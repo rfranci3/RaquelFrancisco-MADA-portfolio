@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "aboutme.html",
+    "href": "aboutme.html",
+    "title": "About me",
+    "section": "",
+    "text": "Background\nMy name is Raquel (Rack-el) and I come from the bustling metropolis of Miami Florida, however I prefer the quiet of the mountains to the coast. By trade I am a veterinarian and while I enjoy clinical medicine, I am most passionate about wildlife disease research. Specifically zoonosis and reverse zoonosis.\n\n\n\nPast Research\nSome of my past research topics include: SARS-CoV-2 in North American Wildlife, the Burden and Diversity of Antimicrobial Resistance Genes in White Stork, and most recently the epidemiology of Sarcoptic mange in American black bears.\n\n\n\nCourse Goals\nI consider myself passable at best in regard to coding and statistical analysis. I hope to use this course as a tool to better understand, visualize, and interpret my often “messy” wildlife field data.\n\n\nFun Fact\nMy spouse and I own 9 chickens. All are hens, all have names, and all come running when you call out “Ladies!”.\n\n\n\nWeird Fact\nRecently it was discovered that California Condors can undergo pathenogenesis, where in a female can create a fertile egg without a male. This was discovered due to continuous genetic analysis of captive-bred condor chicks. While both chicks survived infancy, neither survived to sexual maturity. Bringing into questions, what is the evolutionary advantage of this process IF males are present.\nFacultative Parthenogenesis in California Condors"
+  },
+  {
+    "objectID": "coding_exercise.html",
+    "href": "coding_exercise.html",
+    "title": "R Coding Exercise",
+    "section": "",
+    "text": "Placeholder file for the future R coding exercise."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "My website and data analysis portfolio",
+    "section": "",
+    "text": "Welcome to my website and data analysis portfolio.\n\nPlease use the Menu Bar above to look around.\nHave fun!"
+  },
+  {
+    "objectID": "tidytuesday_exercise.html",
+    "href": "tidytuesday_exercise.html",
+    "title": "Tidy Tuesday Exercise",
+    "section": "",
+    "text": "Placeholder file for the future Tidy Tuesday exercise."
+  },
+  {
+    "objectID": "visualization_exercise.html",
+    "href": "visualization_exercise.html",
+    "title": "Visualization Exercise",
+    "section": "",
+    "text": "Placeholder file for the future visualization exercise."
+  }
+]

@@ -22,7 +22,7 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: yeti
     highlight: zenburn
     css: styles.css
     toc: FALSE
