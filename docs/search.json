@@ -11,7 +11,7 @@
     "href": "coding_exercise.html",
     "title": "R Coding Exercise",
     "section": "",
-    "text": "Placeholder file for the future R coding exercise."
+    "text": "#If needed install package that has our data (dslabs) abd the package that will help us clean the data (tidyverse) #install.packages(dslabs) #install.packages(tidyverse)\nlibrary(tidyverse) library(dslabs) #look at help file for gapminder data ?gapminder #get an overview of data structure str(gapminder) #get a summary of data summary(gapminder) #determine the type of object gapminder is class(gapminder)\n#make tribble gapminder <- tribble()\ngapminder %>% separate(key = continent, value = Africa)"
   },
   {
     "objectID": "index.html",

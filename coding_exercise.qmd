@@ -5,4 +5,109 @@ output:
     toc: FALSE
 ---
 
-Placeholder file for the future R coding exercise.
+#If needed install package that has our data (dslabs) abd the package that will help us clean the data (tidyverse)
+#install.packages(dslabs)
+#install.packages(tidyverse)
+
+library(tidyverse)
+library(dslabs)
+
+#look at help file for gapminder data
+?gapminder
+#get an overview of data structure
+str(gapminder)
+#get a summary of data
+summary(gapminder)
+#determine the type of object gapminder is
+class(gapminder)
+
+#make a tibble data frame
+Data <- gapminder  
+as.tibble(Data)
+
+#Filter all BUT Africa data
+africadata <- Data %>%
+filter(continent == "Africa")
+
+#Subsetting Data
+deadbabies <- africadata %>%
+select(infant_mortality, life_expectancy)
+
+str(deadbabies)
+summary(deadbabies)
+
+popafrica <- africadata %>%
+select(population, life_expectancy)
+
+str(popafrica)
+summary(popafrica)
+
+#Plot subsets
+#Pop on x-axis
+#Pop Vs Life Exp
+plot1c <- ggplot(data = africadata) + 
+  geom_point(mapping = aes(x = population, y =     life_expectancy, color=country)) +
+scale_x_continuous(trans = 'log10') 
+
+plot1y <- ggplot(data = africadata) + 
+  geom_point(mapping = aes(x = population, y =     life_expectancy, color=year)) +
+scale_x_continuous(trans = 'log10') 
+
+plot1c
+plot1y
+
+#Pop Vs Life Exp
+plot2y <- ggplot(data = africadata) + 
+  geom_point(mapping = aes(x = life_expectancy, y =  infant_mortality, color=year)) +
+scale_x_continuous(trans = 'log10') 
+
+plot2c <- ggplot(data = africadata) + 
+  geom_point(mapping = aes(x = life_expectancy, y =  infant_mortality, color=country)) +
+scale_x_continuous(trans = 'log10') 
+
+plot2c
+plot2y
+
+#Finding all the NAs
+africadata %>%
+  summarise(count = sum(is.na(infant_mortality)))
+
+africadata %>%
+  summarise(count = sum(is.na(life_expectancy))) 
+
+africadata %>%
+  summarise(count = sum(is.na(population))) 
+
+#Filter 2000 data from africadata
+africa2000data <- africadata %>%
+  filter(year == '2000')
+
+#Plot 2000 data
+plot3c <- ggplot(data = africa2000data) + 
+  geom_point(mapping = aes(x = population, y = life_expectancy, color=country)) +
+scale_x_continuous(trans = 'log10') 
+
+plot3c
+
+plot4c <- ggplot(data = africa2000data) + 
+  geom_point(mapping = aes(x = life_expectancy, y = infant_mortality, color=country))
+
+plot4c
+
+#Simple Stats to Evaluate Data
+fit1 <- lm(infant_mortality ~ life_expectancy, africa2000data)
+fit2 <- lm(population ~ life_expectancy, africa2000data)
+
+summary(fit1)
+summary(fit2)
+
+#Visualizing States
+ggplot(africa2000data, aes(x = life_expectancy, y = infant_mortality)) + geom_point() +
+  stat_smooth(method = "lm", col = "red")
+
+ggplot(africa2000data, aes(x = life_expectancy, y = population)) + geom_point() +
+  stat_smooth(method = "lm", col = "red")
+
+
+
+
