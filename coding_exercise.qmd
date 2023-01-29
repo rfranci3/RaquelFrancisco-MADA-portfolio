@@ -5,15 +5,16 @@ output:
     toc: FALSE
 ---
 
+Import data and begin to clean data using Tidyverse
+```{r}
 #If needed install package that has our data (dslabs) abd the package that will help us clean the data (tidyverse)
 #install.packages(dslabs)
 #install.packages(tidyverse)
-
 library(tidyverse)
 library(dslabs)
 
 #look at help file for gapminder data
-?gapminder
+#?gapminder
 #get an overview of data structure
 str(gapminder)
 #get a summary of data
@@ -24,12 +25,18 @@ class(gapminder)
 #make a tibble data frame
 Data <- gapminder  
 as.tibble(Data)
+```
 
-#Filter all BUT Africa data
+
+Filter all BUT Africa data
+```{r}
 africadata <- Data %>%
 filter(continent == "Africa")
+```
 
-#Subsetting Data
+
+Subset and review new data
+```{r}
 deadbabies <- africadata %>%
 select(infant_mortality, life_expectancy)
 
@@ -42,9 +49,13 @@ select(population, life_expectancy)
 str(popafrica)
 summary(popafrica)
 
-#Plot subsets
+```
+
+
+Plot Data
+Population Vs Life Exp
+```{r}
 #Pop on x-axis
-#Pop Vs Life Exp
 plot1c <- ggplot(data = africadata) + 
   geom_point(mapping = aes(x = population, y =     life_expectancy, color=country)) +
 scale_x_continuous(trans = 'log10') 
@@ -55,8 +66,10 @@ scale_x_continuous(trans = 'log10')
 
 plot1c
 plot1y
+```
 
-#Pop Vs Life Exp
+Inf Mortality Vs Life Exp
+```{r}
 plot2y <- ggplot(data = africadata) + 
   geom_point(mapping = aes(x = life_expectancy, y =  infant_mortality, color=year)) +
 scale_x_continuous(trans = 'log10') 
@@ -67,8 +80,12 @@ scale_x_continuous(trans = 'log10')
 
 plot2c
 plot2y
+```
 
-#Finding all the NAs
+
+Finding all the NAs (ie the missing data)
+
+```{r}
 africadata %>%
   summarise(count = sum(is.na(infant_mortality)))
 
@@ -77,36 +94,58 @@ africadata %>%
 
 africadata %>%
   summarise(count = sum(is.na(population))) 
+```
 
-#Filter 2000 data from africadata
+
+Now Filter 2000 data from africadata
+```{r}
 africa2000data <- africadata %>%
   filter(year == '2000')
+```
 
-#Plot 2000 data
+
+Plot 2000 data
+2000: Population Vs Life Exp
+```{r}
 plot3c <- ggplot(data = africa2000data) + 
   geom_point(mapping = aes(x = population, y = life_expectancy, color=country)) +
 scale_x_continuous(trans = 'log10') 
 
 plot3c
+```
 
+2000: Inf Mort Vs Life Exp
+```{r}
 plot4c <- ggplot(data = africa2000data) + 
   geom_point(mapping = aes(x = life_expectancy, y = infant_mortality, color=country))
 
 plot4c
+```
 
-#Simple Stats to Evaluate Data
+Simple Stats to Evaluate Data
+```{r}
 fit1 <- lm(infant_mortality ~ life_expectancy, africa2000data)
 fit2 <- lm(population ~ life_expectancy, africa2000data)
 
 summary(fit1)
 summary(fit2)
+```
 
-#Visualizing States
+Visualizing Stats
+2000: Population Vs Life Exp
+```{r}
 ggplot(africa2000data, aes(x = life_expectancy, y = infant_mortality)) + geom_point() +
   stat_smooth(method = "lm", col = "red")
+```
 
+2000: Inf Mort Vs Life Exp
+```{r}
 ggplot(africa2000data, aes(x = life_expectancy, y = population)) + geom_point() +
   stat_smooth(method = "lm", col = "red")
+```
+
+
+
 
 
 
