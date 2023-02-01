@@ -21,8 +21,9 @@ Disability and Health Data System (DHDS) is an online source of state-level data
 Upload raw data to R and install/load packages required to clean data.
 
 ```{r}
-#set working directory
-setwd("C:/Users/Raquel/GitHub/MADA/RaquelFrancisco-MADA-portfolio/dataanalysis_exercise/data")
+##here command to construct a path the that file (datanalysis template) Never make a hard path to the C drive, only relative paths
+##delete code file
+#always open it has a project!
 
 #import file
 raw <- read.csv('rawDHDSdata.csv')
