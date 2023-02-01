@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>My Data Analysis Portfolio - Model4_DataWrangling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">My Data Analysis Portfolio</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="././aboutme.html">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="././coding_exercise.html">
+ <span class="dropdown-text">R Coding Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="././visualization_exercise.html">
+ <span class="dropdown-text">Visualization Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="././tidytuesday_exercise.html">
+ <span class="dropdown-text">Tidy Tuesday Exercise</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="./URL-TO-THIS-REPOSITORY-HERE"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Model4_DataWrangling</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="cdc-disability-data-cleaning-and-wrangling" class="level1">
+<h1>CDC Disability Data Cleaning and Wrangling</h1>
+<section id="prevalence-of-disability-status-and-types-by-demographic-groups-2020" class="level2">
+<h2 class="anchored" data-anchor-id="prevalence-of-disability-status-and-types-by-demographic-groups-2020">Prevalence of Disability Status and Types by Demographic Groups, 2020</h2>
+<p><strong>Data originally acquired at:</strong></p>
+<p><a href="https://data.cdc.gov/Disability-Health/DHDS-Prevalence-of-Disability-Status-and-Types-by-/qjg3-6acf">DHDS - Prevalence of Disability Status and Types by Demographic Groups, 2020 | Data | Centers for Disease Control and Prevention (cdc.gov)</a></p>
+<p><strong>Brief Description:</strong></p>
+<p>Disability and Health Data System (DHDS) is an online source of state-level data on adults with disabilities. Users can access information on six functional disability types: cognitive (serious difficulty concentrating, remembering or making decisions), hearing (serious difficulty hearing or deaf), mobility (serious difficulty walking or climbing stairs), vision (serious difficulty seeing), self-care (difficulty dressing or bathing) and independent living (difficulty doing errands alone).</p>
+</section>
+<section id="importing-and-cleaning-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-and-cleaning-data">Importing and Cleaning Data</h2>
+<p>Upload raw data to R and install/load packages required to clean data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set working directory</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/Raquel/GitHub/MADA/RaquelFrancisco-MADA-portfolio/dataanalysis_exercise/data"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#import file</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'rawDHDSdata.csv'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(dslabs)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(tidyverse)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dslabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dslabs' was built under R version 4.2.2</code></pre>
+</div>
+</div>
+<p>Look at what we have and make a tibble data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   7168 obs. of  30 variables:
+ $ Year                      : int  2020 2020 2020 2020 2020 2020 2020 2020 2020 2020 ...
+ $ LocationAbbr              : chr  "HI" "OH" "WV" "ME" ...
+ $ LocationDesc              : chr  "Hawaii" "Ohio" "West Virginia" "Maine" ...
+ $ DataSource                : chr  "BRFSS" "BRFSS" "BRFSS" "BRFSS" ...
+ $ Category                  : chr  "Disability Estimates" "Disability Estimates" "Disability Estimates" "Disability Estimates" ...
+ $ Indicator                 : chr  "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" ...
+ $ Response                  : chr  "Veteran" "Veteran" "Veteran" "Non-Veteran" ...
+ $ Data_Value_Unit           : chr  "%" "%" "%" "%" ...
+ $ Data_Value_Type           : chr  "Age-adjusted Prevalence" "Age-adjusted Prevalence" "Age-adjusted Prevalence" "Age-adjusted Prevalence" ...
+ $ Data_Value                : num  8.9 11.9 33.4 4.2 3.4 12.3 74.9 NA 64.9 6.5 ...
+ $ Data_Value_Alt            : num  8.9 11.9 33.4 4.2 3.4 12.3 74.9 NA 64.9 6.5 ...
+ $ Data_Value_Footnote_Symbol: chr  "" "" "" "" ...
+ $ Data_Value_Footnote       : chr  "" "" "" "" ...
+ $ Low_Confidence_Limit      : num  6.9 9.9 28.1 3.6 2.9 9.4 73.1 NA 57.6 4.1 ...
+ $ High_Confidence_Limit     : num  11.3 14.2 39.1 5 4.1 16.1 76.6 NA 71.5 10.2 ...
+ $ Number                    : int  158 365 348 483 242 172 6176 NA 323 48 ...
+ $ WeightedNumber            : int  20925 158777 73287 42424 259481 89980 13660252 NA 203697 31424 ...
+ $ StratificationCategory1   : chr  "Disability Type" "Disability Type" "Disability Status" "Disability Type" ...
+ $ Stratification1           : chr  "Hearing Disability" "Mobility Disability" "Any Disability" "Vision Disability" ...
+ $ StratificationCategory2   : logi  NA NA NA NA NA NA ...
+ $ Stratification2           : logi  NA NA NA NA NA NA ...
+ $ CategoryID                : chr  "DISEST" "DISEST" "DISEST" "DISEST" ...
+ $ IndicatorID               : chr  "VETIND" "VETIND" "VETIND" "VETIND" ...
+ $ LocationID                : int  15 39 54 23 26 39 48 33 22 1 ...
+ $ ResponseID                : chr  "VET1" "VET1" "VET1" "VET2" ...
+ $ DataValueTypeID           : chr  "AGEADJPREV" "AGEADJPREV" "AGEADJPREV" "AGEADJPREV" ...
+ $ StratificationCategoryID1 : chr  "DISTYPE" "DISTYPE" "DISSTAT" "DISTYPE" ...
+ $ StratificationID1         : chr  "HEARDIS" "MOBDIS" "DISABL" "VISDIS" ...
+ $ StratificationCategoryID2 : logi  NA NA NA NA NA NA ...
+ $ StratificationID2         : logi  NA NA NA NA NA NA ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Year      LocationAbbr       LocationDesc        DataSource       
+ Min.   :2020   Length:7168        Length:7168        Length:7168       
+ 1st Qu.:2020   Class :character   Class :character   Class :character  
+ Median :2020   Mode  :character   Mode  :character   Mode  :character  
+ Mean   :2020                                                           
+ 3rd Qu.:2020                                                           
+ Max.   :2020                                                           
+                                                                        
+   Category          Indicator           Response         Data_Value_Unit   
+ Length:7168        Length:7168        Length:7168        Length:7168       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+ Data_Value_Type      Data_Value    Data_Value_Alt  Data_Value_Footnote_Symbol
+ Length:7168        Min.   : 0.70   Min.   : 0.70   Length:7168               
+ Class :character   1st Qu.: 5.40   1st Qu.: 5.40   Class :character          
+ Mode  :character   Median :10.30   Median :10.30   Mode  :character          
+                    Mean   :20.38   Mean   :20.38                             
+                    3rd Qu.:23.70   3rd Qu.:23.70                             
+                    Max.   :94.80   Max.   :94.80                             
+                    NA's   :1695    NA's   :1695                              
+ Data_Value_Footnote Low_Confidence_Limit High_Confidence_Limit
+ Length:7168         Min.   : 0.40        Min.   : 1.20        
+ Class :character    1st Qu.: 4.30        1st Qu.: 6.90        
+ Mode  :character    Median : 8.20        Median :12.70        
+                     Mean   :17.96        Mean   :23.16        
+                     3rd Qu.:20.40        3rd Qu.:27.30        
+                     Max.   :89.80        Max.   :97.80        
+                     NA's   :1695         NA's   :1695         
+     Number       WeightedNumber      StratificationCategory1
+ Min.   :     7   Min.   :      471   Length:7168            
+ 1st Qu.:    93   1st Qu.:    33767   Class :character       
+ Median :   257   Median :   120801   Mode  :character       
+ Mean   :  1244   Mean   :   775135                          
+ 3rd Qu.:   762   3rd Qu.:   418722                          
+ Max.   :243399   Max.   :164671302                          
+ NA's   :1695     NA's   :1695                               
+ Stratification1    StratificationCategory2 Stratification2  CategoryID       
+ Length:7168        Mode:logical            Mode:logical    Length:7168       
+ Class :character   NA's:7168               NA's:7168       Class :character  
+ Mode  :character                                           Mode  :character  
+                                                                              
+                                                                              
+                                                                              
+                                                                              
+ IndicatorID          LocationID     ResponseID        DataValueTypeID   
+ Length:7168        Min.   : 1.00   Length:7168        Length:7168       
+ Class :character   1st Qu.:19.75   Class :character   Class :character  
+ Mode  :character   Median :35.50   Mode  :character   Mode  :character  
+                    Mean   :39.36                                        
+                    3rd Qu.:53.25                                        
+                    Max.   :89.00                                        
+                                                                         
+ StratificationCategoryID1 StratificationID1  StratificationCategoryID2
+ Length:7168               Length:7168        Mode:logical             
+ Class :character          Class :character   NA's:7168                
+ Mode  :character          Mode  :character                            
+                                                                       
+                                                                       
+                                                                       
+                                                                       
+ StratificationID2
+ Mode:logical     
+ NA's:7168        
+                  
+                  
+                  
+                  
+                  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.tibble</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `as.tibble()` was deprecated in tibble 2.0.0.
+ℹ Please use `as_tibble()` instead.
+ℹ The signature and semantics have changed, see `?as_tibble`.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7,168 × 30
+    Year Locat…¹ Locat…² DataS…³ Categ…⁴ Indic…⁵ Respo…⁶ Data_…⁷ Data_…⁸ Data_…⁹
+   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
+ 1  2020 HI      Hawaii  BRFSS   Disabi… Disabi… Veteran %       Age-ad…     8.9
+ 2  2020 OH      Ohio    BRFSS   Disabi… Disabi… Veteran %       Age-ad…    11.9
+ 3  2020 WV      West V… BRFSS   Disabi… Disabi… Veteran %       Age-ad…    33.4
+ 4  2020 ME      Maine   BRFSS   Disabi… Disabi… Non-Ve… %       Age-ad…     4.2
+ 5  2020 MI      Michig… BRFSS   Disabi… Disabi… Non-Ve… %       Age-ad…     3.4
+ 6  2020 OH      Ohio    BRFSS   Disabi… Disabi… Veteran %       Age-ad…    12.3
+ 7  2020 TX      Texas   BRFSS   Disabi… Disabi… Non-Ve… %       Age-ad…    74.9
+ 8  2020 NH      New Ha… BRFSS   Disabi… Disabi… Veteran %       Age-ad…    NA  
+ 9  2020 LA      Louisi… BRFSS   Disabi… Disabi… Veteran %       Age-ad…    64.9
+10  2020 AL      Alabama BRFSS   Disabi… Disabi… Veteran %       Age-ad…     6.5
+# … with 7,158 more rows, 20 more variables: Data_Value_Alt &lt;dbl&gt;,
+#   Data_Value_Footnote_Symbol &lt;chr&gt;, Data_Value_Footnote &lt;chr&gt;,
+#   Low_Confidence_Limit &lt;dbl&gt;, High_Confidence_Limit &lt;dbl&gt;, Number &lt;int&gt;,
+#   WeightedNumber &lt;int&gt;, StratificationCategory1 &lt;chr&gt;, Stratification1 &lt;chr&gt;,
+#   StratificationCategory2 &lt;lgl&gt;, Stratification2 &lt;lgl&gt;, CategoryID &lt;chr&gt;,
+#   IndicatorID &lt;chr&gt;, LocationID &lt;int&gt;, ResponseID &lt;chr&gt;,
+#   DataValueTypeID &lt;chr&gt;, StratificationCategoryID1 &lt;chr&gt;, …</code></pre>
+</div>
+</div>
+<p>Wrangler data of interest. Goal is to have ~5 variables. Most interesting in this case would be: LocationDesc, Response (Age/Ethnicity/Veteran Status; will have to be split), WeightedNumber (An adjusted version of the crude number of respondents that reflects the number of persons with the attribute in the population.), Stratification 1 (which type of disability)</p>
+<p>Now we’ll put this data out:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>disdata <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(LocationAbbr, Response, WeightedNumber, Stratification1)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(disdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   7168 obs. of  4 variables:
+ $ LocationAbbr   : chr  "HI" "OH" "WV" "ME" ...
+ $ Response       : chr  "Veteran" "Veteran" "Veteran" "Non-Veteran" ...
+ $ WeightedNumber : int  20925 158777 73287 42424 259481 89980 13660252 NA 203697 31424 ...
+ $ Stratification1: chr  "Hearing Disability" "Mobility Disability" "Any Disability" "Vision Disability" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.tibble</span>(disdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7,168 × 4
+   LocationAbbr Response    WeightedNumber Stratification1     
+   &lt;chr&gt;        &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;               
+ 1 HI           Veteran              20925 Hearing Disability  
+ 2 OH           Veteran             158777 Mobility Disability 
+ 3 WV           Veteran              73287 Any Disability      
+ 4 ME           Non-Veteran          42424 Vision Disability   
+ 5 MI           Non-Veteran         259481 Vision Disability   
+ 6 OH           Veteran              89980 Cognitive Disability
+ 7 TX           Non-Veteran       13660252 No Disability       
+ 8 NH           Veteran                 NA Self-care Disability
+ 9 LA           Veteran             203697 No Disability       
+10 AL           Veteran              31424 Self-care Disability
+# … with 7,158 more rows</code></pre>
+</div>
+</div>
+<p>Lets now look at veterans vs non-veterans. We’ll pull out veterans then remove the “regions” from the data so there are only easily identifiable state abbreviations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>vetdata <span class="ot">&lt;-</span> disdata <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Response <span class="sc">==</span> <span class="st">'Veteran'</span> <span class="sc">|</span> Response <span class="sc">==</span> <span class="st">'Non-Veteran'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Stratification1 <span class="sc">!=</span> <span class="st">'No Disability'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS1'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS2'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS3'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS4'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS5'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS6'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS7'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS8'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS9'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS10'</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(vetdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 756 × 4
+   LocationAbbr Response    WeightedNumber Stratification1     
+   &lt;chr&gt;        &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;               
+ 1 HI           Veteran              20925 Hearing Disability  
+ 2 OH           Veteran             158777 Mobility Disability 
+ 3 WV           Veteran              73287 Any Disability      
+ 4 ME           Non-Veteran          42424 Vision Disability   
+ 5 MI           Non-Veteran         259481 Vision Disability   
+ 6 OH           Veteran              89980 Cognitive Disability
+ 7 NH           Veteran                 NA Self-care Disability
+ 8 AL           Veteran              31424 Self-care Disability
+ 9 GU           Veteran               2102 Cognitive Disability
+10 DC           Veteran                 NA Hearing Disability  
+# … with 746 more rows</code></pre>
+</div>
+</div>
+<p>There are some gaps in the data now. Lets find them and remove them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>vetdata2 <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(vetdata)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>Stratification1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] Hearing Disability            Mobility Disability          
+  [3] Any Disability                Vision Disability            
+  [5] Vision Disability             Cognitive Disability         
+  [7] Self-care Disability          Cognitive Disability         
+  [9] Any Disability                Self-care Disability         
+ [11] Any Disability                Mobility Disability          
+ [13] Vision Disability             Hearing Disability           
+ [15] Hearing Disability            Any Disability               
+ [17] Vision Disability             Self-care Disability         
+ [19] Hearing Disability            Cognitive Disability         
+ [21] Cognitive Disability          Self-care Disability         
+ [23] Vision Disability             Hearing Disability           
+ [25] Cognitive Disability          Hearing Disability           
+ [27] Vision Disability             Hearing Disability           
+ [29] Mobility Disability           Mobility Disability          
+ [31] Cognitive Disability          Vision Disability            
+ [33] Hearing Disability            Vision Disability            
+ [35] Vision Disability             Hearing Disability           
+ [37] Vision Disability             Any Disability               
+ [39] Hearing Disability            Cognitive Disability         
+ [41] Any Disability                Any Disability               
+ [43] Vision Disability             Cognitive Disability         
+ [45] Self-care Disability          Cognitive Disability         
+ [47] Any Disability                Any Disability               
+ [49] Any Disability                Vision Disability            
+ [51] Any Disability                Any Disability               
+ [53] Any Disability                Any Disability               
+ [55] Vision Disability             Any Disability               
+ [57] Any Disability                Any Disability               
+ [59] Any Disability                Cognitive Disability         
+ [61] Any Disability                Any Disability               
+ [63] Any Disability                Mobility Disability          
+ [65] Independent Living Disability Self-care Disability         
+ [67] Mobility Disability           Any Disability               
+ [69] Cognitive Disability          Independent Living Disability
+ [71] Mobility Disability           Hearing Disability           
+ [73] Independent Living Disability Cognitive Disability         
+ [75] Independent Living Disability Self-care Disability         
+ [77] Cognitive Disability          Cognitive Disability         
+ [79] Cognitive Disability          Self-care Disability         
+ [81] Any Disability                Mobility Disability          
+ [83] Self-care Disability          Hearing Disability           
+ [85] Hearing Disability            Hearing Disability           
+ [87] Self-care Disability          Independent Living Disability
+ [89] Hearing Disability            Independent Living Disability
+ [91] Vision Disability             Mobility Disability          
+ [93] Cognitive Disability          Mobility Disability          
+ [95] Hearing Disability            Mobility Disability          
+ [97] Mobility Disability           Independent Living Disability
+ [99] Any Disability                Cognitive Disability         
+[101] Any Disability                Cognitive Disability         
+[103] Self-care Disability          Cognitive Disability         
+[105] Mobility Disability           Self-care Disability         
+[107] Independent Living Disability Independent Living Disability
+[109] Vision Disability             Mobility Disability          
+[111] Self-care Disability          Any Disability               
+[113] Vision Disability             Independent Living Disability
+[115] Any Disability                Vision Disability            
+[117] Independent Living Disability Hearing Disability           
+[119] Hearing Disability            Cognitive Disability         
+[121] Vision Disability             Mobility Disability          
+[123] Hearing Disability            Vision Disability            
+[125] Any Disability                Self-care Disability         
+[127] Vision Disability             Cognitive Disability         
+[129] Any Disability                Mobility Disability          
+[131] Independent Living Disability Self-care Disability         
+[133] Vision Disability             Independent Living Disability
+[135] Cognitive Disability          Self-care Disability         
+[137] Independent Living Disability Cognitive Disability         
+[139] Mobility Disability           Independent Living Disability
+[141] Vision Disability             Independent Living Disability
+[143] Any Disability                Mobility Disability          
+[145] Hearing Disability            Independent Living Disability
+[147] Vision Disability             Hearing Disability           
+[149] Hearing Disability            Hearing Disability           
+[151] Hearing Disability            Cognitive Disability         
+[153] Independent Living Disability Cognitive Disability         
+[155] Self-care Disability          Any Disability               
+[157] Vision Disability             Mobility Disability          
+[159] Hearing Disability            Mobility Disability          
+[161] Hearing Disability            Cognitive Disability         
+[163] Hearing Disability            Cognitive Disability         
+[165] Independent Living Disability Vision Disability            
+[167] Self-care Disability          Independent Living Disability
+[169] Cognitive Disability          Self-care Disability         
+[171] Any Disability                Vision Disability            
+[173] Mobility Disability           Hearing Disability           
+[175] Mobility Disability           Independent Living Disability
+[177] Mobility Disability           Self-care Disability         
+[179] Hearing Disability            Hearing Disability           
+[181] Independent Living Disability Independent Living Disability
+[183] Self-care Disability          Mobility Disability          
+[185] Vision Disability             Hearing Disability           
+[187] Cognitive Disability          Cognitive Disability         
+[189] Hearing Disability            Hearing Disability           
+[191] Any Disability                Hearing Disability           
+[193] Vision Disability             Mobility Disability          
+[195] Cognitive Disability          Mobility Disability          
+[197] Cognitive Disability          Self-care Disability         
+[199] Independent Living Disability Self-care Disability         
+[201] Self-care Disability          Hearing Disability           
+[203] Cognitive Disability          Any Disability               
+[205] Self-care Disability          Independent Living Disability
+[207] Independent Living Disability Self-care Disability         
+[209] Self-care Disability          Independent Living Disability
+[211] Hearing Disability            Hearing Disability           
+[213] Independent Living Disability Vision Disability            
+[215] Any Disability                Mobility Disability          
+[217] Self-care Disability          Cognitive Disability         
+[219] Vision Disability             Hearing Disability           
+[221] Any Disability                Vision Disability            
+[223] Vision Disability             Mobility Disability          
+[225] Mobility Disability           Vision Disability            
+[227] Hearing Disability            Self-care Disability         
+[229] Self-care Disability          Self-care Disability         
+[231] Independent Living Disability Cognitive Disability         
+[233] Hearing Disability            Cognitive Disability         
+[235] Vision Disability             Mobility Disability          
+[237] Independent Living Disability Independent Living Disability
+[239] Vision Disability             Mobility Disability          
+[241] Independent Living Disability Self-care Disability         
+[243] Mobility Disability           Cognitive Disability         
+[245] Hearing Disability            Cognitive Disability         
+[247] Mobility Disability           Independent Living Disability
+[249] Hearing Disability            Mobility Disability          
+[251] Independent Living Disability Mobility Disability          
+[253] Self-care Disability          Vision Disability            
+[255] Vision Disability             Independent Living Disability
+[257] Mobility Disability           Self-care Disability         
+[259] Vision Disability             Cognitive Disability         
+[261] Independent Living Disability Cognitive Disability         
+[263] Hearing Disability            Independent Living Disability
+[265] Cognitive Disability          Hearing Disability           
+[267] Vision Disability             Independent Living Disability
+[269] Cognitive Disability          Self-care Disability         
+[271] Cognitive Disability          Mobility Disability          
+[273] Independent Living Disability Mobility Disability          
+[275] Cognitive Disability          Mobility Disability          
+[277] Cognitive Disability          Mobility Disability          
+[279] Cognitive Disability          Mobility Disability          
+[281] Cognitive Disability          Mobility Disability          
+[283] Vision Disability             Mobility Disability          
+[285] Mobility Disability           Cognitive Disability         
+[287] Mobility Disability           Independent Living Disability
+[289] Cognitive Disability          Self-care Disability         
+[291] Vision Disability             Cognitive Disability         
+[293] Mobility Disability           Any Disability               
+[295] Hearing Disability            Any Disability               
+[297] Independent Living Disability Hearing Disability           
+[299] Vision Disability             Self-care Disability         
+[301] Cognitive Disability          Hearing Disability           
+[303] Independent Living Disability Cognitive Disability         
+[305] Self-care Disability          Vision Disability            
+[307] Mobility Disability           Cognitive Disability         
+[309] Independent Living Disability Self-care Disability         
+[311] Self-care Disability          Mobility Disability          
+[313] Independent Living Disability Independent Living Disability
+[315] Independent Living Disability Hearing Disability           
+[317] Mobility Disability           Vision Disability            
+[319] Cognitive Disability          Vision Disability            
+[321] Any Disability                Any Disability               
+[323] Independent Living Disability Self-care Disability         
+[325] Hearing Disability            Cognitive Disability         
+[327] Mobility Disability           Hearing Disability           
+[329] Vision Disability             Self-care Disability         
+[331] Mobility Disability           Self-care Disability         
+[333] Cognitive Disability          Independent Living Disability
+[335] Vision Disability             Mobility Disability          
+[337] Any Disability                Self-care Disability         
+[339] Hearing Disability            Self-care Disability         
+[341] Independent Living Disability Hearing Disability           
+[343] Any Disability                Any Disability               
+[345] Hearing Disability            Cognitive Disability         
+[347] Hearing Disability            Any Disability               
+[349] Mobility Disability           Any Disability               
+[351] Vision Disability             Vision Disability            
+[353] Independent Living Disability Any Disability               
+[355] Cognitive Disability          Hearing Disability           
+[357] Mobility Disability           Self-care Disability         
+[359] Cognitive Disability          Cognitive Disability         
+[361] Independent Living Disability Self-care Disability         
+[363] Independent Living Disability Vision Disability            
+[365] Mobility Disability           Mobility Disability          
+[367] Any Disability                Independent Living Disability
+[369] Vision Disability             Mobility Disability          
+[371] Hearing Disability            Hearing Disability           
+[373] Vision Disability             Hearing Disability           
+[375] Vision Disability             Cognitive Disability         
+[377] Any Disability                Hearing Disability           
+[379] Self-care Disability          Cognitive Disability         
+[381] Independent Living Disability Any Disability               
+[383] Mobility Disability           Vision Disability            
+[385] Any Disability                Mobility Disability          
+[387] Hearing Disability            Hearing Disability           
+[389] Mobility Disability           Independent Living Disability
+[391] Independent Living Disability Cognitive Disability         
+[393] Self-care Disability          Vision Disability            
+[395] Mobility Disability           Vision Disability            
+[397] Independent Living Disability Vision Disability            
+[399] Cognitive Disability          Self-care Disability         
+[401] Any Disability                Mobility Disability          
+[403] Mobility Disability           Self-care Disability         
+[405] Hearing Disability            Mobility Disability          
+[407] Any Disability                Cognitive Disability         
+[409] Mobility Disability           Cognitive Disability         
+[411] Any Disability                Hearing Disability           
+[413] Hearing Disability            Independent Living Disability
+[415] Mobility Disability           Independent Living Disability
+[417] Self-care Disability          Independent Living Disability
+[419] Mobility Disability           Any Disability               
+[421] Independent Living Disability Mobility Disability          
+[423] Cognitive Disability          Any Disability               
+[425] Vision Disability             Mobility Disability          
+[427] Mobility Disability           Hearing Disability           
+[429] Independent Living Disability Independent Living Disability
+[431] Hearing Disability            Mobility Disability          
+[433] Vision Disability             Any Disability               
+[435] Cognitive Disability          Hearing Disability           
+[437] Hearing Disability            Any Disability               
+[439] Hearing Disability            Independent Living Disability
+[441] Cognitive Disability          Hearing Disability           
+[443] Mobility Disability           Independent Living Disability
+[445] Any Disability                Mobility Disability          
+[447] Cognitive Disability          Self-care Disability         
+[449] Cognitive Disability          Mobility Disability          
+[451] Vision Disability             Any Disability               
+[453] Cognitive Disability          Independent Living Disability
+[455] Self-care Disability          Mobility Disability          
+[457] Mobility Disability           Cognitive Disability         
+[459] Independent Living Disability Vision Disability            
+[461] Hearing Disability            Mobility Disability          
+[463] Cognitive Disability          Self-care Disability         
+[465] Self-care Disability          Mobility Disability          
+[467] Cognitive Disability          Independent Living Disability
+[469] Vision Disability             Any Disability               
+[471] Vision Disability             Self-care Disability         
+[473] Cognitive Disability          Self-care Disability         
+[475] Self-care Disability          Cognitive Disability         
+[477] Cognitive Disability          Independent Living Disability
+[479] Mobility Disability           Any Disability               
+[481] Mobility Disability           Hearing Disability           
+[483] Any Disability                Independent Living Disability
+[485] Hearing Disability            Any Disability               
+[487] Independent Living Disability Vision Disability            
+[489] Any Disability                Independent Living Disability
+[491] Self-care Disability          Vision Disability            
+[493] Hearing Disability            Hearing Disability           
+[495] Any Disability                Any Disability               
+[497] Mobility Disability           Self-care Disability         
+[499] Any Disability                Vision Disability            
+[501] Vision Disability             Cognitive Disability         
+[503] Any Disability                Vision Disability            
+[505] Independent Living Disability Self-care Disability         
+[507] Vision Disability             Mobility Disability          
+[509] Cognitive Disability          Independent Living Disability
+[511] Any Disability                Self-care Disability         
+[513] Mobility Disability           Mobility Disability          
+[515] Any Disability                Mobility Disability          
+[517] Independent Living Disability Any Disability               
+[519] Self-care Disability          Any Disability               
+[521] Vision Disability             Hearing Disability           
+[523] Cognitive Disability          Mobility Disability          
+[525] Mobility Disability           Any Disability               
+[527] Cognitive Disability          Any Disability               
+[529] Independent Living Disability Independent Living Disability
+[531] Hearing Disability            Hearing Disability           
+[533] Mobility Disability           Any Disability               
+[535] Vision Disability             Cognitive Disability         
+[537] Independent Living Disability Cognitive Disability         
+[539] Any Disability                Cognitive Disability         
+[541] Mobility Disability           Mobility Disability          
+[543] Independent Living Disability Cognitive Disability         
+[545] Cognitive Disability          Self-care Disability         
+[547] Independent Living Disability Hearing Disability           
+[549] Vision Disability             Self-care Disability         
+[551] Mobility Disability           Self-care Disability         
+[553] Cognitive Disability          Independent Living Disability
+[555] Hearing Disability            Any Disability               
+[557] Independent Living Disability Hearing Disability           
+[559] Any Disability                Mobility Disability          
+[561] Vision Disability             Vision Disability            
+[563] Any Disability                Any Disability               
+[565] Any Disability                Mobility Disability          
+[567] Vision Disability             Any Disability               
+[569] Any Disability                Self-care Disability         
+[571] Self-care Disability          Any Disability               
+[573] Any Disability                Cognitive Disability         
+[575] Hearing Disability            Any Disability               
+[577] Any Disability                Vision Disability            
+[579] Hearing Disability            Hearing Disability           
+[581] Vision Disability             Cognitive Disability         
+[583] Mobility Disability           Independent Living Disability
+[585] Cognitive Disability          Self-care Disability         
+[587] Hearing Disability            Vision Disability            
+[589] Independent Living Disability Mobility Disability          
+[591] Vision Disability             Cognitive Disability         
+[593] Cognitive Disability          Any Disability               
+[595] Hearing Disability            Self-care Disability         
+[597] Hearing Disability            Any Disability               
+[599] Hearing Disability            Mobility Disability          
+[601] Self-care Disability          Hearing Disability           
+[603] Vision Disability             Vision Disability            
+[605] Hearing Disability            Any Disability               
+[607] Any Disability                Any Disability               
+[609] Self-care Disability          Vision Disability            
+[611] Independent Living Disability Any Disability               
+[613] Any Disability                Self-care Disability         
+[615] Independent Living Disability Hearing Disability           
+[617] Independent Living Disability Vision Disability            
+[619] Mobility Disability           Self-care Disability         
+[621] Cognitive Disability          Hearing Disability           
+[623] Hearing Disability            Any Disability               
+[625] Hearing Disability            Hearing Disability           
+[627] Hearing Disability            Any Disability               
+[629] Independent Living Disability Self-care Disability         
+[631] Vision Disability             Cognitive Disability         
+[633] Hearing Disability            Vision Disability            
+[635] Any Disability                Self-care Disability         
+[637] Vision Disability             Independent Living Disability
+[639] Cognitive Disability          Self-care Disability         
+[641] Mobility Disability           Self-care Disability         
+[643] Mobility Disability           Cognitive Disability         
+[645] Mobility Disability           Independent Living Disability
+[647] Any Disability                Self-care Disability         
+[649] Hearing Disability            Independent Living Disability
+[651] Independent Living Disability Vision Disability            
+[653] Vision Disability             Mobility Disability          
+[655] Self-care Disability          Vision Disability            
+[657] Independent Living Disability Mobility Disability          
+[659] Cognitive Disability          Mobility Disability          
+[661] Self-care Disability          Any Disability               
+[663] Any Disability                Any Disability               
+[665] Any Disability                Independent Living Disability
+[667] Any Disability                Any Disability               
+[669] Hearing Disability            Mobility Disability          
+[671] Vision Disability             Independent Living Disability
+[673] Cognitive Disability          Vision Disability            
+[675] Mobility Disability           Any Disability               
+[677] Any Disability                Hearing Disability           
+[679] Hearing Disability            Cognitive Disability         
+[681] Self-care Disability          Any Disability               
+[683] Cognitive Disability          Independent Living Disability
+[685] Any Disability                Independent Living Disability
+[687] Independent Living Disability Hearing Disability           
+[689] Mobility Disability           Cognitive Disability         
+[691] Hearing Disability            Self-care Disability         
+[693] Cognitive Disability          Mobility Disability          
+[695] Self-care Disability          Mobility Disability          
+[697] Cognitive Disability          Hearing Disability           
+[699] Cognitive Disability          Vision Disability            
+[701] Hearing Disability            Independent Living Disability
+7 Levels: Hearing Disability Mobility Disability ... Independent Living Disability</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>LocationAbbr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] HI OH WV ME MI OH AL GU MO KS NY AR OH IA WY MS MD HI MD NE ID FL MS GA MI
+ [26] AL AK ID LA NJ VT OK MT PR OK WA VT IN ID OK NE VT LA IL KY TN AL AR AK ID
+ [51] AZ US CA CO AR CA AZ AR CO MO US AL AK MS MD TN KS SC CO NV KS LA MD AL UT
+ [76] MT TX CT NE ME ND TX AR AZ NY WV DC GA KY IL WY NH MA FL NV SC AL CA DC NY
+[101] SD KS OK AZ GU HI NJ VA AL OR PR WI NY MN KS PA KS PA UT WV WV NE MI MS FL
+[126] NJ KS LA NC HI NY IL DC WV OR VA MO VT MA AL SC FL KY CO OK IN PA PA PR MS
+[151] AZ AR OK ID NY WY GU IL US MO MD DC IL MN TN CT WV MT CT MA TN NV VT ND ME
+[176] ID WV CO CA SC PR DE MO NY UT MT ME NH WA SC DE LA WI SD NJ NY RI ND OK LA
+[201] TX CA NC NM OR NH PR WY NE WY VT MS CO CA IA AK WV VA MT TN MN TN NC WV KY
+[226] UT NM NY VT AZ NY US DC WI GA IN IL AL WA ND LA KS TX SD OK MO WY HI PR NE
+[251] WV FL AL NM DC DC DE NH SC IA AZ AK MI KS GA CT US SC TX IN ND OK MS VT CA
+[276] MN NH MD GA SD RI IL MT MO PR MN NH NH WY NE IA KY CA RI KS CT TX NE GA SC
+[301] MD WI ND OK MD NH RI NM WY MS OH NC LA OR NE TX HI TN MI VT WA IN AZ GA NC
+[326] PR VA TN KY CA AZ WA WA MT SD WI HI MS OR FL HI RI MD OH ND PA MN ID MI MN
+[351] MO PR TN ME PR WY DE NM IA US NC SC WA CO PA CA PR MS NC TN AR NM RI FL HI
+[376] WI DE KS CT MD IN IA MT WA NJ GA VT NH AK CO ME CA TX MN KY AZ AR IL NC VA
+[401] NM CT US OR AL ID NV DE PR MT MI IN ME MA IA NM MI VT OK UT SC UT MT PA NH
+[426] MD WI NC DC IA CO CT NE RI WA TX DE CT NE US LA IN NV OH WA NM AZ US HI RI
+[451] TX VA NM VA OH TN NC SC OR KY MA MT FL UT ID GA MS TX AK OK DE IA TN WI MT
+[476] NV UT AK WA MA MI SD GA GA OH TX KY OR NH GU DE ND MO WI LA MI PA NC GU WY
+[501] IA KY OR US WI TN FL MN PA NE IL GA NJ DC UT AZ CT DC AK WI MN GU GU US DC
+[526] SD IN KS ID AR ME FL IA NJ HI UT RI OH NE DE OR VA MO NV IL KY ME AR IN MN
+[551] GU UT MS MI VA ID WA MN VT NV CO MO PR ME ND LA NJ WV SC AR NV HI MS WY RI
+[576] OH MD ME HI KY VA MA OH PA CO ME NJ MA MN UT AR SC ND MT AK PA OR TX UT ID
+[601] IN GU VA OH MO TN IL LA WA NY AK GU GA NC DE NJ CT KS AR CO WV VA US NY IL
+[626] IA SD OR NC PA AL ME NV FL MO SD WV MI AR MA ND PR ME NY WY GU NH OK OH KY
+[651] PA OR NE IN AZ TX CA AL NJ MS US PA KY FL VA US MA WY NY WA GU FL KS IN CO
+[676] NV NC MA DE FL RI OK AL UT MT SD OH WV NM OR AK MO VA MA IA SC HI CO IN ID
+[701] GA IA
+54 Levels: HI OH WV ME MI AL GU MO KS NY AR IA WY MS MD NE ID FL GA AK ... NM</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>Response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] Veteran     Veteran     Veteran     Non-Veteran Non-Veteran Veteran    
+  [7] Veteran     Veteran     Veteran     Veteran     Veteran     Veteran    
+ [13] Non-Veteran Non-Veteran Veteran     Veteran     Non-Veteran Veteran    
+ [19] Veteran     Veteran     Non-Veteran Veteran     Veteran     Non-Veteran
+ [25] Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+ [31] Veteran     Veteran     Veteran     Veteran     Non-Veteran Veteran    
+ [37] Non-Veteran Non-Veteran Veteran     Veteran     Veteran     Non-Veteran
+ [43] Non-Veteran Veteran     Veteran     Veteran     Non-Veteran Veteran    
+ [49] Veteran     Non-Veteran Non-Veteran Veteran     Veteran     Veteran    
+ [55] Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran    
+ [61] Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran
+ [67] Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran
+ [73] Non-Veteran Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+ [79] Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran
+ [85] Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran    
+ [91] Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran
+ [97] Non-Veteran Non-Veteran Veteran     Non-Veteran Veteran     Veteran    
+[103] Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran
+[109] Veteran     Veteran     Non-Veteran Veteran     Veteran     Veteran    
+[115] Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran
+[121] Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran
+[127] Veteran     Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran
+[133] Non-Veteran Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran
+[139] Veteran     Non-Veteran Non-Veteran Veteran     Veteran     Veteran    
+[145] Veteran     Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran
+[151] Veteran     Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran
+[157] Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran
+[163] Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+[169] Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran    
+[175] Veteran     Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran
+[181] Veteran     Veteran     Veteran     Veteran     Veteran     Non-Veteran
+[187] Non-Veteran Non-Veteran Non-Veteran Veteran     Veteran     Veteran    
+[193] Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran
+[199] Non-Veteran Non-Veteran Veteran     Veteran     Veteran     Veteran    
+[205] Veteran     Veteran     Non-Veteran Non-Veteran Veteran     Veteran    
+[211] Veteran     Veteran     Veteran     Non-Veteran Veteran     Veteran    
+[217] Veteran     Non-Veteran Veteran     Non-Veteran Veteran     Veteran    
+[223] Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran    
+[229] Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran    
+[235] Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran
+[241] Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran Non-Veteran
+[247] Non-Veteran Veteran     Non-Veteran Veteran     Veteran     Non-Veteran
+[253] Non-Veteran Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran
+[259] Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran     Veteran    
+[265] Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran
+[271] Non-Veteran Non-Veteran Non-Veteran Veteran     Veteran     Veteran    
+[277] Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran Veteran    
+[283] Non-Veteran Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran
+[289] Non-Veteran Non-Veteran Non-Veteran Non-Veteran Non-Veteran Veteran    
+[295] Veteran     Veteran     Veteran     Veteran     Veteran     Non-Veteran
+[301] Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran Veteran    
+[307] Veteran     Veteran     Non-Veteran Non-Veteran Veteran     Veteran    
+[313] Veteran     Veteran     Veteran     Veteran     Veteran     Non-Veteran
+[319] Non-Veteran Veteran     Veteran     Veteran     Veteran     Non-Veteran
+[325] Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran
+[331] Non-Veteran Non-Veteran Veteran     Veteran     Non-Veteran Veteran    
+[337] Veteran     Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran
+[343] Non-Veteran Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+[349] Non-Veteran Non-Veteran Non-Veteran Non-Veteran Veteran     Veteran    
+[355] Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran     Veteran    
+[361] Non-Veteran Veteran     Non-Veteran Veteran     Veteran     Veteran    
+[367] Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran Veteran    
+[373] Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran
+[379] Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran    
+[385] Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+[391] Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+[397] Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran
+[403] Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+[409] Veteran     Veteran     Veteran     Veteran     Non-Veteran Non-Veteran
+[415] Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran
+[421] Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran Veteran    
+[427] Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran Veteran    
+[433] Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran
+[439] Non-Veteran Non-Veteran Non-Veteran Non-Veteran Non-Veteran Veteran    
+[445] Non-Veteran Veteran     Non-Veteran Veteran     Veteran     Non-Veteran
+[451] Veteran     Veteran     Non-Veteran Veteran     Non-Veteran Veteran    
+[457] Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran Veteran    
+[463] Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran
+[469] Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran
+[475] Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran
+[481] Veteran     Non-Veteran Veteran     Veteran     Veteran     Veteran    
+[487] Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran Non-Veteran
+[493] Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran
+[499] Veteran     Non-Veteran Veteran     Veteran     Non-Veteran Veteran    
+[505] Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran
+[511] Non-Veteran Veteran     Veteran     Non-Veteran Veteran     Veteran    
+[517] Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran     Veteran    
+[523] Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran Non-Veteran
+[529] Veteran     Non-Veteran Veteran     Non-Veteran Non-Veteran Non-Veteran
+[535] Non-Veteran Veteran     Non-Veteran Non-Veteran Non-Veteran Veteran    
+[541] Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran Non-Veteran
+[547] Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran
+[553] Non-Veteran Veteran     Veteran     Veteran     Veteran     Veteran    
+[559] Veteran     Veteran     Non-Veteran Veteran     Veteran     Non-Veteran
+[565] Veteran     Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+[571] Non-Veteran Non-Veteran Non-Veteran Veteran     Veteran     Non-Veteran
+[577] Veteran     Veteran     Non-Veteran Veteran     Non-Veteran Veteran    
+[583] Non-Veteran Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran
+[589] Non-Veteran Veteran     Veteran     Non-Veteran Veteran     Veteran    
+[595] Veteran     Veteran     Non-Veteran Non-Veteran Veteran     Veteran    
+[601] Veteran     Non-Veteran Veteran     Veteran     Veteran     Veteran    
+[607] Veteran     Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran
+[613] Non-Veteran Veteran     Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+[619] Non-Veteran Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran
+[625] Non-Veteran Veteran     Veteran     Veteran     Veteran     Non-Veteran
+[631] Non-Veteran Veteran     Veteran     Veteran     Non-Veteran Non-Veteran
+[637] Non-Veteran Non-Veteran Veteran     Non-Veteran Veteran     Veteran    
+[643] Non-Veteran Veteran     Veteran     Non-Veteran Veteran     Veteran    
+[649] Non-Veteran Veteran     Veteran     Non-Veteran Non-Veteran Veteran    
+[655] Veteran     Non-Veteran Veteran     Veteran     Veteran     Veteran    
+[661] Non-Veteran Non-Veteran Non-Veteran Non-Veteran Non-Veteran Veteran    
+[667] Veteran     Veteran     Non-Veteran Non-Veteran Veteran     Non-Veteran
+[673] Non-Veteran Non-Veteran Non-Veteran Veteran     Non-Veteran Veteran    
+[679] Non-Veteran Veteran     Non-Veteran Veteran     Non-Veteran Veteran    
+[685] Non-Veteran Non-Veteran Non-Veteran Non-Veteran Non-Veteran Non-Veteran
+[691] Non-Veteran Non-Veteran Veteran     Non-Veteran Non-Veteran Veteran    
+[697] Non-Veteran Veteran     Veteran     Veteran     Veteran     Veteran    
+Levels: Veteran Non-Veteran</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(vetdata2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 702 × 4
+   LocationAbbr Response    WeightedNumber Stratification1     
+   &lt;chr&gt;        &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;               
+ 1 HI           Veteran              20925 Hearing Disability  
+ 2 OH           Veteran             158777 Mobility Disability 
+ 3 WV           Veteran              73287 Any Disability      
+ 4 ME           Non-Veteran          42424 Vision Disability   
+ 5 MI           Non-Veteran         259481 Vision Disability   
+ 6 OH           Veteran              89980 Cognitive Disability
+ 7 AL           Veteran              31424 Self-care Disability
+ 8 GU           Veteran               2102 Cognitive Disability
+ 9 MO           Veteran             223953 Any Disability      
+10 KS           Veteran              10746 Self-care Disability
+# … with 692 more rows</code></pre>
+</div>
+</div>
+<p>Now that the data is cleaner we can make sum graphs and perform some simple statistics.</p>
+<p>(Possible directions of interest include “Does veteran status predispose to a certain disability”, “Are certain disabilities more common in specific states”, etc.)</p>
+<p>To be continued…..</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

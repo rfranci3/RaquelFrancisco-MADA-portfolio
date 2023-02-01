@@ -1,0 +1,93 @@
+---
+title: "Model4_DataWrangling"
+format: html
+editor: visual
+---
+
+# CDC Disability Data Cleaning and Wrangling
+
+## Prevalence of Disability Status and Types by Demographic Groups, 2020
+
+**Data originally acquired at:**
+
+[DHDS - Prevalence of Disability Status and Types by Demographic Groups, 2020 \| Data \| Centers for Disease Control and Prevention (cdc.gov)](https://data.cdc.gov/Disability-Health/DHDS-Prevalence-of-Disability-Status-and-Types-by-/qjg3-6acf)
+
+**Brief Description:**
+
+Disability and Health Data System (DHDS) is an online source of state-level data on adults with disabilities. Users can access information on six functional disability types: cognitive (serious difficulty concentrating, remembering or making decisions), hearing (serious difficulty hearing or deaf), mobility (serious difficulty walking or climbing stairs), vision (serious difficulty seeing), self-care (difficulty dressing or bathing) and independent living (difficulty doing errands alone).
+
+## Importing and Cleaning Data
+
+Upload raw data to R and install/load packages required to clean data.
+
+```{r}
+#set working directory
+setwd("C:/Users/Raquel/GitHub/MADA/RaquelFrancisco-MADA-portfolio/dataanalysis_exercise/data")
+
+#import file
+raw <- read.csv('rawDHDSdata.csv')
+
+#install.packages(dslabs)
+#install.packages(tidyverse)
+library(tidyverse)
+library(dslabs)
+```
+
+Look at what we have and make a tibble data frame.
+
+```{r}
+str(raw)
+summary(raw)
+as.tibble(raw)
+```
+
+Wrangler data of interest. Goal is to have \~5 variables. Most interesting in this case would be: LocationDesc, Response (Age/Ethnicity/Veteran Status; will have to be split), WeightedNumber (An adjusted version of the crude number of respondents that reflects the number of persons with the attribute in the population.), Stratification 1 (which type of disability)
+
+Now we'll put this data out:
+
+```{r}
+disdata <- raw %>%
+select(LocationAbbr, Response, WeightedNumber, Stratification1)
+
+str(disdata)
+
+as.tibble(disdata)
+```
+
+Lets now look at veterans vs non-veterans. We'll pull out veterans then remove the "regions" from the data so there are only easily identifiable state abbreviations.
+
+```{r}
+vetdata <- disdata %>%
+  filter(Response == 'Veteran' | Response == 'Non-Veteran') %>%
+  filter(Stratification1 != 'No Disability') %>%
+  filter(LocationAbbr != 'HHS1') %>%
+   filter(LocationAbbr != 'HHS2') %>%
+   filter(LocationAbbr != 'HHS3') %>%
+   filter(LocationAbbr != 'HHS4') %>%
+   filter(LocationAbbr != 'HHS5') %>%
+   filter(LocationAbbr != 'HHS6') %>%
+   filter(LocationAbbr != 'HHS7') %>%
+   filter(LocationAbbr != 'HHS8') %>%
+   filter(LocationAbbr != 'HHS9') %>%
+   filter(LocationAbbr != 'HHS10')
+
+tibble(vetdata)
+```
+
+There are some gaps in the data now. Lets find them and remove them.
+
+```{r}
+vetdata2 <- drop_na(vetdata)
+
+as_factor(vetdata2$Stratification1)
+as_factor(vetdata2$LocationAbbr)
+as_factor(vetdata2$Response)
+
+tibble(vetdata2)
+```
+
+Now that the data is cleaner we can make sum graphs and perform some simple statistics.
+
+(Possible directions of interest include "Does veteran status predispose to a certain disability", "Are certain disabilities more common in specific states", etc.)
+
+To be continued.....
