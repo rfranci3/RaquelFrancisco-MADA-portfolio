@@ -220,16 +220,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="importing-and-cleaning-data">Importing and Cleaning Data</h2>
 <p>Upload raw data to R and install/load packages required to clean data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">##here command to construct a path the that file (datanalysis template) Never make a hard path to the C drive, only relative paths</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##delete code file</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#always open it has a project!</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#import file</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'rawDHDSdata.csv'</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(dslabs)</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(tidyverse)</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#always open it has a project!</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(dslabs)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(tidyverse)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(here)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'tidyverse' was built under R version 4.2.2</code></pre>
 </div>
@@ -255,44 +251,100 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'dslabs' was built under R version 4.2.2</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'here' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at C:/Users/Raquel/GitHub/MADA/RaquelFrancisco-MADA-portfolio</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">##here command to construct a path the that file. Never make a hard path to the C drive, only relative paths.</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#import file</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">'dataanalysis_exercise/data/rawDHDSdata.csv'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 7168 Columns: 30
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (19): LocationAbbr, LocationDesc, DataSource, Category, Indicator, Respo...
+dbl  (7): Year, Data_Value, Data_Value_Alt, Low_Confidence_Limit, High_Confi...
+lgl  (4): StratificationCategory2, Stratification2, StratificationCategoryID...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 <p>Look at what we have and make a tibble data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   7168 obs. of  30 variables:
- $ Year                      : int  2020 2020 2020 2020 2020 2020 2020 2020 2020 2020 ...
- $ LocationAbbr              : chr  "HI" "OH" "WV" "ME" ...
- $ LocationDesc              : chr  "Hawaii" "Ohio" "West Virginia" "Maine" ...
- $ DataSource                : chr  "BRFSS" "BRFSS" "BRFSS" "BRFSS" ...
- $ Category                  : chr  "Disability Estimates" "Disability Estimates" "Disability Estimates" "Disability Estimates" ...
- $ Indicator                 : chr  "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" ...
- $ Response                  : chr  "Veteran" "Veteran" "Veteran" "Non-Veteran" ...
- $ Data_Value_Unit           : chr  "%" "%" "%" "%" ...
- $ Data_Value_Type           : chr  "Age-adjusted Prevalence" "Age-adjusted Prevalence" "Age-adjusted Prevalence" "Age-adjusted Prevalence" ...
- $ Data_Value                : num  8.9 11.9 33.4 4.2 3.4 12.3 74.9 NA 64.9 6.5 ...
- $ Data_Value_Alt            : num  8.9 11.9 33.4 4.2 3.4 12.3 74.9 NA 64.9 6.5 ...
- $ Data_Value_Footnote_Symbol: chr  "" "" "" "" ...
- $ Data_Value_Footnote       : chr  "" "" "" "" ...
- $ Low_Confidence_Limit      : num  6.9 9.9 28.1 3.6 2.9 9.4 73.1 NA 57.6 4.1 ...
- $ High_Confidence_Limit     : num  11.3 14.2 39.1 5 4.1 16.1 76.6 NA 71.5 10.2 ...
- $ Number                    : int  158 365 348 483 242 172 6176 NA 323 48 ...
- $ WeightedNumber            : int  20925 158777 73287 42424 259481 89980 13660252 NA 203697 31424 ...
- $ StratificationCategory1   : chr  "Disability Type" "Disability Type" "Disability Status" "Disability Type" ...
- $ Stratification1           : chr  "Hearing Disability" "Mobility Disability" "Any Disability" "Vision Disability" ...
- $ StratificationCategory2   : logi  NA NA NA NA NA NA ...
- $ Stratification2           : logi  NA NA NA NA NA NA ...
- $ CategoryID                : chr  "DISEST" "DISEST" "DISEST" "DISEST" ...
- $ IndicatorID               : chr  "VETIND" "VETIND" "VETIND" "VETIND" ...
- $ LocationID                : int  15 39 54 23 26 39 48 33 22 1 ...
- $ ResponseID                : chr  "VET1" "VET1" "VET1" "VET2" ...
- $ DataValueTypeID           : chr  "AGEADJPREV" "AGEADJPREV" "AGEADJPREV" "AGEADJPREV" ...
- $ StratificationCategoryID1 : chr  "DISTYPE" "DISTYPE" "DISSTAT" "DISTYPE" ...
- $ StratificationID1         : chr  "HEARDIS" "MOBDIS" "DISABL" "VISDIS" ...
- $ StratificationCategoryID2 : logi  NA NA NA NA NA NA ...
- $ StratificationID2         : logi  NA NA NA NA NA NA ...</code></pre>
+<pre><code>spc_tbl_ [7,168 × 30] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Year                      : num [1:7168] 2020 2020 2020 2020 2020 2020 2020 2020 2020 2020 ...
+ $ LocationAbbr              : chr [1:7168] "HI" "OH" "WV" "ME" ...
+ $ LocationDesc              : chr [1:7168] "Hawaii" "Ohio" "West Virginia" "Maine" ...
+ $ DataSource                : chr [1:7168] "BRFSS" "BRFSS" "BRFSS" "BRFSS" ...
+ $ Category                  : chr [1:7168] "Disability Estimates" "Disability Estimates" "Disability Estimates" "Disability Estimates" ...
+ $ Indicator                 : chr [1:7168] "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" "Disability status and types among adults 18 years of age or older by veteran status" ...
+ $ Response                  : chr [1:7168] "Veteran" "Veteran" "Veteran" "Non-Veteran" ...
+ $ Data_Value_Unit           : chr [1:7168] "%" "%" "%" "%" ...
+ $ Data_Value_Type           : chr [1:7168] "Age-adjusted Prevalence" "Age-adjusted Prevalence" "Age-adjusted Prevalence" "Age-adjusted Prevalence" ...
+ $ Data_Value                : num [1:7168] 8.9 11.9 33.4 4.2 3.4 12.3 74.9 NA 64.9 6.5 ...
+ $ Data_Value_Alt            : num [1:7168] 8.9 11.9 33.4 4.2 3.4 12.3 74.9 NA 64.9 6.5 ...
+ $ Data_Value_Footnote_Symbol: chr [1:7168] NA NA NA NA ...
+ $ Data_Value_Footnote       : chr [1:7168] NA NA NA NA ...
+ $ Low_Confidence_Limit      : num [1:7168] 6.9 9.9 28.1 3.6 2.9 9.4 73.1 NA 57.6 4.1 ...
+ $ High_Confidence_Limit     : num [1:7168] 11.3 14.2 39.1 5 4.1 16.1 76.6 NA 71.5 10.2 ...
+ $ Number                    : num [1:7168] 158 365 348 483 242 ...
+ $ WeightedNumber            : num [1:7168] 20925 158777 73287 42424 259481 ...
+ $ StratificationCategory1   : chr [1:7168] "Disability Type" "Disability Type" "Disability Status" "Disability Type" ...
+ $ Stratification1           : chr [1:7168] "Hearing Disability" "Mobility Disability" "Any Disability" "Vision Disability" ...
+ $ StratificationCategory2   : logi [1:7168] NA NA NA NA NA NA ...
+ $ Stratification2           : logi [1:7168] NA NA NA NA NA NA ...
+ $ CategoryID                : chr [1:7168] "DISEST" "DISEST" "DISEST" "DISEST" ...
+ $ IndicatorID               : chr [1:7168] "VETIND" "VETIND" "VETIND" "VETIND" ...
+ $ LocationID                : chr [1:7168] "15" "39" "54" "23" ...
+ $ ResponseID                : chr [1:7168] "VET1" "VET1" "VET1" "VET2" ...
+ $ DataValueTypeID           : chr [1:7168] "AGEADJPREV" "AGEADJPREV" "AGEADJPREV" "AGEADJPREV" ...
+ $ StratificationCategoryID1 : chr [1:7168] "DISTYPE" "DISTYPE" "DISSTAT" "DISTYPE" ...
+ $ StratificationID1         : chr [1:7168] "HEARDIS" "MOBDIS" "DISABL" "VISDIS" ...
+ $ StratificationCategoryID2 : logi [1:7168] NA NA NA NA NA NA ...
+ $ StratificationID2         : logi [1:7168] NA NA NA NA NA NA ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   Year = col_double(),
+  ..   LocationAbbr = col_character(),
+  ..   LocationDesc = col_character(),
+  ..   DataSource = col_character(),
+  ..   Category = col_character(),
+  ..   Indicator = col_character(),
+  ..   Response = col_character(),
+  ..   Data_Value_Unit = col_character(),
+  ..   Data_Value_Type = col_character(),
+  ..   Data_Value = col_double(),
+  ..   Data_Value_Alt = col_double(),
+  ..   Data_Value_Footnote_Symbol = col_character(),
+  ..   Data_Value_Footnote = col_character(),
+  ..   Low_Confidence_Limit = col_double(),
+  ..   High_Confidence_Limit = col_double(),
+  ..   Number = col_double(),
+  ..   WeightedNumber = col_double(),
+  ..   StratificationCategory1 = col_character(),
+  ..   Stratification1 = col_character(),
+  ..   StratificationCategory2 = col_logical(),
+  ..   Stratification2 = col_logical(),
+  ..   CategoryID = col_character(),
+  ..   IndicatorID = col_character(),
+  ..   LocationID = col_character(),
+  ..   ResponseID = col_character(),
+  ..   DataValueTypeID = col_character(),
+  ..   StratificationCategoryID1 = col_character(),
+  ..   StratificationID1 = col_character(),
+  ..   StratificationCategoryID2 = col_logical(),
+  ..   StratificationID2 = col_logical()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Year      LocationAbbr       LocationDesc        DataSource       
  Min.   :2020   Length:7168        Length:7168        Length:7168       
@@ -342,14 +394,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                                                                               
                                                                               
                                                                               
- IndicatorID          LocationID     ResponseID        DataValueTypeID   
- Length:7168        Min.   : 1.00   Length:7168        Length:7168       
- Class :character   1st Qu.:19.75   Class :character   Class :character  
- Mode  :character   Median :35.50   Mode  :character   Mode  :character  
-                    Mean   :39.36                                        
-                    3rd Qu.:53.25                                        
-                    Max.   :89.00                                        
-                                                                         
+ IndicatorID         LocationID         ResponseID        DataValueTypeID   
+ Length:7168        Length:7168        Length:7168        Length:7168       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
  StratificationCategoryID1 StratificationID1  StratificationCategoryID2
  Length:7168               Length:7168        Mode:logical             
  Class :character          Class :character   NA's:7168                
@@ -367,7 +419,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                   
                   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.tibble</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.tibble</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: `as.tibble()` was deprecated in tibble 2.0.0.
 ℹ Please use `as_tibble()` instead.
@@ -376,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7,168 × 30
     Year Locat…¹ Locat…² DataS…³ Categ…⁴ Indic…⁵ Respo…⁶ Data_…⁷ Data_…⁸ Data_…⁹
-   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
+   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
  1  2020 HI      Hawaii  BRFSS   Disabi… Disabi… Veteran %       Age-ad…     8.9
  2  2020 OH      Ohio    BRFSS   Disabi… Disabi… Veteran %       Age-ad…    11.9
  3  2020 WV      West V… BRFSS   Disabi… Disabi… Veteran %       Age-ad…    33.4
@@ -389,32 +441,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 10  2020 AL      Alabama BRFSS   Disabi… Disabi… Veteran %       Age-ad…     6.5
 # … with 7,158 more rows, 20 more variables: Data_Value_Alt &lt;dbl&gt;,
 #   Data_Value_Footnote_Symbol &lt;chr&gt;, Data_Value_Footnote &lt;chr&gt;,
-#   Low_Confidence_Limit &lt;dbl&gt;, High_Confidence_Limit &lt;dbl&gt;, Number &lt;int&gt;,
-#   WeightedNumber &lt;int&gt;, StratificationCategory1 &lt;chr&gt;, Stratification1 &lt;chr&gt;,
+#   Low_Confidence_Limit &lt;dbl&gt;, High_Confidence_Limit &lt;dbl&gt;, Number &lt;dbl&gt;,
+#   WeightedNumber &lt;dbl&gt;, StratificationCategory1 &lt;chr&gt;, Stratification1 &lt;chr&gt;,
 #   StratificationCategory2 &lt;lgl&gt;, Stratification2 &lt;lgl&gt;, CategoryID &lt;chr&gt;,
-#   IndicatorID &lt;chr&gt;, LocationID &lt;int&gt;, ResponseID &lt;chr&gt;,
+#   IndicatorID &lt;chr&gt;, LocationID &lt;chr&gt;, ResponseID &lt;chr&gt;,
 #   DataValueTypeID &lt;chr&gt;, StratificationCategoryID1 &lt;chr&gt;, …</code></pre>
 </div>
 </div>
 <p>Wrangler data of interest. Goal is to have ~5 variables. Most interesting in this case would be: LocationDesc, Response (Age/Ethnicity/Veteran Status; will have to be split), WeightedNumber (An adjusted version of the crude number of respondents that reflects the number of persons with the attribute in the population.), Stratification 1 (which type of disability)</p>
 <p>Now we’ll put this data out:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>disdata <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(LocationAbbr, Response, WeightedNumber, Stratification1)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(disdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>disdata <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(LocationAbbr, Response, WeightedNumber, Stratification1)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(disdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   7168 obs. of  4 variables:
- $ LocationAbbr   : chr  "HI" "OH" "WV" "ME" ...
- $ Response       : chr  "Veteran" "Veteran" "Veteran" "Non-Veteran" ...
- $ WeightedNumber : int  20925 158777 73287 42424 259481 89980 13660252 NA 203697 31424 ...
- $ Stratification1: chr  "Hearing Disability" "Mobility Disability" "Any Disability" "Vision Disability" ...</code></pre>
+<pre><code>tibble [7,168 × 4] (S3: tbl_df/tbl/data.frame)
+ $ LocationAbbr   : chr [1:7168] "HI" "OH" "WV" "ME" ...
+ $ Response       : chr [1:7168] "Veteran" "Veteran" "Veteran" "Non-Veteran" ...
+ $ WeightedNumber : num [1:7168] 20925 158777 73287 42424 259481 ...
+ $ Stratification1: chr [1:7168] "Hearing Disability" "Mobility Disability" "Any Disability" "Vision Disability" ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.tibble</span>(disdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.tibble</span>(disdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7,168 × 4
    LocationAbbr Response    WeightedNumber Stratification1     
-   &lt;chr&gt;        &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;               
+   &lt;chr&gt;        &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;               
  1 HI           Veteran              20925 Hearing Disability  
  2 OH           Veteran             158777 Mobility Disability 
  3 WV           Veteran              73287 Any Disability      
@@ -430,25 +482,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Lets now look at veterans vs non-veterans. We’ll pull out veterans then remove the “regions” from the data so there are only easily identifiable state abbreviations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>vetdata <span class="ot">&lt;-</span> disdata <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Response <span class="sc">==</span> <span class="st">'Veteran'</span> <span class="sc">|</span> Response <span class="sc">==</span> <span class="st">'Non-Veteran'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Stratification1 <span class="sc">!=</span> <span class="st">'No Disability'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS1'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS2'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS3'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS4'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS5'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS6'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS7'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS8'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS9'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS10'</span>)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(vetdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>vetdata <span class="ot">&lt;-</span> disdata <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Response <span class="sc">==</span> <span class="st">'Veteran'</span> <span class="sc">|</span> Response <span class="sc">==</span> <span class="st">'Non-Veteran'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Stratification1 <span class="sc">!=</span> <span class="st">'No Disability'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS1'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS2'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS3'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS4'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS5'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS6'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS7'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS8'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS9'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(LocationAbbr <span class="sc">!=</span> <span class="st">'HHS10'</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(vetdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 756 × 4
    LocationAbbr Response    WeightedNumber Stratification1     
-   &lt;chr&gt;        &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;               
+   &lt;chr&gt;        &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;               
  1 HI           Veteran              20925 Hearing Disability  
  2 OH           Veteran             158777 Mobility Disability 
  3 WV           Veteran              73287 Any Disability      
@@ -464,9 +516,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>There are some gaps in the data now. Lets find them and remove them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>vetdata2 <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(vetdata)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>Stratification1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>vetdata2 <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(vetdata)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>Stratification1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] Hearing Disability            Mobility Disability          
   [3] Any Disability                Vision Disability            
@@ -821,7 +873,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [701] Hearing Disability            Independent Living Disability
 7 Levels: Hearing Disability Mobility Disability ... Independent Living Disability</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>LocationAbbr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>LocationAbbr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] HI OH WV ME MI OH AL GU MO KS NY AR OH IA WY MS MD HI MD NE ID FL MS GA MI
  [26] AL AK ID LA NJ VT OK MT PR OK WA VT IN ID OK NE VT LA IL KY TN AL AR AK ID
@@ -854,7 +906,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [701] GA IA
 54 Levels: HI OH WV ME MI AL GU MO KS NY AR IA WY MS MD NE ID FL GA AK ... NM</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>Response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_factor</span>(vetdata2<span class="sc">$</span>Response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] Veteran     Veteran     Veteran     Non-Veteran Non-Veteran Veteran    
   [7] Veteran     Veteran     Veteran     Veteran     Veteran     Veteran    
@@ -975,11 +1027,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [697] Non-Veteran Veteran     Veteran     Veteran     Veteran     Veteran    
 Levels: Veteran Non-Veteran</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(vetdata2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(vetdata2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 702 × 4
    LocationAbbr Response    WeightedNumber Stratification1     
-   &lt;chr&gt;        &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;               
+   &lt;chr&gt;        &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;               
  1 HI           Veteran              20925 Hearing Disability  
  2 OH           Veteran             158777 Mobility Disability 
  3 WV           Veteran              73287 Any Disability      

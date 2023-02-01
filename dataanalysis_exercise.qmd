@@ -21,17 +21,20 @@ Disability and Health Data System (DHDS) is an online source of state-level data
 Upload raw data to R and install/load packages required to clean data.
 
 ```{r}
-##here command to construct a path the that file (datanalysis template) Never make a hard path to the C drive, only relative paths
-##delete code file
 #always open it has a project!
-
-#import file
-raw <- read.csv('rawDHDSdata.csv')
 
 #install.packages(dslabs)
 #install.packages(tidyverse)
+#install.packages(here)
 library(tidyverse)
 library(dslabs)
+library(here)
+
+##here command to construct a path the that file. Never make a hard path to the C drive, only relative paths.
+
+#import file
+raw <- read_csv(here('dataanalysis_exercise/data/rawDHDSdata.csv'))
+
 ```
 
 Look at what we have and make a tibble data frame.
