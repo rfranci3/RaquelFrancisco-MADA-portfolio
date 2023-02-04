@@ -95,3 +95,41 @@ Now that the data is cleaner we can make sum graphs and perform some simple stat
 (Possible directions of interest include "Does veteran status predispose to a certain disability", "Are certain disabilities more common in specific states", etc.)
 
 To be continued.....
+
+##This section added by Vijay Panthayi (Wrangling and Exploring the Data)
+
+First, we are going to save the cleaned data into an Rds file
+
+```{r}
+#saving the cleaned data as an rds file
+#it appears that vetdata2 is the final, clean data 
+vetdata2 %>% saveRDS(here::here("vetdata2.rds"))
+```
+
+Next, we are going to load the Rds file which previously was made of the cleaned data. Loading the data under "vetdata_clean".
+
+```{r}
+#loading the vetdata2.rds file
+vetdata_clean <- readRDS(here("vetdata2.rds"))
+glimpse(vetdata_clean)
+```
+
+Now that we have loaded the cleaned data, we can explore the previously mentioned interest of "Does veteran status predispose to a certain disability?".
+
+To do this, we will first grab all the data where the response is "veteran" and then create a bar graph with each stratification to visually see which disability correlates most with being a veteran according to the data.
+
+```{r}
+#create a subset data set of only the observations where the Response variable was "Veteran"
+vetdata_clean_veteran <- subset(vetdata_clean, vetdata_clean$Response == "Veteran")
+glimpse (vetdata_clean_veteran)
+
+#create a bar graph of the different disabilities
+counts <- table(vetdata_clean_veteran$Stratification1)
+par(mar = c(5,4,4,2) + 0.1)
+barplot(counts, main = "Disability Distribution Among Veterans", xlab = "Disability Type", 
+                  ylab = "Count", col=rainbow(20), las=2, ylim = c(0,60))
+
+#confirm the number of bars equals the number of unique entries for "Stratification1" variable
+unique(vetdata_clean_veteran$Stratification1)
+```
+It appears that Any and Mobility disabilities are about equivalent at count as the highest. Self-Care disability appears to be the lowest.
