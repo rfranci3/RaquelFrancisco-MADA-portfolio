@@ -1048,6 +1048,59 @@ Levels: Veteran Non-Veteran</code></pre>
 <p>Now that the data is cleaner we can make sum graphs and perform some simple statistics.</p>
 <p>(Possible directions of interest include “Does veteran status predispose to a certain disability”, “Are certain disabilities more common in specific states”, etc.)</p>
 <p>To be continued…..</p>
+<p>##This section added by Vijay Panthayi (Wrangling and Exploring the Data)</p>
+<p>First, we are going to save the cleaned data into an Rds file</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#saving the cleaned data as an rds file</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#it appears that vetdata2 is the final, clean data </span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>vetdata2 <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"vetdata2.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, we are going to load the Rds file which previously was made of the cleaned data. Loading the data under “vetdata_clean”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#loading the vetdata2.rds file</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>vetdata_clean <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"vetdata2.rds"</span>))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(vetdata_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 702
+Columns: 4
+$ LocationAbbr    &lt;chr&gt; "HI", "OH", "WV", "ME", "MI", "OH", "AL", "GU", "MO", …
+$ Response        &lt;chr&gt; "Veteran", "Veteran", "Veteran", "Non-Veteran", "Non-V…
+$ WeightedNumber  &lt;dbl&gt; 20925, 158777, 73287, 42424, 259481, 89980, 31424, 210…
+$ Stratification1 &lt;chr&gt; "Hearing Disability", "Mobility Disability", "Any Disa…</code></pre>
+</div>
+</div>
+<p>Now that we have loaded the cleaned data, we can explore the previously mentioned interest of “Does veteran status predispose to a certain disability?”.</p>
+<p>To do this, we will first grab all the data where the response is “veteran” and then create a bar graph with each stratification to visually see which disability correlates most with being a veteran according to the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create a subset data set of only the observations where the Response variable was "Veteran"</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>vetdata_clean_veteran <span class="ot">&lt;-</span> <span class="fu">subset</span>(vetdata_clean, vetdata_clean<span class="sc">$</span>Response <span class="sc">==</span> <span class="st">"Veteran"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span> (vetdata_clean_veteran)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 325
+Columns: 4
+$ LocationAbbr    &lt;chr&gt; "HI", "OH", "WV", "OH", "AL", "GU", "MO", "KS", "NY", …
+$ Response        &lt;chr&gt; "Veteran", "Veteran", "Veteran", "Veteran", "Veteran",…
+$ WeightedNumber  &lt;dbl&gt; 20925, 158777, 73287, 89980, 31424, 2102, 223953, 1074…
+$ Stratification1 &lt;chr&gt; "Hearing Disability", "Mobility Disability", "Any Disa…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create a bar graph of the different disabilities</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">table</span>(vetdata_clean_veteran<span class="sc">$</span>Stratification1)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(counts, <span class="at">main =</span> <span class="st">"Disability Distribution Among Veterans"</span>, <span class="at">xlab =</span> <span class="st">"Disability Type"</span>, </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylab =</span> <span class="st">"Count"</span>, <span class="at">col=</span><span class="fu">rainbow</span>(<span class="dv">20</span>), <span class="at">las=</span><span class="dv">2</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">60</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dataanalysis_exercise_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#confirm the number of bars equals the number of unique entries for "Stratification1" variable</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(vetdata_clean_veteran<span class="sc">$</span>Stratification1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hearing Disability"            "Mobility Disability"          
+[3] "Any Disability"                "Cognitive Disability"         
+[5] "Self-care Disability"          "Vision Disability"            
+[7] "Independent Living Disability"</code></pre>
+</div>
+</div>
+<p>It appears that Any and Mobility disabilities are about equivalent at count as the highest. Self-Care disability appears to be the lowest.</p>
 
 
 </section>

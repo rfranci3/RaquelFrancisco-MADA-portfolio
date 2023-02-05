@@ -132,4 +132,5 @@ barplot(counts, main = "Disability Distribution Among Veterans", xlab = "Disabil
 #confirm the number of bars equals the number of unique entries for "Stratification1" variable
 unique(vetdata_clean_veteran$Stratification1)
 ```
+
 It appears that Any and Mobility disabilities are about equivalent at count as the highest. Self-Care disability appears to be the lowest.
