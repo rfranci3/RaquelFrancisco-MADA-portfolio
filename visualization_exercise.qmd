@@ -5,4 +5,39 @@ output:
     toc: FALSE
 ---
 
-Placeholder file for the future visualization exercise.
+# Original Source:
+
+https://fivethirtyeight.com/features/marriage-isnt-dead-yet/
+
+![](Visualization_Exercise/casselman-feature-marriage-1.webp)
+
+![](Visualization_Exercise/casselman-feature-marriage-2.webp)
+
+![](Visualization_Exercise/casselman-feature-marriage-3.webp)
+
+![](Visualization_Exercise/casselman-feature-marriage-4.webp)
+
+Graph(s) I am trying to replicate:
+
+## Importing and Cleaning Data
+
+Upload raw data to R and install/load packages required to clean data.
+
+```{r}
+#install.packages('dslabs')
+#install.packages('tidyverse')
+#install.packages('here')
+#install.packages('rjson')
+#install.packages('plotly')
+library(tidyverse)
+library(dslabs)
+library(here)
+library(plotly)
+
+#import file via relative path
+raw_bothsexes <- read_csv(here('Visualization_Exercise/raw_data/both_sexes.csv'))
+raw_divorce <- read_csv(here('Visualization_Exercise/raw_data/divorce.csv'))
+raw_men <- read_csv(here('Visualization_Exercise/raw_data/men.csv'))
+raw_women <- read_csv(here('Visualization_Exercise/raw_data/women.csv'))
+
+```
