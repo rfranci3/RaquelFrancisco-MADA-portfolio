@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>My Data Analysis Portfolio - Visualization Exercise</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">My Data Analysis Portfolio</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="././aboutme.html">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="././coding_exercise.html">
+ <span class="dropdown-text">R Coding Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="././visualization_exercise.html">
+ <span class="dropdown-text">Visualization Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="././tidytuesday_exercise.html">
+ <span class="dropdown-text">Tidy Tuesday Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="././dataanalysis_exercise.html">
+ <span class="dropdown-text">Wrangling Exercise</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="./URL-TO-THIS-REPOSITORY-HERE"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Visualization Exercise</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="original-source" class="level1">
+<h1>Original Source:</h1>
+<p>https://fivethirtyeight.com/features/marriage-isnt-dead-yet/</p>
+<p><strong>Graph I am trying to replicate:</strong></p>
+<p><img src="Visualization_Exercise/casselman-feature-marriage-4.webp" class="img-fluid"></p>
+<section id="importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data">Importing Data</h2>
+<p>Upload raw data to R and install/load packages required to clean data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('dslabs')</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('tidyverse')</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('here')</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('rjson')</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('plotly')</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('ggthemes')</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dslabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dslabs' was built under R version 4.2.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'here' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at C:/Users/rf12124/Work_MADA/RaquelFrancisco-MADA-portfolio</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'plotly' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'plotly'
+
+The following object is masked from 'package:ggplot2':
+
+    last_plot
+
+The following object is masked from 'package:stats':
+
+    filter
+
+The following object is masked from 'package:graphics':
+
+    layout</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggthemes' was built under R version 4.2.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import file via relative path</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#raw_bothsexes &lt;- read_csv(here('Visualization_Exercise/raw_data/both_sexes.csv'))</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>raw_divorce <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">'Visualization_Exercise/raw_data/divorce.csv'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 17 Columns: 21
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," dbl
+(20): ...1, year, all_3544, HS_3544, SC_3544, BAp_3544, BAo_3544, GD_35... date
+(1): date
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#raw_men &lt;- read_csv(here('Visualization_Exercise/raw_data/men.csv'))</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#raw_women &lt;- read_csv(here('Visualization_Exercise/raw_data/women.csv'))</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(raw_divorce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17 × 21
+    ...1  year date       all_3544 HS_3544 SC_3544 BAp_3544 BAo_3544 GD_3544
+   &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+ 1     1  1960 1960-01-01   0.0344  0.0349  0.0337   0.0275   0.0275 NA     
+ 2     2  1970 1970-01-01   0.0493  0.0500  0.0487   0.0413   0.0413 NA     
+ 3     3  1980 1980-01-01   0.106   0.104   0.113    0.0978   0.0978 NA     
+ 4     4  1990 1990-01-01   0.151   0.159   0.170    0.115    0.119   0.109 
+ 5     5  2000 2000-01-01   0.157   0.175   0.174    0.106    0.111   0.0959
+ 6     6  2001 2001-01-01   0.157   0.174   0.178    0.107    0.112   0.0972
+ 7     7  2002 2002-01-01   0.157   0.175   0.179    0.103    0.110   0.0908
+ 8     8  2003 2003-01-01   0.154   0.173   0.177    0.103    0.111   0.0864
+ 9     9  2004 2004-01-01   0.155   0.178   0.177    0.100    0.106   0.0891
+10    10  2005 2005-01-01   0.153   0.175   0.177    0.0995   0.107   0.0850
+11    11  2006 2006-01-01   0.162   0.189   0.184    0.104    0.111   0.0905
+12    12  2007 2007-01-01   0.160   0.187   0.185    0.104    0.112   0.0891
+13    13  2008 2008-01-01   0.161   0.188   0.189    0.102    0.111   0.0852
+14    14  2009 2009-01-01   0.160   0.187   0.190    0.102    0.112   0.0844
+15    15  2010 2010-01-01   0.164   0.190   0.197    0.103    0.112   0.0882
+16    16  2011 2011-01-01   0.166   0.192   0.200    0.108    0.117   0.0919
+17    17  2012 2012-01-01   0.165   0.190   0.203    0.107    0.115   0.0943
+# … with 12 more variables: poor_3544 &lt;dbl&gt;, mid_3544 &lt;dbl&gt;, rich_3544 &lt;dbl&gt;,
+#   all_4554 &lt;dbl&gt;, HS_4554 &lt;dbl&gt;, SC_4554 &lt;dbl&gt;, BAp_4554 &lt;dbl&gt;,
+#   BAo_4554 &lt;dbl&gt;, GD_4554 &lt;dbl&gt;, poor_4554 &lt;dbl&gt;, mid_4554 &lt;dbl&gt;,
+#   rich_4554 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="cleaning-data-to-build-the-divorce-rates-by-education" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-data-to-build-the-divorce-rates-by-education">Cleaning data to build the: “Divorce Rates by Education”</h2>
+<p>Variables will be:</p>
+<section id="highschool-or-less" class="level3">
+<h3 class="anchored" data-anchor-id="highschool-or-less">Highschool or Less</h3>
+<p><code>HS</code> | High school graduate or less (EDUCD &lt; 65)</p>
+</section>
+<section id="some-college" class="level3">
+<h3 class="anchored" data-anchor-id="some-college">Some college</h3>
+<p><code>SC</code> | Some college (EDUCD &gt;= 65 &amp; &lt;= 100)</p>
+</section>
+<section id="college-graduate" class="level3">
+<h3 class="anchored" data-anchor-id="college-graduate">College graduate</h3>
+<p><code>BAp</code> | Bachelor’s degree or more (EDUCD &gt; 100) <code>BAo</code> | Bachelor’s degree, no graduate degre (EDUCD &gt; 100 &amp; &lt;= 113) <code>GD</code> | Graduate degree (EDUCD &gt; 113)</p>
+<p><strong>Goal is to have an X- Axis of “Year (Decade)” and a Y-Axis of “% of Divorce with Education” of only ages 35 to 44</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>clean_Div <span class="ot">&lt;-</span> raw_divorce <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">'year'</span>, <span class="st">'HS_3544'</span>, <span class="st">'SC_3544'</span>, <span class="st">'BAp_3544'</span>, <span class="st">'BAo_3544'</span>, <span class="st">'GD_3544'</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>clean_Div<span class="sc">$</span>Graduate <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(clean_Div[, <span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>)], <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#I made the exective decision to get an average of this data because this would be what would me most reminiscent of the original graph. It looks exactly the same as there's after visualization.</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>clean_Div <span class="ot">&lt;-</span> <span class="fu">rename</span>(clean_Div, <span class="at">SomeCollege =</span> SC_3544)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>clean_Div <span class="ot">&lt;-</span> <span class="fu">rename</span>(clean_Div, <span class="at">Highschool =</span> HS_3544)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>clean_Div <span class="ot">&lt;-</span> <span class="fu">rename</span>(clean_Div, <span class="at">Year =</span> year)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>Div_3345 <span class="ot">&lt;-</span> clean_Div <span class="sc">%&gt;%</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">'Year'</span>,<span class="st">'Highschool'</span>, <span class="st">'SomeCollege'</span>, <span class="st">'Graduate'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="start-plotting" class="level2">
+<h2 class="anchored" data-anchor-id="start-plotting">Start Plotting</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>main <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> Div_3345) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Highschool), <span class="at">color =</span> <span class="st">'lightblue3'</span>, <span class="at">size=</span><span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Graduate), <span class="at">color =</span> <span class="st">"paleturquoise"</span>, <span class="at">size=</span><span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> SomeCollege), <span class="at">color =</span> <span class="st">'#336699'</span>, <span class="at">size=</span><span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Divorce Rates By Education"</span>, <span class="at">subtitle =</span> <span class="st">"Ages 35 to 44"</span>) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_fivethirtyeight</span>() <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_fivethirtyeight</span>(<span class="at">base_size =</span> <span class="dv">18</span>, <span class="at">base_family =</span> <span class="st">"sans"</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1995</span>, <span class="at">y=</span>.<span class="dv">2</span>, <span class="at">label=</span><span class="st">"Some College"</span>, <span class="at">colour=</span><span class="st">"#336699"</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="dv">6</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">2000</span>, <span class="at">y=</span>.<span class="dv">15</span>, <span class="at">label=</span><span class="st">"High school or less"</span>, <span class="at">colour=</span><span class="st">"lightblue3"</span>,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="dv">6</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">2005</span>, <span class="at">y=</span>.<span class="dv">12</span>, <span class="at">label=</span><span class="st">"College graduates"</span>, <span class="at">colour=</span><span class="st">"paleturquoise"</span>,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="dv">6</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#My biggest issue with this graph is I cannot figure out how they added the labels for each education level with black with lines pointing to each trendline. Is it possible that they did this in lightroom after? To compensate, I made the labels "float" near the lines and made their color match.</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualization_exercise_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">##ggthemes had a theme called 'fivethirtyeight' that was very close to what is seen in the original plot. It was found here: https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/theme_fivethirtyeight/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="explore-plotly" class="level2">
+<h2 class="anchored" data-anchor-id="explore-plotly">Explore Plotly</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(<span class="at">maintooltip =</span> <span class="fu">c</span>(<span class="st">"text"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: plotly.js does not (yet) support horizontal legend items 
+You can track progress here: 
+https://github.com/plotly/plotly.js/issues/53 </code></pre>
+</div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a5d5e2337f39ca6d6ef0" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-a5d5e2337f39ca6d6ef0">{"x":{"data":[{"x":[1960,1970,1980,1990,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012],"y":[0.0348888663159724,0.0499998424010515,0.104151278087304,0.159380946957268,0.175446156982954,0.174116037641218,0.174769314328559,0.172544834700036,0.177564545613702,0.17516352826892,0.18943672859424,0.187216410920835,0.18837663464662,0.186987579034161,0.189895803857904,0.192398917305487,0.190206333214362],"text":["Year: 1960<br />Highschool: 0.03488887","Year: 1970<br />Highschool: 0.04999984","Year: 1980<br />Highschool: 0.10415128","Year: 1990<br />Highschool: 0.15938095","Year: 2000<br />Highschool: 0.17544616","Year: 2001<br />Highschool: 0.17411604","Year: 2002<br />Highschool: 0.17476931","Year: 2003<br />Highschool: 0.17254483","Year: 2004<br />Highschool: 0.17756455","Year: 2005<br />Highschool: 0.17516353","Year: 2006<br />Highschool: 0.18943673","Year: 2007<br />Highschool: 0.18721641","Year: 2008<br />Highschool: 0.18837663","Year: 2009<br />Highschool: 0.18698758","Year: 2010<br />Highschool: 0.18989580","Year: 2011<br />Highschool: 0.19239892","Year: 2012<br />Highschool: 0.19020633"],"type":"scatter","mode":"lines","line":{"width":5.66929133858268,"color":"rgba(154,192,205,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1960,1970,1980,1990,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012],"y":[0.0295649745552306,0.043741465174046,0.102747875319461,0.134386565501365,0.129986883852313,0.132356189019882,0.130808646386601,0.130069395519005,0.127801905985134,0.127779422753302,0.132938267886438,0.133590869966334,0.134207353815897,0.134639310571948,0.137321666758216,0.141834342394849,0.141958341253894],"text":["Year: 1960<br />Graduate: 0.02956497","Year: 1970<br />Graduate: 0.04374147","Year: 1980<br />Graduate: 0.10274788","Year: 1990<br />Graduate: 0.13438657","Year: 2000<br />Graduate: 0.12998688","Year: 2001<br />Graduate: 0.13235619","Year: 2002<br />Graduate: 0.13080865","Year: 2003<br />Graduate: 0.13006940","Year: 2004<br />Graduate: 0.12780191","Year: 2005<br />Graduate: 0.12777942","Year: 2006<br />Graduate: 0.13293827","Year: 2007<br />Graduate: 0.13359087","Year: 2008<br />Graduate: 0.13420735","Year: 2009<br />Graduate: 0.13463931","Year: 2010<br />Graduate: 0.13732167","Year: 2011<br />Graduate: 0.14183434","Year: 2012<br />Graduate: 0.14195834"],"type":"scatter","mode":"lines","line":{"width":5.66929133858268,"color":"rgba(175,238,238,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1960,1970,1980,1990,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012],"y":[0.0336693781883359,0.0487054867093564,0.112699470963608,0.169670046803153,0.173803243557511,0.178169064539992,0.179294187163752,0.176975360253417,0.177079546954962,0.176742649953406,0.184120975760802,0.184960860450715,0.189449980962628,0.190136258416081,0.197269447478601,0.200458832860299,0.203176485927978],"text":["Year: 1960<br />SomeCollege: 0.03366938","Year: 1970<br />SomeCollege: 0.04870549","Year: 1980<br />SomeCollege: 0.11269947","Year: 1990<br />SomeCollege: 0.16967005","Year: 2000<br />SomeCollege: 0.17380324","Year: 2001<br />SomeCollege: 0.17816906","Year: 2002<br />SomeCollege: 0.17929419","Year: 2003<br />SomeCollege: 0.17697536","Year: 2004<br />SomeCollege: 0.17707955","Year: 2005<br />SomeCollege: 0.17674265","Year: 2006<br />SomeCollege: 0.18412098","Year: 2007<br />SomeCollege: 0.18496086","Year: 2008<br />SomeCollege: 0.18944998","Year: 2009<br />SomeCollege: 0.19013626","Year: 2010<br />SomeCollege: 0.19726945","Year: 2011<br />SomeCollege: 0.20045883","Year: 2012<br />SomeCollege: 0.20317649"],"type":"scatter","mode":"lines","line":{"width":5.66929133858268,"color":"rgba(51,102,153,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1995],"y":[0.2],"text":"Some College","hovertext":"x: 1995<br />y: 0.2","textfont":{"size":22.6771653543307,"color":"rgba(51,102,153,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2000],"y":[0.15],"text":"High school or less","hovertext":"x: 2000<br />y: 0.15","textfont":{"size":22.6771653543307,"color":"rgba(154,192,205,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2005],"y":[0.12],"text":"College graduates","hovertext":"x: 2005<br />y: 0.12","textfont":{"size":22.6771653543307,"color":"rgba(175,238,238,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":71.065504358655,"r":19.2,"b":44.3058530510585,"l":53.8699875466999},"plot_bgcolor":"rgba(240,240,240,1)","paper_bgcolor":"rgba(240,240,240,1)","font":{"color":"rgba(60,60,60,1)","family":"sans","size":23.9103362391034},"title":{"text":"<b> Divorce Rates By Education <\/b>","font":{"color":"rgba(60,60,60,1)","family":"sans","size":35.865504358655},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1957.4,2014.6],"tickmode":"array","ticktext":["1960","1970","1980","1990","2000","2010"],"tickvals":[1960,1970,1980,1990,2000,2010],"categoryorder":"array","categoryarray":["1960","1970","1980","1990","2000","2010"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":5.97758405977584,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(60,60,60,1)","family":"sans","size":19.1282689912827},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(210,210,210,1)","gridwidth":1.08683346541379,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.0208843989865933,0.211857061496615],"tickmode":"array","ticktext":["5%","10%","15%","20%"],"tickvals":[0.05,0.1,0.15,0.2],"categoryorder":"array","categoryarray":["5%","10%","15%","20%"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":5.97758405977584,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(60,60,60,1)","family":"sans","size":19.1282689912827},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(210,210,210,1)","gridwidth":1.08683346541379,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"transparent","width":1.08683346541379,"linetype":"none"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(240,240,240,1)","bordercolor":"transparent","borderwidth":3.09234073013601,"font":{"color":"rgba(60,60,60,1)","family":"sans","size":19.1282689912827},"title":{"text":"","font":{"color":"rgba(60,60,60,1)","family":"sans","size":23.9103362391034}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"6a507ace6e3e":{"x":{},"y":{},"type":"scatter"},"6a5060e5576":{"x":{},"y":{}},"6a502b077713":{"x":{},"y":{}},"6a5012a61be0":{"x":{},"y":{}},"6a5059844412":{"x":{},"y":{}},"6a50125b1b3c":{"x":{},"y":{}}},"cur_data":"6a507ace6e3e","visdat":{"6a507ace6e3e":["function (y) ","x"],"6a5060e5576":["function (y) ","x"],"6a502b077713":["function (y) ","x"],"6a5012a61be0":["function (y) ","x"],"6a5059844412":["function (y) ","x"],"6a50125b1b3c":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>two <span class="ot">&lt;-</span> <span class="fu">plotly_build</span>(main)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: plotly.js does not (yet) support horizontal legend items 
+You can track progress here: 
+https://github.com/plotly/plotly.js/issues/53 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(two<span class="sc">$</span>x<span class="sc">$</span>data[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "x"          "y"          "text"       "type"       "mode"      
+ [6] "line"       "hoveron"    "showlegend" "xaxis"      "yaxis"     
+[11] "hoverinfo"  "frame"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(two<span class="sc">$</span>x<span class="sc">$</span>layout)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "margin"        "plot_bgcolor"  "paper_bgcolor" "font"         
+ [5] "title"         "xaxis"         "yaxis"         "shapes"       
+ [9] "showlegend"    "legend"        "hovermode"     "barmode"      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#I am having trouble editing the layout of plotly. The github and help pages have not been very helpful.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

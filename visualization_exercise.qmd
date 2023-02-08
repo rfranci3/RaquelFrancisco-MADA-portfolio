@@ -36,7 +36,6 @@ raw_divorce <- read_csv(here('Visualization_Exercise/raw_data/divorce.csv'))
 #raw_men <- read_csv(here('Visualization_Exercise/raw_data/men.csv'))
 #raw_women <- read_csv(here('Visualization_Exercise/raw_data/women.csv'))
 
-tibble(raw_bothsexes)
 tibble(raw_divorce)
 
 ```
