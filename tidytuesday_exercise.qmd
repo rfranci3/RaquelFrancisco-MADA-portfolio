@@ -3,6 +3,210 @@ title: "Tidy Tuesday Exercise"
 output: 
   html_document:
     toc: FALSE
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
-Placeholder file for the future Tidy Tuesday exercise.
+# Tidy Tuesday Exercise
+
+## Hollywood Age Gaps
+
+### 2/14/2023
+
+Upload public access data for exercise via tidytuesdayR package.
+
+```{r}
+#install.packages("tidytuesdayR")
+#install.packages('janitor')
+
+library(tidytuesdayR)
+library(tidyverse)
+library(here)
+library(janitor)
+
+tuesdata <- tidytuesdayR::tt_load(2023, week = 7)
+age_gaps <- tuesdata$age_gaps
+
+```
+
+## Data Dictionary
+
+### variable; class; description
+
+movie_name; character; Name of the film;
+
+release_year; integer; Release year
+
+director; character; Director of the film
+
+age_difference; integer; Age difference between the characters in whole
+years
+
+couple_number; integer; An identifier for the couple in case multiple
+couples are listed for this film
+
+actor_1\_name; character; The name of the older actor in this couple
+
+actor_2\_name; character; The name of the younger actor in this couple
+
+character_1\_gender; character; The gender of the older character, as
+identified by the person who submitted the data for this couple
+
+character_2\_gender; character; The gender of the younger character, as
+identified by the person who submitted the data for this couple
+
+actor_1\_birthdate; date; The birthdate of the older member of the
+couple
+
+actor_2\_birthdate; date; The birthdate of the younger member of the
+couple
+
+actor_1\_age; integer; The age of the older actor when the film was
+released
+
+actor_2\_age; integer; The age of the younger actor when the film was
+released
+
+```{r}
+tibble(age_gaps)
+
+glimpse(age_gaps)
+```
+
+# Cleaning data
+
+```{r}
+adata <- age_gaps %>%
+  ##Pick out data relevant to me
+  ## filter out main couples (i.e. couple 1)
+  filter(couple_number == 1) %>%
+  ## select variables of interest
+  select( release_year  | age_difference | movie_name | character_1_gender |  actor_1_age | actor_1_name | character_2_gender | actor_2_age | actor_2_name )
+
+##quick visualization of data to look for trends
+plot(adata)
+
+#quick view of data with scatterplots show that actor 1 age and age difference seem related
+#but i think this data would be easier to read if we changed actor gender to just male vs female
+#we'll flip this to female lead roles and male lead roles
+
+leadFdata <- adata %>%
+  filter(character_1_gender == 'woman') %>%
+  rename("female_leads" = "character_1_gender") %>%
+  rename("lead_female_age" = "actor_1_age") %>%
+  rename("lead_name" = "actor_1_name") %>%
+  rename("supporting_name" = "actor_2_name") %>%
+  rename("supporting_actor_age" = "actor_2_age") %>%
+  rename("supporting_gender" = "character_2_gender")
+
+plot(leadFdata)
+
+#looks promising to pursue: age difference and lead female age, lead age and supporting actor age, also personally interested in supporting actress age and release year
+
+leadMdata <- adata %>%
+  filter(character_1_gender == 'man') %>%
+  rename("male_leads" = "character_1_gender") %>%
+  rename("lead_male_age" = "actor_1_age")  %>%
+  rename("lead_name" = "actor_1_name") %>%
+  rename("supporting_name" = "actor_2_name") %>%
+  rename("supporting_actor_age" = "actor_2_age") %>%
+  rename("supporting_gender" = "character_2_gender")
+
+plot(leadMdata)
+
+#firstly wow! way more data. Second same trends seem to apply. Would also like to compare the gender of the supporting actor and a same-sex supporting role.
+#onto visualization!
+
+```
+# Data Vizualization
+
+## Actor and Release Data
+### (because inquiring minds want to know...)
+
+
+```{r}
+library(ggthemes)
+
+ARplot <- ggplot() +
+  geom_point(data = leadMdata, aes(x = release_year, y = lead_male_age), color = 'dodgerblue4', size=1.5, shape = 15) +
+  geom_point(data = leadFdata, aes(x = release_year, y = lead_female_age), color = 'deeppink4', size=1.5, shape = 15) +
+    geom_point(data = leadMdata, aes(x = release_year, y = supporting_actor_age), color = 'deepskyblue2', size=1.5, shape = 18) +
+  geom_point(data = leadFdata, aes(x = release_year, y = supporting_actor_age), color = 'deeppink1', size=1.5, shape = 18) +
+  ggtitle("Actor Age in Relation to the Movie Release Data", subtitle = "Evaluated by Genders") +
+labs(x = "Release Year", y = "Actor Ages") +
+  annotate(geom="text", x=1950, y=75, label="Lead Male Actors", colour="dodgerblue4", size=4, family="sans", fontface="bold", angle=0) +
+  annotate(geom="text", x=1950, y=80, label="Lead Female Actors", colour="deeppink4", size=4, family="sans", fontface="bold", angle=0) +
+  annotate(geom="text", x=1950, y=65, label="Actors that Support Male Leads", colour="deepskyblue2", size=3, family="sans", fontface="bold", angle=0) +
+  annotate(geom="text", x=1950, y=70, label="Actors that Support Female Leads", colour="deeppink1", size=3, family="sans", fontface="bold", angle=0)
+
+ARplot
+
+```
+Lets look a little closer at lead actors and age gaps
+
+```{r}
+ARAplot <- ggplot() +
+  geom_point(data = leadMdata, aes(x = release_year, y = lead_male_age, size = age_difference), fill = 'dodgerblue4', shape = 21, colour = "black") +
+  geom_point(data = leadFdata, aes(x = release_year, y = lead_female_age, size = age_difference), fill = 'deeppink4', shape = 21, colour = "black") +
+
+  ggtitle("Lead Actor Age in Relation to the Movie Release Data", subtitle = "Factoring in Age Gaps between Lead and Supporting Actors") +
+  labs(x = "Release Year", y = "Actor Ages", color= "Age Gap") +
+  annotate(geom="text", x=1950, y=75, label="Lead Male Actors", colour="dodgerblue4", size=4, family="sans", fontface="bold", angle=0) +
+  annotate(geom="text", x=1950, y=80, label="Lead Female Actors", colour="deeppink4", size=4, family="sans", fontface="bold", angle=0) 
+  
+
+
+ARAplot
+
+```
+
+
+## Relationship between Movie release data, Age difference, and supporting Actor Age 
+###Supporting actor age
+
+```{r}
+ASAplot <- ggplot() +
+    geom_point(data = leadMdata, aes(x = release_year, y = supporting_actor_age, size = age_difference), fill = 'deepskyblue2', shape = 21, colour = "black") +
+  geom_point(data = leadFdata, aes(x = release_year, y = supporting_actor_age, size = age_difference), fill = 'deeppink1', shape = 21, colour = "black") +
+  ggtitle("Supporting Actor Age in Relation to the Movie Release Data", subtitle = "Factoring in Age Gaps between Lead and Supporting Actors") +
+labs(x = "Release Year", y = "Actor Ages") +
+   annotate(geom="text", x=1965, y=60, label="Actors that Support Male Leads", colour="deepskyblue2", size=4, family="sans", fontface="bold", angle=0) +
+  annotate(geom="text", x=1965, y=65, label="Actors that Support Female Leads", colour="deeppink1", size=4, family="sans", fontface="bold", angle=0)
+
+ASAplot
+```
+
+## Lead Age vs Supporting actor age
+### Opposite vs Same-sex
+#### lets add some trends
+
+Males:
+```{r}
+SSplot <- ggplot() +
+  geom_point(data = leadMdata, aes(x = age_difference, y = lead_male_age), color = 'dodgerblue4', size=2) +
+  geom_point(data = leadMdata, aes(x = age_difference, y = supporting_actor_age, color = supporting_gender), size=2 , shape = 21) +
+  ggtitle("Male Actor Age in Relation to the Age Gaps", subtitle = "Evaluated by Supporting Actor Genders") +
+  labs(x = "Age Difference Between Supporitng and Lead Actors", y = "Actor Ages") +
+  annotate(geom="text", x=7, y=80, label="Lead Male Actors", colour="dodgerblue4", size=4, family="sans", fontface="bold", angle=0)  + 
+  annotate(geom="text", x=7, y=75, label="Supporting Actors", color="cyan4", size=4, family="sans", fontface="bold", angle=0) 
+
+
+SSplot 
+```
+Females:
+```{r}
+SSFplot <- ggplot() +
+  geom_point(data = leadFdata, aes(x = age_difference, y = lead_female_age), color = 'deeppink4', size=2) +
+  geom_point(data = leadFdata, aes(x = age_difference, y = supporting_actor_age, color = supporting_gender), size=2 , shape = 21) +
+  ggtitle("Female Actor Age in Relation to the Age Gaps", subtitle = "Evaluated by Supporting Actor Genders") +
+  labs(x = "Age Difference Between Supporitng and Lead Actors", y = "Actor Ages") +
+  annotate(geom="text", x=10, y=75, label="Lead Female Actors", colour="deeppink4", size=4, family="sans", fontface="bold", angle=0)  + 
+  annotate(geom="text", x=10, y=70, label="Supporting Actors", color="orangered2", size=4, family="sans", fontface="bold", angle=0) 
+
+
+SSFplot 
+```
+Wow this is pretty striking! The raw cleaned data really shows a disparity between male leads and female leads and the age gap between their supporting actors!
+
+We could play with this data forever! I will stop here but if you have a recommendation please post it on my "issues" page of my github!

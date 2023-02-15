@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -144,9 +207,303 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Placeholder file for the future Tidy Tuesday exercise.</p>
+<section id="tidy-tuesday-exercise" class="level1">
+<h1>Tidy Tuesday Exercise</h1>
+<section id="hollywood-age-gaps" class="level2">
+<h2 class="anchored" data-anchor-id="hollywood-age-gaps">Hollywood Age Gaps</h2>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section">2/14/2023</h3>
+<p>Upload public access data for exercise via tidytuesdayR package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("tidytuesdayR")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('janitor')</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytuesdayR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidytuesdayR' was built under R version 4.2.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'here' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at C:/Users/Raquel/GitHub/MADA/RaquelFrancisco-MADA-portfolio</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'janitor' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'janitor'
+
+The following objects are masked from 'package:stats':
+
+    chisq.test, fisher.test</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="dv">2023</span>, <span class="at">week =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>--- Compiling #TidyTuesday Information for 2023-02-14 ----
+--- There is 1 file available ---
+--- Starting Download ---</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Downloading file 1 of 1: `age_gaps.csv`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>--- Download complete ---</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>age_gaps <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>age_gaps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="data-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="data-dictionary">Data Dictionary</h2>
+<section id="variable-class-description" class="level3">
+<h3 class="anchored" data-anchor-id="variable-class-description">variable; class; description</h3>
+<p>movie_name; character; Name of the film;</p>
+<p>release_year; integer; Release year</p>
+<p>director; character; Director of the film</p>
+<p>age_difference; integer; Age difference between the characters in whole years</p>
+<p>couple_number; integer; An identifier for the couple in case multiple couples are listed for this film</p>
+<p>actor_1_name; character; The name of the older actor in this couple</p>
+<p>actor_2_name; character; The name of the younger actor in this couple</p>
+<p>character_1_gender; character; The gender of the older character, as identified by the person who submitted the data for this couple</p>
+<p>character_2_gender; character; The gender of the younger character, as identified by the person who submitted the data for this couple</p>
+<p>actor_1_birthdate; date; The birthdate of the older member of the couple</p>
+<p>actor_2_birthdate; date; The birthdate of the younger member of the couple</p>
+<p>actor_1_age; integer; The age of the older actor when the film was released</p>
+<p>actor_2_age; integer; The age of the younger actor when the film was released</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(age_gaps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,155 × 13
+   movie_name    relea…¹ direc…² age_d…³ coupl…⁴ actor…⁵ actor…⁶ chara…⁷ chara…⁸
+   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+ 1 Harold and M…    1971 Hal As…      52       1 Ruth G… Bud Co… woman   man    
+ 2 Venus            2006 Roger …      50       1 Peter … Jodie … man     woman  
+ 3 The Quiet Am…    2002 Philli…      49       1 Michae… Do Thi… man     woman  
+ 4 The Big Lebo…    1998 Joel C…      45       1 David … Tara R… man     woman  
+ 5 Beginners        2010 Mike M…      43       1 Christ… Goran … man     man    
+ 6 Poison Ivy       1992 Katt S…      42       1 Tom Sk… Drew B… man     woman  
+ 7 Whatever Wor…    2009 Woody …      40       1 Larry … Evan R… man     woman  
+ 8 Entrapment       1999 Jon Am…      39       1 Sean C… Cather… man     woman  
+ 9 Husbands and…    1992 Woody …      38       1 Woody … Juliet… man     woman  
+10 Magnolia         1999 Paul T…      38       1 Jason … Julian… man     woman  
+# … with 1,145 more rows, 4 more variables: actor_1_birthdate &lt;date&gt;,
+#   actor_2_birthdate &lt;date&gt;, actor_1_age &lt;dbl&gt;, actor_2_age &lt;dbl&gt;, and
+#   abbreviated variable names ¹​release_year, ²​director, ³​age_difference,
+#   ⁴​couple_number, ⁵​actor_1_name, ⁶​actor_2_name, ⁷​character_1_gender,
+#   ⁸​character_2_gender</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(age_gaps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,155
+Columns: 13
+$ movie_name         &lt;chr&gt; "Harold and Maude", "Venus", "The Quiet American", …
+$ release_year       &lt;dbl&gt; 1971, 2006, 2002, 1998, 2010, 1992, 2009, 1999, 199…
+$ director           &lt;chr&gt; "Hal Ashby", "Roger Michell", "Phillip Noyce", "Joe…
+$ age_difference     &lt;dbl&gt; 52, 50, 49, 45, 43, 42, 40, 39, 38, 38, 36, 36, 35,…
+$ couple_number      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ actor_1_name       &lt;chr&gt; "Ruth Gordon", "Peter O'Toole", "Michael Caine", "D…
+$ actor_2_name       &lt;chr&gt; "Bud Cort", "Jodie Whittaker", "Do Thi Hai Yen", "T…
+$ character_1_gender &lt;chr&gt; "woman", "man", "man", "man", "man", "man", "man", …
+$ character_2_gender &lt;chr&gt; "man", "woman", "woman", "woman", "man", "woman", "…
+$ actor_1_birthdate  &lt;date&gt; 1896-10-30, 1932-08-02, 1933-03-14, 1930-09-17, 19…
+$ actor_2_birthdate  &lt;date&gt; 1948-03-29, 1982-06-03, 1982-10-01, 1975-11-08, 19…
+$ actor_1_age        &lt;dbl&gt; 75, 74, 69, 68, 81, 59, 62, 69, 57, 77, 59, 56, 65,…
+$ actor_2_age        &lt;dbl&gt; 23, 24, 20, 23, 38, 17, 22, 30, 19, 39, 23, 20, 30,…</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="cleaning-data" class="level1">
+<h1>Cleaning data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>adata <span class="ot">&lt;-</span> age_gaps <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">##Pick out data relevant to me</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="do">## filter out main couples (i.e. couple 1)</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(couple_number <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="do">## select variables of interest</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>( release_year  <span class="sc">|</span> age_difference <span class="sc">|</span> movie_name <span class="sc">|</span> character_1_gender <span class="sc">|</span>  actor_1_age <span class="sc">|</span> actor_1_name <span class="sc">|</span> character_2_gender <span class="sc">|</span> actor_2_age <span class="sc">|</span> actor_2_name )</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="do">##quick visualization of data to look for trends</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(adata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidytuesday_exercise_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#quick view of data with scatterplots show that actor 1 age and age difference seem related</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#but i think this data would be easier to read if we changed actor gender to just male vs female</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#we'll flip this to female lead roles and male lead roles</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>leadFdata <span class="ot">&lt;-</span> adata <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(character_1_gender <span class="sc">==</span> <span class="st">'woman'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"female_leads"</span> <span class="ot">=</span> <span class="st">"character_1_gender"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"lead_female_age"</span> <span class="ot">=</span> <span class="st">"actor_1_age"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"lead_name"</span> <span class="ot">=</span> <span class="st">"actor_1_name"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"supporting_name"</span> <span class="ot">=</span> <span class="st">"actor_2_name"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"supporting_actor_age"</span> <span class="ot">=</span> <span class="st">"actor_2_age"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"supporting_gender"</span> <span class="ot">=</span> <span class="st">"character_2_gender"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(leadFdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidytuesday_exercise_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#looks promising to pursue: age difference and lead female age, lead age and supporting actor age, also personally interested in supporting actress age and release year</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>leadMdata <span class="ot">&lt;-</span> adata <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(character_1_gender <span class="sc">==</span> <span class="st">'man'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"male_leads"</span> <span class="ot">=</span> <span class="st">"character_1_gender"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"lead_male_age"</span> <span class="ot">=</span> <span class="st">"actor_1_age"</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"lead_name"</span> <span class="ot">=</span> <span class="st">"actor_1_name"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"supporting_name"</span> <span class="ot">=</span> <span class="st">"actor_2_name"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"supporting_actor_age"</span> <span class="ot">=</span> <span class="st">"actor_2_age"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"supporting_gender"</span> <span class="ot">=</span> <span class="st">"character_2_gender"</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(leadMdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidytuesday_exercise_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#firstly wow! way more data. Second same trends seem to apply. Would also like to compare the gender of the supporting actor and a same-sex supporting role.</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#onto visualization!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-vizualization" class="level1">
+<h1>Data Vizualization</h1>
+<section id="actor-and-release-data" class="level2">
+<h2 class="anchored" data-anchor-id="actor-and-release-data">Actor and Release Data</h2>
+<section id="because-inquiring-minds-want-to-know" class="level3">
+<h3 class="anchored" data-anchor-id="because-inquiring-minds-want-to-know">(because inquiring minds want to know…)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggthemes' was built under R version 4.2.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ARplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadMdata, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> lead_male_age), <span class="at">color =</span> <span class="st">'dodgerblue4'</span>, <span class="at">size=</span><span class="fl">1.5</span>, <span class="at">shape =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadFdata, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> lead_female_age), <span class="at">color =</span> <span class="st">'deeppink4'</span>, <span class="at">size=</span><span class="fl">1.5</span>, <span class="at">shape =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> leadMdata, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> supporting_actor_age), <span class="at">color =</span> <span class="st">'deepskyblue2'</span>, <span class="at">size=</span><span class="fl">1.5</span>, <span class="at">shape =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadFdata, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> supporting_actor_age), <span class="at">color =</span> <span class="st">'deeppink1'</span>, <span class="at">size=</span><span class="fl">1.5</span>, <span class="at">shape =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Actor Age in Relation to the Movie Release Data"</span>, <span class="at">subtitle =</span> <span class="st">"Evaluated by Genders"</span>) <span class="sc">+</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Release Year"</span>, <span class="at">y =</span> <span class="st">"Actor Ages"</span>) <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1950</span>, <span class="at">y=</span><span class="dv">75</span>, <span class="at">label=</span><span class="st">"Lead Male Actors"</span>, <span class="at">colour=</span><span class="st">"dodgerblue4"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1950</span>, <span class="at">y=</span><span class="dv">80</span>, <span class="at">label=</span><span class="st">"Lead Female Actors"</span>, <span class="at">colour=</span><span class="st">"deeppink4"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1950</span>, <span class="at">y=</span><span class="dv">65</span>, <span class="at">label=</span><span class="st">"Actors that Support Male Leads"</span>, <span class="at">colour=</span><span class="st">"deepskyblue2"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1950</span>, <span class="at">y=</span><span class="dv">70</span>, <span class="at">label=</span><span class="st">"Actors that Support Female Leads"</span>, <span class="at">colour=</span><span class="st">"deeppink1"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>ARplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidytuesday_exercise_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Lets look a little closer at lead actors and age gaps</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ARAplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadMdata, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> lead_male_age, <span class="at">size =</span> age_difference), <span class="at">fill =</span> <span class="st">'dodgerblue4'</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadFdata, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> lead_female_age, <span class="at">size =</span> age_difference), <span class="at">fill =</span> <span class="st">'deeppink4'</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Lead Actor Age in Relation to the Movie Release Data"</span>, <span class="at">subtitle =</span> <span class="st">"Factoring in Age Gaps between Lead and Supporting Actors"</span>) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Release Year"</span>, <span class="at">y =</span> <span class="st">"Actor Ages"</span>, <span class="at">color=</span> <span class="st">"Age Gap"</span>) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1950</span>, <span class="at">y=</span><span class="dv">75</span>, <span class="at">label=</span><span class="st">"Lead Male Actors"</span>, <span class="at">colour=</span><span class="st">"dodgerblue4"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1950</span>, <span class="at">y=</span><span class="dv">80</span>, <span class="at">label=</span><span class="st">"Lead Female Actors"</span>, <span class="at">colour=</span><span class="st">"deeppink4"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>ARAplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidytuesday_exercise_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="relationship-between-movie-release-data-age-difference-and-supporting-actor-age" class="level2">
+<h2 class="anchored" data-anchor-id="relationship-between-movie-release-data-age-difference-and-supporting-actor-age">Relationship between Movie release data, Age difference, and supporting Actor Age</h2>
+<p>###Supporting actor age</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>ASAplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> leadMdata, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> supporting_actor_age, <span class="at">size =</span> age_difference), <span class="at">fill =</span> <span class="st">'deepskyblue2'</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadFdata, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> supporting_actor_age, <span class="at">size =</span> age_difference), <span class="at">fill =</span> <span class="st">'deeppink1'</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Supporting Actor Age in Relation to the Movie Release Data"</span>, <span class="at">subtitle =</span> <span class="st">"Factoring in Age Gaps between Lead and Supporting Actors"</span>) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Release Year"</span>, <span class="at">y =</span> <span class="st">"Actor Ages"</span>) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1965</span>, <span class="at">y=</span><span class="dv">60</span>, <span class="at">label=</span><span class="st">"Actors that Support Male Leads"</span>, <span class="at">colour=</span><span class="st">"deepskyblue2"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">1965</span>, <span class="at">y=</span><span class="dv">65</span>, <span class="at">label=</span><span class="st">"Actors that Support Female Leads"</span>, <span class="at">colour=</span><span class="st">"deeppink1"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>ASAplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidytuesday_exercise_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="lead-age-vs-supporting-actor-age" class="level2">
+<h2 class="anchored" data-anchor-id="lead-age-vs-supporting-actor-age">Lead Age vs Supporting actor age</h2>
+<section id="opposite-vs-same-sex" class="level3">
+<h3 class="anchored" data-anchor-id="opposite-vs-same-sex">Opposite vs Same-sex</h3>
+<section id="lets-add-some-trends" class="level4">
+<h4 class="anchored" data-anchor-id="lets-add-some-trends">lets add some trends</h4>
+<p>Males:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>SSplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadMdata, <span class="fu">aes</span>(<span class="at">x =</span> age_difference, <span class="at">y =</span> lead_male_age), <span class="at">color =</span> <span class="st">'dodgerblue4'</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadMdata, <span class="fu">aes</span>(<span class="at">x =</span> age_difference, <span class="at">y =</span> supporting_actor_age, <span class="at">color =</span> supporting_gender), <span class="at">size=</span><span class="dv">2</span> , <span class="at">shape =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Male Actor Age in Relation to the Age Gaps"</span>, <span class="at">subtitle =</span> <span class="st">"Evaluated by Supporting Actor Genders"</span>) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age Difference Between Supporitng and Lead Actors"</span>, <span class="at">y =</span> <span class="st">"Actor Ages"</span>) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">7</span>, <span class="at">y=</span><span class="dv">80</span>, <span class="at">label=</span><span class="st">"Lead Male Actors"</span>, <span class="at">colour=</span><span class="st">"dodgerblue4"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>)  <span class="sc">+</span> </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">7</span>, <span class="at">y=</span><span class="dv">75</span>, <span class="at">label=</span><span class="st">"Supporting Actors"</span>, <span class="at">color=</span><span class="st">"cyan4"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>SSplot </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidytuesday_exercise_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Females:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>SSFplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadFdata, <span class="fu">aes</span>(<span class="at">x =</span> age_difference, <span class="at">y =</span> lead_female_age), <span class="at">color =</span> <span class="st">'deeppink4'</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> leadFdata, <span class="fu">aes</span>(<span class="at">x =</span> age_difference, <span class="at">y =</span> supporting_actor_age, <span class="at">color =</span> supporting_gender), <span class="at">size=</span><span class="dv">2</span> , <span class="at">shape =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Female Actor Age in Relation to the Age Gaps"</span>, <span class="at">subtitle =</span> <span class="st">"Evaluated by Supporting Actor Genders"</span>) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age Difference Between Supporitng and Lead Actors"</span>, <span class="at">y =</span> <span class="st">"Actor Ages"</span>) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">10</span>, <span class="at">y=</span><span class="dv">75</span>, <span class="at">label=</span><span class="st">"Lead Female Actors"</span>, <span class="at">colour=</span><span class="st">"deeppink4"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>)  <span class="sc">+</span> </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">"text"</span>, <span class="at">x=</span><span class="dv">10</span>, <span class="at">y=</span><span class="dv">70</span>, <span class="at">label=</span><span class="st">"Supporting Actors"</span>, <span class="at">color=</span><span class="st">"orangered2"</span>, <span class="at">size=</span><span class="dv">4</span>, <span class="at">family=</span><span class="st">"sans"</span>, <span class="at">fontface=</span><span class="st">"bold"</span>, <span class="at">angle=</span><span class="dv">0</span>) </span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>SSFplot </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidytuesday_exercise_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Wow this is pretty striking! The raw cleaned data really shows a disparity between male leads and female leads and the age gap between their supporting actors!</p>
+<p>We could play with this data forever! I will stop here but if you have a recommendation please post it on my “issues” page of my github!</p>
 
 
+</section>
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
