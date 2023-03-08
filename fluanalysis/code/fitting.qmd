@@ -3,7 +3,17 @@
 #### Load the data and packages:
 
 ```{r}
+library(tidyverse)
+library(tidymodels) #build models
+library(here) #help read/import data
+library(ggplot2) #data visualization
+library(broom.mixed) # for converting bayesian models to tidy tibbles
+library(dotwhisker)  # for visualizing regression results
+library(performance) #evaluate model fit and performance
 
+data <- readRDS(here('fluanalysis/data/SypAct_clean.rds')) #upload cleaned data
+tibble(data) # to get a look at the data
+str(data)
 ```
 
 Code will include:
@@ -19,3 +29,121 @@ Code will include:
 - Fitting another logistic model to the categorical outcome using all (important) predictors of interest.
 
 - Compares the model results for the categorical model with just the main predictor and all predictors.
+
+#### Linear Model: Body Temperature vs. Myalgia
+
+```{r}
+#plot suspect interaction
+ggplot(data,
+       aes(x = Myalgia, y = BodyTemp)) + 
+  geom_boxplot()
+
+lm_mod <- linear_reg() #note the default is lm(), thus we do not need to "set" the computational engine
+
+lm_fit1 <- lm_mod %>% 
+  fit(BodyTemp ~ Myalgia, data = data)
+
+tidy(lm_fit1) #several significant results
+
+tidy(lm_fit1) %>% ##help visualize model with dot-whisker plot
+  dwplot(dot_args = list(size = 2, color = "black"),
+         whisker_args = list(color = "black"),
+         vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2))
+```
+
+#### Linear Model: Body Temperature vs. All Variables
+
+```{r}
+lm_fit_all1 <- lm_mod %>% 
+  fit(BodyTemp ~ ., data = data)
+
+tidy(lm_fit_all1) #several significant results
+
+tidy(lm_fit_all1) %>% ##help visualize regression with dot-whisker plot w/ 95% CI
+  dwplot(dot_args = list(size = 2, color = "black"), #Coefficient Estimates
+         whisker_args = list(color = "black"), #CI
+         vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2))
+```
+
+#### Model Output Comparison
+
+```{r}
+#Check the goodness of "fit" with these 2 lm() models
+check_model(lm_fit1$fit) #allows for streamlined way to look at QQ plot, normality, etc
+check_model(lm_fit_all1$fit)
+
+#Compare output
+#Visually
+dwplot(list(Myalgia = lm_fit1, AllVariables = lm_fit_all1)) #compare dwplots
+
+glance(lm_fit1) %>%
+  dplyr::select(adj.r.squared, AIC, BIC, p.value)
+glance(lm_fit_all1) %>%
+  dplyr::select(adj.r.squared, AIC, BIC, p.value)
+
+compare_performance(lm_fit1,lm_fit_all1) #better way
+
+#Via ANOVA
+anova(lm_fit1$fit, lm_fit_all1$fit)
+
+```
+
+#### Logistic Model: Nausea vs. Myalgia
+
+```{r}
+#plot suspect interaction
+ggplot(data, aes(x = Myalgia, y = Nausea)) + 
+  geom_count()
+
+glm_mod <- logistic_reg(mode = "classification",
+  engine = "glm",
+  penalty = NULL,
+  mixture = NULL) #define mode so it is a glm
+
+glm_fit1 <- glm_mod %>% 
+  fit(Nausea ~ Myalgia, data = data)
+
+tidy(glm_fit1) #several significant results
+
+tidy(glm_fit1) %>% ##help visualize model with dot-whisker plot
+  dwplot(dot_args = list(size = 2, color = "black"),
+         whisker_args = list(color = "black"),
+         vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2))
+```
+
+#### Logistic Model: Nausea vs. All Variables
+
+```{r}
+glm_fit_all1 <- glm_mod %>% 
+  fit(Nausea ~ ., data = data)
+
+tidy(glm_fit_all1) #several significant results
+
+tidy(glm_fit_all1) %>% ##help visualize regression with dot-whisker plot w/ 95% CI
+  dwplot(dot_args = list(size = 2, color = "black"), #Coefficient Estimates
+         whisker_args = list(color = "black"), #CI
+         vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2))
+```
+
+#### Model Output Comparison
+
+```{r}
+#Check the goodness of "fit" with these 2 lm() models
+check_model(glm_fit1$fit) #QQ plot seems off, residuals may be an issue
+check_model(glm_fit_all1$fit)
+
+#Compare output
+#Visually
+dwplot(list(Myalgia = glm_fit1, AllVariables = glm_fit_all1)) #compare dwplots
+
+glance(glm_fit1) %>%
+  dplyr::select( AIC, BIC)
+glance(glm_fit_all1) %>%
+  dplyr::select( AIC, BIC) #better fit
+
+compare_performance(glm_fit1,glm_fit_all1)
+
+#Via ANOVA
+anova(glm_fit1$fit, glm_fit_all1$fit)
+```
+

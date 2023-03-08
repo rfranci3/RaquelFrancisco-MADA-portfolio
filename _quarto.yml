@@ -28,7 +28,7 @@ website:
             href: ./fluanalysis/code/fitting.html
     right:
       - icon: github 
-        href: URL-TO-THIS-REPOSITORY-HERE        
+        href: https://github.com/rfranci3/RaquelFrancisco-MADA-portfolio
 
 format:
   html:
