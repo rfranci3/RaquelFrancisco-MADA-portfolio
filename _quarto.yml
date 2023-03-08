@@ -18,6 +18,14 @@ website:
             href: ./tidytuesday_exercise.html
           - text: "Wrangling Exercise"
             href: ./dataanalysis_exercise.html
+      - text: "Flu Analysis"
+        menu:
+          - text: "Data Wrangling"
+            href: ./fluanalysis/code/wrangling.html
+          - text: "Data Visualization"
+            href: ./fluanalysis/code/exploration.html
+          - text: "Model Fitting"
+            href: ./fluanalysis/code/fitting.html           
     right:
       - icon: github 
         href: URL-TO-THIS-REPOSITORY-HERE        

@@ -1,0 +1,33 @@
+# **Flu Analysis: Wrangling**
+
+#### Load the data and packages:
+
+```{r}
+library(tidyverse)
+library(here)
+
+raw_flu <- readRDS(here('fluanalysis/data/SympAct_Any_Pos.Rda'))
+tibble(raw_flu) # to get a look at the data
+```
+
+#### Remove unwanted data columns:
+
+Remove all variables that have Score or Total or FluA or FluB or Dxname or Activity in their name. Also remove the variable Unique.Visit. Remove any NA observations.
+
+Now data set contains 32 variables coding for presence or absence of some symptom. Only one, temperature, is continuous.
+
+```{r}
+flu_clean <- raw_flu %>% #sort through the data and removing all variables (columns) that include the words: Score or Total or FluA or FluB or Dxname or Activity
+  select(-contains(c("Score", "Total", "FluA", "FluB", "Dxname", "Activity"))) %>% #now will remove all columns that include Unique.Visit
+  select(-contains(c("Unique.Visit"))) %>%
+  drop_na #Will drop all nas now
+
+
+```
+
+#### Save file into project:
+
+```{r}
+saveRDS(flu_clean, file= here("fluanalysis", "data", "SypAct_clean.rds")) #will save as a data.frame in the RDS file
+
+```

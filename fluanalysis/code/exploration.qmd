@@ -1,0 +1,83 @@
+# **Flu Analysis: Exploration**
+
+#### Load the data and packages:
+
+```{r}
+library(tidyverse)
+library(here)
+library(ggplot2)
+
+data <- readRDS(here('fluanalysis/data/SypAct_clean.rds'))
+tibble(data) # to get a look at the data
+str(data)
+```
+
+#### Minimum requirements:
+
+For each (important) variable, produce and print some numerical output (e.g. a table or some summary statistics numbers). - Myalgia - Cough Intensity - Weakness
+
+-   Chills
+-   Fatigue
+-   Headache
+-   Vision
+
+For each (important) continuous variable, create a histogram or density plot. - Body Temperature
+
+Create scatterplots or boxplots or similar plots for the variable you decided is your main outcome of interest and the most important (or all depending on number of variables) independent variables/predictors.
+
+#### Summary Statistics for Categorical Data
+
+```{r}
+table(data$Myalgia)
+table(data$CoughIntensity)
+table(data$Weakness)
+
+par(mfrow=c(1,3)) # show the following plots side by side
+barplot(table(data$Myalgia), ylab = 'Severity of Flu Symptoms', xlab = 'Myalgia', ylim = c(0,350))
+barplot(table(data$CoughIntensity), xlab = 'Cough Intensity', ylim = c(0,350))
+barplot(table(data$Weakness), xlab = 'Weakness', ylim = c(0,350))
+```
+
+#### Summary Statistics for Binary Data
+
+```{r}
+table(data$ChillsSweats)
+table(data$Fatigue)
+table(data$Headache)
+table(data$Vision)
+table(data$Nausea)
+
+par(mfrow=c(1,5)) # show the following plots side by side
+barplot(table(data$ChillsSweats), ylab = 'Presence of Flu Symptoms', xlab = 'Chills or Sweats', ylim = c(0,800))
+barplot(table(data$Fatigue), xlab = 'Fatigue', ylim = c(0,800))
+barplot(table(data$Headache), xlab = 'Headache', ylim = c(0,800))
+barplot(table(data$Vision), xlab = 'Blurry VIsion', ylim = c(0,800))
+barplot(table(data$Nausea), xlab = 'Nausea', ylim = c(0,800))
+```
+
+#### Summary Statistics for Continuous Data
+
+```{r}
+summary(data$BodyTemp)
+
+hist(data$BodyTemp) #histogram
+ 
+d <- density(data$BodyTemp)
+plot(d, main="Flu Body Temperature") #Density plot
+```
+
+Visualizing Data interations
+
+```{r}
+ggplot(data = data) +
+  geom_boxplot(aes(x= Myalgia, y = BodyTemp))
+
+ggplot(data = data) +
+  geom_boxplot(aes(x= CoughIntensity, y = BodyTemp))
+
+ggplot(data = data) +
+  geom_boxplot(aes(x= Weakness, y = BodyTemp)) 
+```
+
+
+

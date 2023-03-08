@@ -1,0 +1,21 @@
+# **Flu Analysis: Fitting**
+
+#### Load the data and packages:
+
+```{r}
+
+```
+
+Code will include:
+
+- Fitting a linear model to the continuous outcome (Body temperature) using only the main predictor of interest.
+
+- Fitting another linear model to the continuous outcome using all (important) predictors of interest.
+
+- Comparing the model results for the model with just the main predictor and all predictors.
+
+- Fitting a logistic model to the categorical outcome (Nausea) using only the main predictor of interest.
+
+- Fitting another logistic model to the categorical outcome using all (important) predictors of interest.
+
+- Compares the model results for the categorical model with just the main predictor and all predictors.
