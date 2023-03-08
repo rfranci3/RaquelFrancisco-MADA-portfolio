@@ -32,7 +32,7 @@ website:
 
 format:
   html:
-    theme: yeti
+    theme: darkly
     highlight: zenburn
     css: styles.css
     toc: FALSE

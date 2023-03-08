@@ -7,5 +7,7 @@ output:
 
 Welcome to **my website** and *data analysis portfolio.*
 
--   Please use the `Menu Bar` above to look around.
--   Have fun!
+-   Use the `Menu Bar` above to look around.
+-   Please enjoy my attempt at:
+
+![](images/data-analysis-f1f346eb7f.jpg)
