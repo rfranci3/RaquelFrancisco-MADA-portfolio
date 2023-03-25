@@ -26,6 +26,8 @@ website:
             href: ./fluanalysis/code/exploration.html
           - text: "Model Fitting"
             href: ./fluanalysis/code/fitting.html
+          - text: "Model Improvement"
+            href: ./fluanalysis/code/modeleval.html
     right:
       - icon: github 
         href: https://github.com/rfranci3/RaquelFrancisco-MADA-portfolio

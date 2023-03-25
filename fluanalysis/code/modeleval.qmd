@@ -1,0 +1,112 @@
+# Improving Models
+
+### Load packakes and data
+
+```{r}
+library(here)
+library(tidyverse)
+library(ggplot2)
+library(tidymodels)
+library(dplyr)
+
+data <- readRDS(here('fluanalysis/data/SypAct_clean.rds')) #upload cleaned data
+tibble(data) #overview of data
+```
+
+### Split Data
+
+```{r}
+set.seed(123)
+# Fix the random numbers by setting the seed 
+# This enables the analysis to be reproducible when random numbers are used 
+
+data_split <- initial_split(data, prop = 3/4)
+
+# Create data frames for the two sets:
+train_data <- training(data_split)
+test_data  <- testing(data_split)
+
+```
+
+### Make a recipe and fit a model
+
+```{r}
+# Create recipe using Nausea as categorical variable
+data_recipe <- recipe(Nausea ~ ., data = train_data) 
+
+# Logistic model recipe
+recipe_mod <- logistic_reg() %>% set_engine("glm")
+
+# Model workflow to pair model and recipe 
+mod_flow <- workflow() %>% 
+  add_model(recipe_mod) %>% 
+  add_recipe(data_recipe)
+
+mod_flow
+```
+
+### Train the model from the resulting predictors
+
+```{r}
+data_fit <- 
+  mod_flow %>% 
+  fit(data = train_data)
+
+data_fit %>% 
+  extract_fit_parsnip() %>% 
+  tidy()
+
+```
+
+### Use a trained workflow to Predict
+
+```{r}
+predict(data_fit, test_data)
+
+data_aug <- 
+  augment(data_fit, test_data)
+
+# The data look like: 
+data_aug %>%
+  select(Nausea, .pred_No, .pred_Yes)
+
+```
+
+### ROC Curve
+
+```{r}
+data_aug %>% 
+  roc_curve(truth = Nausea, .pred_No) %>% 
+  autoplot()
+
+data_aug %>% 
+  roc_auc(truth = Nausea, .pred_No)
+# > 0.7; the model might be useful. 
+```
+
+### Alternative Model: Main predictor to the Categorical Outcome
+
+```{r}
+
+# Create new recipe
+data_recipe2 <- recipe(Nausea ~ Myalgia, data = train_data) 
+
+# Model workflow to pair model and recipe 
+mod_flow2 <- workflow() %>% 
+  add_model(recipe_mod) %>% 
+  add_recipe(data_recipe2)
+
+#Train data
+data_fit2 <- 
+  mod_flow2 %>% 
+  fit(data = train_data)
+
+data_aug2 <- 
+  augment(data_fit2, test_data)
+
+data_aug2 %>% 
+  roc_auc(truth = Nausea, .pred_No)
+# < 0.7; the model not very useful. 
+
+```
+
