@@ -110,3 +110,95 @@ data_aug2 %>%
 
 ```
 
+
+### The following added by SETH LATTNER
+
+#### Fitting continuous variables
+
+```{r}
+# Create recipe using Nausea as categorical variable
+data_recipe3 <- recipe(BodyTemp ~ ., data = train_data) 
+
+# Logistic model recipe
+recipe_mod3 <- linear_reg() %>% set_engine("lm")
+
+# Model workflow to pair model and recipe 
+mod_flow3 <- workflow() %>% 
+  add_model(recipe_mod3) %>% 
+  add_recipe(data_recipe3)
+
+mod_flow3
+```
+
+### Train the model from the resulting predictors
+
+```{r}
+data_fit3 <- 
+  mod_flow3 %>% 
+  fit(data = train_data)
+
+data_fit3 %>% 
+  extract_fit_parsnip() %>% 
+  tidy()
+
+```
+
+### Use a trained workflow to Predict
+
+```{r}
+predict(data_fit3, test_data)
+
+data_aug3 <- 
+  augment(data_fit3, test_data)
+
+# The data look like: 
+data_aug3 %>%
+  select(BodyTemp, .pred)
+
+```
+```{r}
+#calculate RMSE
+yardstick::rmse(data_aug3, BodyTemp, .pred)
+```
+
+
+### Alternative Model: Main predictor to the Categorical Outcome
+
+```{r}
+
+# Create new recipe
+data_recipe4 <- recipe(BodyTemp ~ RunnyNose, data = train_data) 
+
+# Model workflow to pair model and recipe 
+mod_flow4 <- workflow() %>% 
+  add_model(recipe_mod3) %>% 
+  add_recipe(data_recipe4)
+
+#Train data
+data_fit4 <- 
+  mod_flow4 %>% 
+  fit(data = train_data)
+
+data_fit4 %>% 
+  extract_fit_parsnip() %>% 
+  tidy()
+```
+
+```{r}
+#predict from test data
+predict(data_fit4, test_data)
+
+#augment test data
+data_aug4 <- 
+  augment(data_fit4, test_data)
+
+#the data look like:
+data_aug4 %>%
+  select(BodyTemp, .pred)
+
+```
+```{r}
+#calculate RMSE
+yardstick::rmse(data_aug4, BodyTemp, .pred)
+```
+The RMSE of the univariate model 4 (1.12) was lower than that of the global model 3 (1.15), showing that it is a better fit to the data.
