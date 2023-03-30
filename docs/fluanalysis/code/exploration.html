@@ -254,30 +254,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">'fluanalysis/data/SypAct_clean.rds'</span>))</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(data) <span class="co"># to get a look at the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 730 × 32
-   SwollenLymph…¹ Chest…² Chill…³ Nasal…⁴ CoughYN Sneeze Fatigue Subje…⁵ Heada…⁶
-   &lt;fct&gt;          &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  
- 1 Yes            No      No      No      Yes     No     Yes     Yes     Yes    
- 2 Yes            Yes     No      Yes     Yes     No     Yes     Yes     Yes    
- 3 Yes            Yes     Yes     Yes     No      Yes    Yes     Yes     Yes    
- 4 Yes            Yes     Yes     Yes     Yes     Yes    Yes     Yes     Yes    
- 5 Yes            No      Yes     No      No      No     Yes     Yes     Yes    
- 6 No             No      Yes     No      Yes     Yes    Yes     Yes     Yes    
- 7 No             No      Yes     No      Yes     No     Yes     Yes     No     
- 8 No             Yes     Yes     Yes     Yes     Yes    Yes     Yes     Yes    
- 9 Yes            Yes     Yes     Yes     Yes     No     Yes     Yes     Yes    
-10 No             Yes     No      Yes     Yes     No     Yes     No      Yes    
-# … with 720 more rows, 23 more variables: Weakness &lt;fct&gt;, WeaknessYN &lt;fct&gt;,
-#   CoughIntensity &lt;fct&gt;, CoughYN2 &lt;fct&gt;, Myalgia &lt;fct&gt;, MyalgiaYN &lt;fct&gt;,
+<pre><code># A tibble: 730 × 26
+   SwollenLymph…¹ Chest…² Chill…³ Nasal…⁴ Sneeze Fatigue Subje…⁵ Heada…⁶ Weakn…⁷
+   &lt;fct&gt;          &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  
+ 1 Yes            No      No      No      No     Yes     Yes     Yes     Mild   
+ 2 Yes            Yes     No      Yes     No     Yes     Yes     Yes     Severe 
+ 3 Yes            Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 4 Yes            Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 5 Yes            No      Yes     No      No     Yes     Yes     Yes     Modera…
+ 6 No             No      Yes     No      Yes    Yes     Yes     Yes     Modera…
+ 7 No             No      Yes     No      No     Yes     Yes     No      Mild   
+ 8 No             Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 9 Yes            Yes     Yes     Yes     No     Yes     Yes     Yes     Modera…
+10 No             Yes     No      Yes     No     Yes     No      Yes     Modera…
+# … with 720 more rows, 17 more variables: CoughIntensity &lt;fct&gt;, Myalgia &lt;fct&gt;,
 #   RunnyNose &lt;fct&gt;, AbPain &lt;fct&gt;, ChestPain &lt;fct&gt;, Diarrhea &lt;fct&gt;,
 #   EyePn &lt;fct&gt;, Insomnia &lt;fct&gt;, ItchyEye &lt;fct&gt;, Nausea &lt;fct&gt;, EarPn &lt;fct&gt;,
-#   Hearing &lt;fct&gt;, Pharyngitis &lt;fct&gt;, Breathless &lt;fct&gt;, ToothPn &lt;fct&gt;,
-#   Vision &lt;fct&gt;, Vomit &lt;fct&gt;, Wheeze &lt;fct&gt;, BodyTemp &lt;dbl&gt;, and abbreviated
-#   variable names ¹​SwollenLymphNodes, ²​ChestCongestion, ³​ChillsSweats, …</code></pre>
+#   Pharyngitis &lt;fct&gt;, Breathless &lt;fct&gt;, ToothPn &lt;fct&gt;, Vomit &lt;fct&gt;,
+#   Wheeze &lt;fct&gt;, BodyTemp &lt;dbl&gt;, and abbreviated variable names
+#   ¹​SwollenLymphNodes, ²​ChestCongestion, ³​ChillsSweats, ⁴​NasalCongestion,
+#   ⁵​SubjectiveFever, ⁶​Headache, ⁷​Weakness</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   730 obs. of  32 variables:
+<pre><code>'data.frame':   730 obs. of  26 variables:
  $ SwollenLymphNodes: Factor w/ 2 levels "No","Yes": 2 2 2 2 2 1 1 1 2 1 ...
   ..- attr(*, "label")= chr "Swollen Lymph Nodes"
  $ ChestCongestion  : Factor w/ 2 levels "No","Yes": 1 2 2 2 1 1 1 2 2 2 ...
@@ -286,8 +286,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   ..- attr(*, "label")= chr "Chills/Sweats"
  $ NasalCongestion  : Factor w/ 2 levels "No","Yes": 1 2 2 2 1 1 1 2 2 2 ...
   ..- attr(*, "label")= chr "Nasal Congestion"
- $ CoughYN          : Factor w/ 2 levels "No","Yes": 2 2 1 2 1 2 2 2 2 2 ...
-  ..- attr(*, "label")= chr "Cough"
  $ Sneeze           : Factor w/ 2 levels "No","Yes": 1 1 2 2 1 2 1 2 1 1 ...
   ..- attr(*, "label")= chr "Sneeze"
  $ Fatigue          : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 2 2 2 ...
@@ -297,14 +295,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  $ Headache         : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 1 2 2 2 ...
   ..- attr(*, "label")= chr "Headache"
  $ Weakness         : Factor w/ 4 levels "None","Mild",..: 2 4 4 4 3 3 2 4 3 3 ...
- $ WeaknessYN       : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 2 2 2 ...
-  ..- attr(*, "label")= chr "Weakness"
  $ CoughIntensity   : Factor w/ 4 levels "None","Mild",..: 4 4 2 3 1 3 4 3 3 3 ...
   ..- attr(*, "label")= chr "Cough Severity"
- $ CoughYN2         : Factor w/ 2 levels "No","Yes": 2 2 2 2 1 2 2 2 2 2 ...
  $ Myalgia          : Factor w/ 4 levels "None","Mild",..: 2 4 4 4 2 3 2 4 3 2 ...
- $ MyalgiaYN        : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 2 2 2 ...
-  ..- attr(*, "label")= chr "Myalgia"
  $ RunnyNose        : Factor w/ 2 levels "No","Yes": 1 1 2 2 1 1 2 2 2 2 ...
   ..- attr(*, "label")= chr "Runny Nose"
  $ AbPain           : Factor w/ 2 levels "No","Yes": 1 1 2 1 1 1 1 1 1 1 ...
@@ -321,16 +314,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  $ Nausea           : Factor w/ 2 levels "No","Yes": 1 1 2 2 2 2 1 1 2 2 ...
  $ EarPn            : Factor w/ 2 levels "No","Yes": 1 2 1 2 1 1 1 1 1 1 ...
   ..- attr(*, "label")= chr "Ear Pain"
- $ Hearing          : Factor w/ 2 levels "No","Yes": 1 2 1 1 1 1 1 1 1 1 ...
-  ..- attr(*, "label")= chr "Loss of Hearing"
  $ Pharyngitis      : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 1 1 1 ...
   ..- attr(*, "label")= chr "Sore Throat"
  $ Breathless       : Factor w/ 2 levels "No","Yes": 1 1 2 1 1 2 1 1 1 2 ...
   ..- attr(*, "label")= chr "Breathlessness"
  $ ToothPn          : Factor w/ 2 levels "No","Yes": 1 1 2 1 1 1 1 1 2 1 ...
   ..- attr(*, "label")= chr "Tooth Pain"
- $ Vision           : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
-  ..- attr(*, "label")= chr "Blurred Vision"
  $ Vomit            : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 2 1 1 1 ...
   ..- attr(*, "label")= chr "Vomiting"
  $ Wheeze           : Factor w/ 2 levels "No","Yes": 1 1 1 2 1 2 1 1 1 1 ...
@@ -404,9 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>Vision)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
- No Yes 
-711  19 </code></pre>
+<pre><code>&lt; table of extent 0 &gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>Nausea)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -418,8 +405,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(data<span class="sc">$</span>ChillsSweats), <span class="at">ylab =</span> <span class="st">'Presence of Flu Symptoms'</span>, <span class="at">xlab =</span> <span class="st">'Chills or Sweats'</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">800</span>))</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(data<span class="sc">$</span>Fatigue), <span class="at">xlab =</span> <span class="st">'Fatigue'</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">800</span>))</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(data<span class="sc">$</span>Headache), <span class="at">xlab =</span> <span class="st">'Headache'</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">800</span>))</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(data<span class="sc">$</span>Vision), <span class="at">xlab =</span> <span class="st">'Blurry VIsion'</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">800</span>))</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(data<span class="sc">$</span>Nausea), <span class="at">xlab =</span> <span class="st">'Nausea'</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">800</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(data<span class="sc">$</span>Nausea), <span class="at">xlab =</span> <span class="st">'Nausea'</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">800</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="exploration_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>

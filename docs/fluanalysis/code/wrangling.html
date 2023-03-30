@@ -249,8 +249,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stderr">
 <pre><code>here() starts at C:/Users/Raquel/GitHub/MADA/RaquelFrancisco-MADA-portfolio</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>raw_flu <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">'fluanalysis/data/SympAct_Any_Pos.Rda'</span>))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(raw_flu) <span class="co"># to get a look at the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidymodels' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.0.0 ──
+✔ broom        1.0.3     ✔ rsample      1.1.1
+✔ dials        1.1.0     ✔ tune         1.0.1
+✔ infer        1.0.4     ✔ workflows    1.1.2
+✔ modeldata    1.1.0     ✔ workflowsets 1.0.0
+✔ parsnip      1.0.3     ✔ yardstick    1.1.0
+✔ recipes      1.0.4     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'broom' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dials' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'infer' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'modeldata' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'parsnip' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'recipes' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'rsample' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tune' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'workflows' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'workflowsets' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'yardstick' was built under R version 4.2.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ scales::discard() masks purrr::discard()
+✖ dplyr::filter()   masks stats::filter()
+✖ recipes::fixed()  masks stringr::fixed()
+✖ dplyr::lag()      masks stats::lag()
+✖ yardstick::spec() masks readr::spec()
+✖ recipes::step()   masks stats::step()
+• Search for functions across packages at https://www.tidymodels.org/find/</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>raw_flu <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">'fluanalysis/data/SympAct_Any_Pos.Rda'</span>))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(raw_flu) <span class="co"># to get a look at the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 735 × 63
    DxName1       DxName2 DxName3 DxName4 DxName5 Uniqu…¹ Activ…² Activ…³ Swoll…⁴
@@ -276,20 +332,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 <section id="remove-unwanted-data-columns" class="level4">
-<h4 class="anchored" data-anchor-id="remove-unwanted-data-columns">Remove unwanted data columns:</h4>
+<h4 class="anchored" data-anchor-id="remove-unwanted-data-columns">Remove unwanted data columns</h4>
+<section id="featurevariable-removal" class="level5">
+<h5 class="anchored" data-anchor-id="featurevariable-removal">+ Feature/Variable removal</h5>
 <p>Remove all variables that have Score or Total or FluA or FluB or Dxname or Activity in their name. Also remove the variable Unique.Visit. Remove any NA observations.</p>
 <p>Now data set contains 32 variables coding for presence or absence of some symptom. Only one, temperature, is continuous.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>flu_clean <span class="ot">&lt;-</span> raw_flu <span class="sc">%&gt;%</span> <span class="co">#sort through the data and removing all variables (columns) that include the words: Score or Total or FluA or FluB or Dxname or Activity</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"Score"</span>, <span class="st">"Total"</span>, <span class="st">"FluA"</span>, <span class="st">"FluB"</span>, <span class="st">"Dxname"</span>, <span class="st">"Activity"</span>))) <span class="sc">%&gt;%</span> <span class="co">#now will remove all columns that include Unique.Visit</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"Unique.Visit"</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  drop_na <span class="co">#Will drop all nas now</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>flu_clean <span class="ot">&lt;-</span> raw_flu <span class="sc">%&gt;%</span> <span class="co">#sort through the data and removing all variables (columns) that include the words: Score or Total or FluA or FluB or Dxname or Activity</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"Score"</span>, <span class="st">"Total"</span>, <span class="st">"FluA"</span>, <span class="st">"FluB"</span>, <span class="st">"Dxname"</span>, <span class="st">"Activity"</span>))) <span class="sc">%&gt;%</span> <span class="co">#now will remove all columns that include Unique.Visit</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"Unique.Visit"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  drop_na <span class="sc">%&gt;%</span> <span class="co">#Will drop all nas now </span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"WeaknessYN"</span>, <span class="st">"CoughYN"</span>, <span class="st">"CoughYN2"</span>, <span class="st">"MyalgiaYN"</span>))) <span class="do">## Remove repeated variables (#Weakness, Cough and Myalgia)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="remove-binary-predictors-with-50-entries" class="level4">
+<h4 class="anchored" data-anchor-id="remove-binary-predictors-with-50-entries">Remove binary predictors with &lt;50 entries</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(flu_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> SwollenLymphNodes ChestCongestion ChillsSweats NasalCongestion Sneeze   
+ No :418           No :323         No :130      No :167         No :339  
+ Yes:312           Yes:407         Yes:600      Yes:563         Yes:391  
+                                                                         
+                                                                         
+                                                                         
+                                                                         
+ Fatigue   SubjectiveFever Headache      Weakness    CoughIntensity
+ No : 64   No :230         No :115   None    : 49   None    : 47   
+ Yes:666   Yes:500         Yes:615   Mild    :223   Mild    :154   
+                                     Moderate:338   Moderate:357   
+                                     Severe  :120   Severe  :172   
+                                                                   
+                                                                   
+     Myalgia    RunnyNose AbPain    ChestPain Diarrhea  EyePn     Insomnia 
+ None    : 79   No :211   No :639   No :497   No :631   No :617   No :315  
+ Mild    :213   Yes:519   Yes: 91   Yes:233   Yes: 99   Yes:113   Yes:415  
+ Moderate:325                                                              
+ Severe  :113                                                              
+                                                                           
+                                                                           
+ ItchyEye  Nausea    EarPn     Hearing   Pharyngitis Breathless ToothPn  
+ No :551   No :475   No :568   No :700   No :119     No :436    No :565  
+ Yes:179   Yes:255   Yes:162   Yes: 30   Yes:611     Yes:294    Yes:165  
+                                                                         
+                                                                         
+                                                                         
+                                                                         
+ Vision    Vomit     Wheeze       BodyTemp     
+ No :711   No :652   No :510   Min.   : 97.20  
+ Yes: 19   Yes: 78   Yes:220   1st Qu.: 98.20  
+                               Median : 98.50  
+                               Mean   : 98.94  
+                               3rd Qu.: 99.30  
+                               Max.   :103.10  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Both vision and Hearing have under 50 of either Yes/No, remove</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>flu_clean_2 <span class="ot">&lt;-</span> flu_clean <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"Vision"</span>, <span class="st">"Hearing"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="save-file-into-project" class="level4">
 <h4 class="anchored" data-anchor-id="save-file-into-project">Save file into project:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(flu_clean, <span class="at">file=</span> <span class="fu">here</span>(<span class="st">"fluanalysis"</span>, <span class="st">"data"</span>, <span class="st">"SypAct_clean.rds"</span>)) <span class="co">#will save as a data.frame in the RDS file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(flu_clean_2, <span class="at">file=</span> <span class="fu">here</span>(<span class="st">"fluanalysis"</span>, <span class="st">"data"</span>, <span class="st">"SypAct_clean.rds"</span>)) <span class="co">#will save as a data.frame in the RDS file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

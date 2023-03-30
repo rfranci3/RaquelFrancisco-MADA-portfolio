@@ -11,6 +11,7 @@ library(dplyr)
 
 data <- readRDS(here('fluanalysis/data/SypAct_clean.rds')) #upload cleaned data
 tibble(data) #overview of data
+
 ```
 
 ### Split Data
@@ -32,7 +33,8 @@ test_data  <- testing(data_split)
 
 ```{r}
 # Create recipe using Nausea as categorical variable
-data_recipe <- recipe(Nausea ~ ., data = train_data) 
+
+data_recipe <- recipe(Nausea ~ ., data = train_data)
 
 # Logistic model recipe
 recipe_mod <- logistic_reg() %>% set_engine("glm")
@@ -89,7 +91,9 @@ data_aug %>%
 ```{r}
 
 # Create new recipe
-data_recipe2 <- recipe(Nausea ~ Myalgia, data = train_data) 
+data_recipe2 <- recipe(Nausea ~ Myalgia, data = train_data) #%>%
+#  step_nzv(all_predictors(), freq_cut = 995/5, unique_cut = 10) %>%
+#  step_ordinalscore(all_of(ordered_names))
 
 # Model workflow to pair model and recipe 
 mod_flow2 <- workflow() %>% 
@@ -116,8 +120,9 @@ data_aug2 %>%
 #### Fitting continuous variables
 
 ```{r}
-# Create recipe using Nausea as categorical variable
-data_recipe3 <- recipe(BodyTemp ~ ., data = train_data) 
+data_recipe3 <- recipe(BodyTemp ~ ., data = train_data) #%>%
+#  step_nzv(all_predictors(), freq_cut = 995/5, unique_cut = 10) %>%
+#  step_ordinalscore(all_of(ordered_names))
 
 # Logistic model recipe
 recipe_mod3 <- linear_reg() %>% set_engine("lm")
@@ -167,7 +172,9 @@ yardstick::rmse(data_aug3, BodyTemp, .pred)
 ```{r}
 
 # Create new recipe
-data_recipe4 <- recipe(BodyTemp ~ RunnyNose, data = train_data) 
+data_recipe4 <- recipe(BodyTemp ~ RunnyNose, data = train_data) #%>%
+#  step_nzv(all_predictors(), freq_cut = 995/5, unique_cut = 10) %>%
+# step_ordinalscore(all_of(ordered_names))
 
 # Model workflow to pair model and recipe 
 mod_flow4 <- workflow() %>% 

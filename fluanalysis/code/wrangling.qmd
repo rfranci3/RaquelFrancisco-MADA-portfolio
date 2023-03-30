@@ -5,12 +5,14 @@
 ```{r}
 library(tidyverse)
 library(here)
+library(tidymodels)
 
 raw_flu <- readRDS(here('fluanalysis/data/SympAct_Any_Pos.Rda'))
 tibble(raw_flu) # to get a look at the data
 ```
 
-#### Remove unwanted data columns:
+#### Remove unwanted data columns
+##### + Feature/Variable removal
 
 Remove all variables that have Score or Total or FluA or FluB or Dxname or Activity in their name. Also remove the variable Unique.Visit. Remove any NA observations.
 
@@ -20,14 +22,23 @@ Now data set contains 32 variables coding for presence or absence of some sympto
 flu_clean <- raw_flu %>% #sort through the data and removing all variables (columns) that include the words: Score or Total or FluA or FluB or Dxname or Activity
   select(-contains(c("Score", "Total", "FluA", "FluB", "Dxname", "Activity"))) %>% #now will remove all columns that include Unique.Visit
   select(-contains(c("Unique.Visit"))) %>%
-  drop_na #Will drop all nas now
+  drop_na %>% #Will drop all nas now 
+select(-contains(c("WeaknessYN", "CoughYN", "CoughYN2", "MyalgiaYN"))) ## Remove repeated variables (#Weakness, Cough and Myalgia)
+```
 
+####  Remove binary predictors with <50 entries
 
+```{r}
+summary(flu_clean)
+#Both vision and Hearing have under 50 of either Yes/No, remove
+
+flu_clean_2 <- flu_clean %>%
+select(-contains(c("Vision", "Hearing")))
 ```
 
 #### Save file into project:
 
 ```{r}
-saveRDS(flu_clean, file= here("fluanalysis", "data", "SypAct_clean.rds")) #will save as a data.frame in the RDS file
+saveRDS(flu_clean_2, file= here("fluanalysis", "data", "SypAct_clean.rds")) #will save as a data.frame in the RDS file
 
 ```

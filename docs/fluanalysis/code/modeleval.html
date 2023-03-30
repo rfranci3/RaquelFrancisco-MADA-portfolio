@@ -308,33 +308,33 @@ tidyverse 1.3.2 ──</code></pre>
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">'fluanalysis/data/SypAct_clean.rds'</span>)) <span class="co">#upload cleaned data</span></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(data) <span class="co">#overview of data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 730 × 32
-   SwollenLymph…¹ Chest…² Chill…³ Nasal…⁴ CoughYN Sneeze Fatigue Subje…⁵ Heada…⁶
-   &lt;fct&gt;          &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  
- 1 Yes            No      No      No      Yes     No     Yes     Yes     Yes    
- 2 Yes            Yes     No      Yes     Yes     No     Yes     Yes     Yes    
- 3 Yes            Yes     Yes     Yes     No      Yes    Yes     Yes     Yes    
- 4 Yes            Yes     Yes     Yes     Yes     Yes    Yes     Yes     Yes    
- 5 Yes            No      Yes     No      No      No     Yes     Yes     Yes    
- 6 No             No      Yes     No      Yes     Yes    Yes     Yes     Yes    
- 7 No             No      Yes     No      Yes     No     Yes     Yes     No     
- 8 No             Yes     Yes     Yes     Yes     Yes    Yes     Yes     Yes    
- 9 Yes            Yes     Yes     Yes     Yes     No     Yes     Yes     Yes    
-10 No             Yes     No      Yes     Yes     No     Yes     No      Yes    
-# … with 720 more rows, 23 more variables: Weakness &lt;fct&gt;, WeaknessYN &lt;fct&gt;,
-#   CoughIntensity &lt;fct&gt;, CoughYN2 &lt;fct&gt;, Myalgia &lt;fct&gt;, MyalgiaYN &lt;fct&gt;,
+<pre><code># A tibble: 730 × 26
+   SwollenLymph…¹ Chest…² Chill…³ Nasal…⁴ Sneeze Fatigue Subje…⁵ Heada…⁶ Weakn…⁷
+   &lt;fct&gt;          &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  
+ 1 Yes            No      No      No      No     Yes     Yes     Yes     Mild   
+ 2 Yes            Yes     No      Yes     No     Yes     Yes     Yes     Severe 
+ 3 Yes            Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 4 Yes            Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 5 Yes            No      Yes     No      No     Yes     Yes     Yes     Modera…
+ 6 No             No      Yes     No      Yes    Yes     Yes     Yes     Modera…
+ 7 No             No      Yes     No      No     Yes     Yes     No      Mild   
+ 8 No             Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 9 Yes            Yes     Yes     Yes     No     Yes     Yes     Yes     Modera…
+10 No             Yes     No      Yes     No     Yes     No      Yes     Modera…
+# … with 720 more rows, 17 more variables: CoughIntensity &lt;fct&gt;, Myalgia &lt;fct&gt;,
 #   RunnyNose &lt;fct&gt;, AbPain &lt;fct&gt;, ChestPain &lt;fct&gt;, Diarrhea &lt;fct&gt;,
 #   EyePn &lt;fct&gt;, Insomnia &lt;fct&gt;, ItchyEye &lt;fct&gt;, Nausea &lt;fct&gt;, EarPn &lt;fct&gt;,
-#   Hearing &lt;fct&gt;, Pharyngitis &lt;fct&gt;, Breathless &lt;fct&gt;, ToothPn &lt;fct&gt;,
-#   Vision &lt;fct&gt;, Vomit &lt;fct&gt;, Wheeze &lt;fct&gt;, BodyTemp &lt;dbl&gt;, and abbreviated
-#   variable names ¹​SwollenLymphNodes, ²​ChestCongestion, ³​ChillsSweats, …</code></pre>
+#   Pharyngitis &lt;fct&gt;, Breathless &lt;fct&gt;, ToothPn &lt;fct&gt;, Vomit &lt;fct&gt;,
+#   Wheeze &lt;fct&gt;, BodyTemp &lt;dbl&gt;, and abbreviated variable names
+#   ¹​SwollenLymphNodes, ²​ChestCongestion, ³​ChillsSweats, ⁴​NasalCongestion,
+#   ⁵​SubjectiveFever, ⁶​Headache, ⁷​Weakness</code></pre>
 </div>
 </div>
 </section>
@@ -356,17 +356,18 @@ tidyverse 1.3.2 ──</code></pre>
 <h3 class="anchored" data-anchor-id="make-a-recipe-and-fit-a-model">Make a recipe and fit a model</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create recipe using Nausea as categorical variable</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>data_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Nausea <span class="sc">~</span> ., <span class="at">data =</span> train_data) </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic model recipe</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>recipe_mod <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"glm"</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Model workflow to pair model and recipe </span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>mod_flow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(recipe_mod) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(data_recipe)</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>mod_flow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>data_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Nausea <span class="sc">~</span> ., <span class="at">data =</span> train_data)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic model recipe</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>recipe_mod <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"glm"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Model workflow to pair model and recipe </span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>mod_flow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(recipe_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(data_recipe)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>mod_flow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
 Preprocessor: Recipe
@@ -393,20 +394,20 @@ Computational engine: glm </code></pre>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 38 × 5
-   term                  estimate std.error statistic p.value
-   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
- 1 (Intercept)          -2.42         9.14  -0.265     0.791 
- 2 SwollenLymphNodesYes -0.440        0.236 -1.86      0.0624
- 3 ChestCongestionYes    0.278        0.255  1.09      0.275 
- 4 ChillsSweatsYes       0.314        0.356  0.881     0.378 
- 5 NasalCongestionYes    0.213        0.302  0.707     0.480 
- 6 CoughYNYes           -0.000535     0.708 -0.000755  0.999 
- 7 SneezeYes             0.142        0.255  0.556     0.578 
- 8 FatigueYes            0.287        0.462  0.621     0.535 
- 9 SubjectiveFeverYes    0.434        0.276  1.57      0.116 
-10 HeadacheYes           0.634        0.367  1.73      0.0843
-# … with 28 more rows</code></pre>
+<pre><code># A tibble: 32 × 5
+   term                 estimate std.error statistic p.value
+   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 (Intercept)            -2.83      9.07     -0.312  0.755 
+ 2 SwollenLymphNodesYes   -0.435     0.235    -1.85   0.0649
+ 3 ChestCongestionYes      0.277     0.252     1.10   0.271 
+ 4 ChillsSweatsYes         0.333     0.355     0.939  0.348 
+ 5 NasalCongestionYes      0.233     0.300     0.778  0.437 
+ 6 SneezeYes               0.115     0.253     0.455  0.649 
+ 7 FatigueYes              0.288     0.460     0.626  0.531 
+ 8 SubjectiveFeverYes      0.402     0.271     1.48   0.138 
+ 9 HeadacheYes             0.644     0.367     1.75   0.0794
+10 WeaknessMild           -0.274     0.574    -0.478  0.633 
+# … with 22 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -414,10 +415,6 @@ Computational engine: glm </code></pre>
 <h3 class="anchored" data-anchor-id="use-a-trained-workflow-to-predict">Use a trained workflow to Predict</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(data_fit, test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
-prediction from a rank-deficient fit may be misleading</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 183 × 1
    .pred_class
@@ -434,32 +431,26 @@ prediction from a rank-deficient fit may be misleading</code></pre>
 10 Yes        
 # … with 173 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>data_aug <span class="ot">&lt;-</span> </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(data_fit, test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
-prediction from a rank-deficient fit may be misleading
-
-Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
-prediction from a rank-deficient fit may be misleading</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The data look like: </span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>data_aug <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Nausea, .pred_No, .pred_Yes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>data_aug <span class="ot">&lt;-</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(data_fit, test_data)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The data look like: </span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>data_aug <span class="sc">%&gt;%</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Nausea, .pred_No, .pred_Yes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 183 × 3
    Nausea .pred_No .pred_Yes
    &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 No        0.958    0.0417
- 2 Yes       0.125    0.875 
- 3 Yes       0.781    0.219 
+ 1 No        0.961    0.0394
+ 2 Yes       0.121    0.879 
+ 3 Yes       0.769    0.231 
  4 Yes       0.744    0.256 
- 5 Yes       0.779    0.221 
- 6 No        0.773    0.227 
- 7 No        0.555    0.445 
- 8 No        0.749    0.251 
- 9 No        0.937    0.0626
-10 Yes       0.176    0.824 
+ 5 Yes       0.759    0.241 
+ 6 No        0.771    0.229 
+ 7 No        0.544    0.456 
+ 8 No        0.745    0.255 
+ 9 No        0.941    0.0585
+10 Yes       0.171    0.829 
 # … with 173 more rows</code></pre>
 </div>
 </div>
@@ -467,52 +458,254 @@ prediction from a rank-deficient fit may be misleading</code></pre>
 <section id="roc-curve" class="level3">
 <h3 class="anchored" data-anchor-id="roc-curve">ROC Curve</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>data_aug <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> Nausea, .pred_No) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>data_aug <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> Nausea, .pred_No) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="modeleval_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>data_aug <span class="sc">%&gt;%</span> </span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> Nausea, .pred_No)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>data_aug <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> Nausea, .pred_No)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 roc_auc binary         0.706</code></pre>
+1 roc_auc binary         0.709</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; 0.7; the model might be useful. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; 0.7; the model might be useful. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="alternative-model-main-predictor-to-the-categorical-outcome" class="level3">
 <h3 class="anchored" data-anchor-id="alternative-model-main-predictor-to-the-categorical-outcome">Alternative Model: Main predictor to the Categorical Outcome</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new recipe</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>data_recipe2 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Nausea <span class="sc">~</span> Myalgia, <span class="at">data =</span> train_data) </span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model workflow to pair model and recipe </span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>mod_flow2 <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(recipe_mod) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(data_recipe2)</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Train data</span></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>data_fit2 <span class="ot">&lt;-</span> </span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  mod_flow2 <span class="sc">%&gt;%</span> </span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>data_aug2 <span class="ot">&lt;-</span> </span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(data_fit2, test_data)</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>data_aug2 <span class="sc">%&gt;%</span> </span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> Nausea, .pred_No)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new recipe</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>data_recipe2 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Nausea <span class="sc">~</span> Myalgia, <span class="at">data =</span> train_data) <span class="co">#%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  step_nzv(all_predictors(), freq_cut = 995/5, unique_cut = 10) %&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  step_ordinalscore(all_of(ordered_names))</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Model workflow to pair model and recipe </span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>mod_flow2 <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(recipe_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(data_recipe2)</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Train data</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>data_fit2 <span class="ot">&lt;-</span> </span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  mod_flow2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>data_aug2 <span class="ot">&lt;-</span> </span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(data_fit2, test_data)</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>data_aug2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> Nausea, .pred_No)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
 1 roc_auc binary         0.633</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt; 0.7; the model not very useful. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt; 0.7; the model not very useful. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="the-following-added-by-seth-lattner" class="level3">
+<h3 class="anchored" data-anchor-id="the-following-added-by-seth-lattner">The following added by SETH LATTNER</h3>
+<section id="fitting-continuous-variables" class="level4">
+<h4 class="anchored" data-anchor-id="fitting-continuous-variables">Fitting continuous variables</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>data_recipe3 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(BodyTemp <span class="sc">~</span> ., <span class="at">data =</span> train_data) <span class="co">#%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  step_nzv(all_predictors(), freq_cut = 995/5, unique_cut = 10) %&gt;%</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  step_ordinalscore(all_of(ordered_names))</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic model recipe</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>recipe_mod3 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Model workflow to pair model and recipe </span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>mod_flow3 <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(recipe_mod3) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(data_recipe3)</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>mod_flow3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: linear_reg()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+0 Recipe Steps
+
+── Model ───────────────────────────────────────────────────────────────────────
+Linear Regression Model Specification (regression)
+
+Computational engine: lm </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="train-the-model-from-the-resulting-predictors-1" class="level3">
+<h3 class="anchored" data-anchor-id="train-the-model-from-the-resulting-predictors-1">Train the model from the resulting predictors</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>data_fit3 <span class="ot">&lt;-</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  mod_flow3 <span class="sc">%&gt;%</span> </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>data_fit3 <span class="sc">%&gt;%</span> </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 5
+   term                 estimate std.error statistic   p.value
+   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept)           98.2        0.352   279.    0        
+ 2 SwollenLymphNodesYes  -0.104      0.108    -0.960 0.337    
+ 3 ChestCongestionYes     0.0566     0.114     0.496 0.620    
+ 4 ChillsSweatsYes        0.279      0.151     1.84  0.0664   
+ 5 NasalCongestionYes    -0.213      0.133    -1.60  0.110    
+ 6 SneezeYes             -0.400      0.116    -3.44  0.000627 
+ 7 FatigueYes             0.375      0.187     2.00  0.0461   
+ 8 SubjectiveFeverYes     0.517      0.122     4.25  0.0000259
+ 9 HeadacheYes           -0.0614     0.151    -0.406 0.685    
+10 WeaknessMild          -0.0473     0.226    -0.209 0.834    
+# … with 22 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="use-a-trained-workflow-to-predict-1" class="level3">
+<h3 class="anchored" data-anchor-id="use-a-trained-workflow-to-predict-1">Use a trained workflow to Predict</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(data_fit3, test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 183 × 1
+   .pred
+   &lt;dbl&gt;
+ 1  99.5
+ 2  98.9
+ 3  99.0
+ 4  98.7
+ 5  98.5
+ 6  99.0
+ 7  99.5
+ 8  99.7
+ 9  98.9
+10  99.6
+# … with 173 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>data_aug3 <span class="ot">&lt;-</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(data_fit3, test_data)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The data look like: </span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>data_aug3 <span class="sc">%&gt;%</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(BodyTemp, .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 183 × 2
+   BodyTemp .pred
+      &lt;dbl&gt; &lt;dbl&gt;
+ 1     98.3  99.5
+ 2    101.   98.9
+ 3     98.8  99.0
+ 4     98.5  98.7
+ 5     98.1  98.5
+ 6     98.4  99.0
+ 7     99.5  99.5
+ 8     98.8  99.7
+ 9    102.   98.9
+10     99.7  99.6
+# … with 173 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate RMSE</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>yardstick<span class="sc">::</span><span class="fu">rmse</span>(data_aug3, BodyTemp, .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard        1.14</code></pre>
+</div>
+</div>
+</section>
+<section id="alternative-model-main-predictor-to-the-categorical-outcome-1" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-model-main-predictor-to-the-categorical-outcome-1">Alternative Model: Main predictor to the Categorical Outcome</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new recipe</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>data_recipe4 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(BodyTemp <span class="sc">~</span> RunnyNose, <span class="at">data =</span> train_data) <span class="co">#%&gt;%</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  step_nzv(all_predictors(), freq_cut = 995/5, unique_cut = 10) %&gt;%</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># step_ordinalscore(all_of(ordered_names))</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Model workflow to pair model and recipe </span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>mod_flow4 <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(recipe_mod3) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(data_recipe4)</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Train data</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>data_fit4 <span class="ot">&lt;-</span> </span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>  mod_flow4 <span class="sc">%&gt;%</span> </span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> train_data)</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>data_fit4 <span class="sc">%&gt;%</span> </span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term         estimate std.error statistic p.value
+  &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)    99.2      0.0969   1024.   0      
+2 RunnyNoseYes   -0.362    0.115      -3.16 0.00168</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#predict from test data</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(data_fit4, test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 183 × 1
+   .pred
+   &lt;dbl&gt;
+ 1  99.2
+ 2  98.9
+ 3  98.9
+ 4  98.9
+ 5  98.9
+ 6  98.9
+ 7  99.2
+ 8  99.2
+ 9  99.2
+10  99.2
+# … with 173 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#augment test data</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>data_aug4 <span class="ot">&lt;-</span> </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(data_fit4, test_data)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="co">#the data look like:</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>data_aug4 <span class="sc">%&gt;%</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(BodyTemp, .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 183 × 2
+   BodyTemp .pred
+      &lt;dbl&gt; &lt;dbl&gt;
+ 1     98.3  99.2
+ 2    101.   98.9
+ 3     98.8  98.9
+ 4     98.5  98.9
+ 5     98.1  98.9
+ 6     98.4  98.9
+ 7     99.5  99.2
+ 8     98.8  99.2
+ 9    102.   99.2
+10     99.7  99.2
+# … with 173 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate RMSE</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>yardstick<span class="sc">::</span><span class="fu">rmse</span>(data_aug4, BodyTemp, .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard        1.12</code></pre>
+</div>
+</div>
+<p>The RMSE of the univariate model 4 (1.12) was lower than that of the global model 3 (1.15), showing that it is a better fit to the data.</p>
 
 
 </section>

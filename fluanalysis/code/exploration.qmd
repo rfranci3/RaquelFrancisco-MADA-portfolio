@@ -51,7 +51,6 @@ par(mfrow=c(1,5)) # show the following plots side by side
 barplot(table(data$ChillsSweats), ylab = 'Presence of Flu Symptoms', xlab = 'Chills or Sweats', ylim = c(0,800))
 barplot(table(data$Fatigue), xlab = 'Fatigue', ylim = c(0,800))
 barplot(table(data$Headache), xlab = 'Headache', ylim = c(0,800))
-barplot(table(data$Vision), xlab = 'Blurry VIsion', ylim = c(0,800))
 barplot(table(data$Nausea), xlab = 'Nausea', ylim = c(0,800))
 ```
 

@@ -296,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Search for functions across packages at https://www.tidymodels.org/find/</code></pre>
+• Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) <span class="co">#help read/import data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -329,30 +329,30 @@ The following objects are masked from 'package:yardstick':
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">'fluanalysis/data/SypAct_clean.rds'</span>)) <span class="co">#upload cleaned data</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(data) <span class="co"># to get a look at the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 730 × 32
-   SwollenLymph…¹ Chest…² Chill…³ Nasal…⁴ CoughYN Sneeze Fatigue Subje…⁵ Heada…⁶
-   &lt;fct&gt;          &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  
- 1 Yes            No      No      No      Yes     No     Yes     Yes     Yes    
- 2 Yes            Yes     No      Yes     Yes     No     Yes     Yes     Yes    
- 3 Yes            Yes     Yes     Yes     No      Yes    Yes     Yes     Yes    
- 4 Yes            Yes     Yes     Yes     Yes     Yes    Yes     Yes     Yes    
- 5 Yes            No      Yes     No      No      No     Yes     Yes     Yes    
- 6 No             No      Yes     No      Yes     Yes    Yes     Yes     Yes    
- 7 No             No      Yes     No      Yes     No     Yes     Yes     No     
- 8 No             Yes     Yes     Yes     Yes     Yes    Yes     Yes     Yes    
- 9 Yes            Yes     Yes     Yes     Yes     No     Yes     Yes     Yes    
-10 No             Yes     No      Yes     Yes     No     Yes     No      Yes    
-# … with 720 more rows, 23 more variables: Weakness &lt;fct&gt;, WeaknessYN &lt;fct&gt;,
-#   CoughIntensity &lt;fct&gt;, CoughYN2 &lt;fct&gt;, Myalgia &lt;fct&gt;, MyalgiaYN &lt;fct&gt;,
+<pre><code># A tibble: 730 × 26
+   SwollenLymph…¹ Chest…² Chill…³ Nasal…⁴ Sneeze Fatigue Subje…⁵ Heada…⁶ Weakn…⁷
+   &lt;fct&gt;          &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  
+ 1 Yes            No      No      No      No     Yes     Yes     Yes     Mild   
+ 2 Yes            Yes     No      Yes     No     Yes     Yes     Yes     Severe 
+ 3 Yes            Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 4 Yes            Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 5 Yes            No      Yes     No      No     Yes     Yes     Yes     Modera…
+ 6 No             No      Yes     No      Yes    Yes     Yes     Yes     Modera…
+ 7 No             No      Yes     No      No     Yes     Yes     No      Mild   
+ 8 No             Yes     Yes     Yes     Yes    Yes     Yes     Yes     Severe 
+ 9 Yes            Yes     Yes     Yes     No     Yes     Yes     Yes     Modera…
+10 No             Yes     No      Yes     No     Yes     No      Yes     Modera…
+# … with 720 more rows, 17 more variables: CoughIntensity &lt;fct&gt;, Myalgia &lt;fct&gt;,
 #   RunnyNose &lt;fct&gt;, AbPain &lt;fct&gt;, ChestPain &lt;fct&gt;, Diarrhea &lt;fct&gt;,
 #   EyePn &lt;fct&gt;, Insomnia &lt;fct&gt;, ItchyEye &lt;fct&gt;, Nausea &lt;fct&gt;, EarPn &lt;fct&gt;,
-#   Hearing &lt;fct&gt;, Pharyngitis &lt;fct&gt;, Breathless &lt;fct&gt;, ToothPn &lt;fct&gt;,
-#   Vision &lt;fct&gt;, Vomit &lt;fct&gt;, Wheeze &lt;fct&gt;, BodyTemp &lt;dbl&gt;, and abbreviated
-#   variable names ¹​SwollenLymphNodes, ²​ChestCongestion, ³​ChillsSweats, …</code></pre>
+#   Pharyngitis &lt;fct&gt;, Breathless &lt;fct&gt;, ToothPn &lt;fct&gt;, Vomit &lt;fct&gt;,
+#   Wheeze &lt;fct&gt;, BodyTemp &lt;dbl&gt;, and abbreviated variable names
+#   ¹​SwollenLymphNodes, ²​ChestCongestion, ³​ChillsSweats, ⁴​NasalCongestion,
+#   ⁵​SubjectiveFever, ⁶​Headache, ⁷​Weakness</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   730 obs. of  32 variables:
+<pre><code>'data.frame':   730 obs. of  26 variables:
  $ SwollenLymphNodes: Factor w/ 2 levels "No","Yes": 2 2 2 2 2 1 1 1 2 1 ...
   ..- attr(*, "label")= chr "Swollen Lymph Nodes"
  $ ChestCongestion  : Factor w/ 2 levels "No","Yes": 1 2 2 2 1 1 1 2 2 2 ...
@@ -361,8 +361,6 @@ The following objects are masked from 'package:yardstick':
   ..- attr(*, "label")= chr "Chills/Sweats"
  $ NasalCongestion  : Factor w/ 2 levels "No","Yes": 1 2 2 2 1 1 1 2 2 2 ...
   ..- attr(*, "label")= chr "Nasal Congestion"
- $ CoughYN          : Factor w/ 2 levels "No","Yes": 2 2 1 2 1 2 2 2 2 2 ...
-  ..- attr(*, "label")= chr "Cough"
  $ Sneeze           : Factor w/ 2 levels "No","Yes": 1 1 2 2 1 2 1 2 1 1 ...
   ..- attr(*, "label")= chr "Sneeze"
  $ Fatigue          : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 2 2 2 ...
@@ -372,14 +370,9 @@ The following objects are masked from 'package:yardstick':
  $ Headache         : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 1 2 2 2 ...
   ..- attr(*, "label")= chr "Headache"
  $ Weakness         : Factor w/ 4 levels "None","Mild",..: 2 4 4 4 3 3 2 4 3 3 ...
- $ WeaknessYN       : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 2 2 2 ...
-  ..- attr(*, "label")= chr "Weakness"
  $ CoughIntensity   : Factor w/ 4 levels "None","Mild",..: 4 4 2 3 1 3 4 3 3 3 ...
   ..- attr(*, "label")= chr "Cough Severity"
- $ CoughYN2         : Factor w/ 2 levels "No","Yes": 2 2 2 2 1 2 2 2 2 2 ...
  $ Myalgia          : Factor w/ 4 levels "None","Mild",..: 2 4 4 4 2 3 2 4 3 2 ...
- $ MyalgiaYN        : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 2 2 2 ...
-  ..- attr(*, "label")= chr "Myalgia"
  $ RunnyNose        : Factor w/ 2 levels "No","Yes": 1 1 2 2 1 1 2 2 2 2 ...
   ..- attr(*, "label")= chr "Runny Nose"
  $ AbPain           : Factor w/ 2 levels "No","Yes": 1 1 2 1 1 1 1 1 1 1 ...
@@ -396,16 +389,12 @@ The following objects are masked from 'package:yardstick':
  $ Nausea           : Factor w/ 2 levels "No","Yes": 1 1 2 2 2 2 1 1 2 2 ...
  $ EarPn            : Factor w/ 2 levels "No","Yes": 1 2 1 2 1 1 1 1 1 1 ...
   ..- attr(*, "label")= chr "Ear Pain"
- $ Hearing          : Factor w/ 2 levels "No","Yes": 1 2 1 1 1 1 1 1 1 1 ...
-  ..- attr(*, "label")= chr "Loss of Hearing"
  $ Pharyngitis      : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 2 2 1 1 1 ...
   ..- attr(*, "label")= chr "Sore Throat"
  $ Breathless       : Factor w/ 2 levels "No","Yes": 1 1 2 1 1 2 1 1 1 2 ...
   ..- attr(*, "label")= chr "Breathlessness"
  $ ToothPn          : Factor w/ 2 levels "No","Yes": 1 1 2 1 1 1 1 1 2 1 ...
   ..- attr(*, "label")= chr "Tooth Pain"
- $ Vision           : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
-  ..- attr(*, "label")= chr "Blurred Vision"
  $ Vomit            : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 2 1 1 1 ...
   ..- attr(*, "label")= chr "Vomiting"
  $ Wheeze           : Factor w/ 2 levels "No","Yes": 1 1 1 2 1 2 1 1 1 1 ...
@@ -465,20 +454,20 @@ The following objects are masked from 'package:yardstick':
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_fit_all1) <span class="co">#several significant results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 38 × 5
+<pre><code># A tibble: 32 × 5
    term                 estimate std.error statistic   p.value
    &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 (Intercept)           97.9       0.304   322.     0        
- 2 SwollenLymphNodesYes  -0.165     0.0920   -1.80   0.0727   
- 3 ChestCongestionYes     0.0873    0.0975    0.895  0.371    
- 4 ChillsSweatsYes        0.201     0.127     1.58   0.114    
- 5 NasalCongestionYes    -0.216     0.114    -1.90   0.0584   
- 6 CoughYNYes             0.314     0.241     1.30   0.193    
- 7 SneezeYes             -0.362     0.0983   -3.68   0.000249 
- 8 FatigueYes             0.265     0.161     1.65   0.0996   
- 9 SubjectiveFeverYes     0.437     0.103     4.22   0.0000271
-10 HeadacheYes            0.0115    0.125     0.0913 0.927    
-# … with 28 more rows</code></pre>
+ 1 (Intercept)          97.9        0.304   323.     0        
+ 2 SwollenLymphNodesYes -0.166      0.0920   -1.81   0.0714   
+ 3 ChestCongestionYes    0.103      0.0971    1.06   0.291    
+ 4 ChillsSweatsYes       0.192      0.127     1.51   0.131    
+ 5 NasalCongestionYes   -0.222      0.113    -1.95   0.0512   
+ 6 SneezeYes            -0.373      0.0980   -3.80   0.000156 
+ 7 FatigueYes            0.273      0.161     1.70   0.0901   
+ 8 SubjectiveFeverYes    0.437      0.103     4.25   0.0000244
+ 9 HeadacheYes           0.00498    0.125     0.0397 0.968    
+10 WeaknessMild          0.00552    0.189     0.0292 0.977    
+# … with 22 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_fit_all1) <span class="sc">%&gt;%</span> <span class="do">##help visualize regression with dot-whisker plot w/ 95% CI</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dwplot</span>(<span class="at">dot_args =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>), <span class="co">#Coefficient Estimates</span></span>
@@ -507,53 +496,48 @@ The following objects are masked from 'package:yardstick':
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Compare output</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Visually</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dwplot</span>(<span class="fu">list</span>(<span class="at">Myalgia =</span> lm_fit1, <span class="at">AllVariables =</span> lm_fit_all1)) <span class="co">#compare dwplots</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Model matrix is rank deficient. Parameters `WeaknessYNYes, CoughYN2Yes,
-  MyalgiaYNYes` were not estimable.</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="fitting_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_fit1) <span class="sc">%&gt;%</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(adj.r.squared, AIC, BIC, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_fit1) <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(adj.r.squared, AIC, BIC, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   adj.r.squared   AIC   BIC p.value
           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
 1       0.00387 2337. 2360.   0.121</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_fit_all1) <span class="sc">%&gt;%</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(adj.r.squared, AIC, BIC, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lm_fit_all1) <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(adj.r.squared, AIC, BIC, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   adj.r.squared   AIC   BIC      p.value
           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;
-1        0.0860 2304. 2469. 0.0000000420</code></pre>
+1        0.0853 2302. 2453. 0.0000000247</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_performance</span>(lm_fit1,lm_fit_all1) <span class="co">#better way</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_performance</span>(lm_fit1,lm_fit_all1) <span class="co">#better way</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
 Name        | Model |  AIC (weights) | AICc (weights) |  BIC (weights) |    R2 | R2 (adj.) |  RMSE | Sigma
 ----------------------------------------------------------------------------------------------------------
 lm_fit1     |   _lm | 2336.6 (&lt;.001) | 2336.6 (&lt;.001) | 2359.5 (&gt;.999) | 0.008 |     0.004 | 1.191 | 1.194
-lm_fit_all1 |   _lm | 2303.8 (&gt;.999) | 2307.7 (&gt;.999) | 2469.2 (&lt;.001) | 0.129 |     0.086 | 1.116 | 1.144</code></pre>
+lm_fit_all1 |   _lm | 2301.6 (&gt;.999) | 2304.8 (&gt;.999) | 2453.1 (&lt;.001) | 0.124 |     0.085 | 1.119 | 1.144</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Via ANOVA</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_fit1<span class="sc">$</span>fit, lm_fit_all1<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Via ANOVA</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm_fit1<span class="sc">$</span>fit, lm_fit_all1<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
 Model 1: BodyTemp ~ Myalgia
 Model 2: BodyTemp ~ SwollenLymphNodes + ChestCongestion + ChillsSweats + 
-    NasalCongestion + CoughYN + Sneeze + Fatigue + SubjectiveFever + 
-    Headache + Weakness + WeaknessYN + CoughIntensity + CoughYN2 + 
-    Myalgia + MyalgiaYN + RunnyNose + AbPain + ChestPain + Diarrhea + 
-    EyePn + Insomnia + ItchyEye + Nausea + EarPn + Hearing + 
-    Pharyngitis + Breathless + ToothPn + Vision + Vomit + Wheeze
+    NasalCongestion + Sneeze + Fatigue + SubjectiveFever + Headache + 
+    Weakness + CoughIntensity + Myalgia + RunnyNose + AbPain + 
+    ChestPain + Diarrhea + EyePn + Insomnia + ItchyEye + Nausea + 
+    EarPn + Pharyngitis + Breathless + ToothPn + Vomit + Wheeze
   Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
 1    726 1035.07                                  
-2    695  909.12 31    125.94 3.1059 5.789e-08 ***
+2    698  913.79 28    121.28 3.3086 3.294e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -562,21 +546,21 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="logistic-model-nausea-vs.-myalgia" class="level4">
 <h4 class="anchored" data-anchor-id="logistic-model-nausea-vs.-myalgia">Logistic Model: Nausea vs.&nbsp;Myalgia</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot suspect interaction</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> Myalgia, <span class="at">y =</span> Nausea)) <span class="sc">+</span> </span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot suspect interaction</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> Myalgia, <span class="at">y =</span> Nausea)) <span class="sc">+</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fitting_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>glm_mod <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">"classification"</span>,</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">engine =</span> <span class="st">"glm"</span>,</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">penalty =</span> <span class="cn">NULL</span>,</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mixture =</span> <span class="cn">NULL</span>) <span class="co">#define mode so it is a glm</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>glm_fit1 <span class="ot">&lt;-</span> glm_mod <span class="sc">%&gt;%</span> </span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Nausea <span class="sc">~</span> Myalgia, <span class="at">data =</span> data)</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit1) <span class="co">#several significant results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>glm_mod <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">"classification"</span>,</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">engine =</span> <span class="st">"glm"</span>,</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">penalty =</span> <span class="cn">NULL</span>,</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mixture =</span> <span class="cn">NULL</span>) <span class="co">#define mode so it is a glm</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>glm_fit1 <span class="ot">&lt;-</span> glm_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Nausea <span class="sc">~</span> Myalgia, <span class="at">data =</span> data)</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit1) <span class="co">#several significant results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   term            estimate std.error statistic     p.value
@@ -586,10 +570,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 3 MyalgiaModerate    0.926     0.302     3.07  0.00217    
 4 MyalgiaSevere      1.42      0.337     4.22  0.0000244  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit1) <span class="sc">%&gt;%</span> <span class="do">##help visualize model with dot-whisker plot</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dwplot</span>(<span class="at">dot_args =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>),</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">whisker_args =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">vline =</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>, <span class="at">linetype =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit1) <span class="sc">%&gt;%</span> <span class="do">##help visualize model with dot-whisker plot</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dwplot</span>(<span class="at">dot_args =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">whisker_args =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">vline =</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>, <span class="at">linetype =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fitting_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
 </div>
@@ -598,30 +582,30 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="logistic-model-nausea-vs.-all-variables" class="level4">
 <h4 class="anchored" data-anchor-id="logistic-model-nausea-vs.-all-variables">Logistic Model: Nausea vs.&nbsp;All Variables</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>glm_fit_all1 <span class="ot">&lt;-</span> glm_mod <span class="sc">%&gt;%</span> </span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Nausea <span class="sc">~</span> ., <span class="at">data =</span> data)</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit_all1) <span class="co">#several significant results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>glm_fit_all1 <span class="ot">&lt;-</span> glm_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Nausea <span class="sc">~</span> ., <span class="at">data =</span> data)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit_all1) <span class="co">#several significant results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 38 × 5
+<pre><code># A tibble: 32 × 5
    term                 estimate std.error statistic p.value
    &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
- 1 (Intercept)             0.223     7.83     0.0285  0.977 
- 2 SwollenLymphNodesYes   -0.251     0.196   -1.28    0.200 
- 3 ChestCongestionYes      0.276     0.213    1.30    0.195 
- 4 ChillsSweatsYes         0.274     0.288    0.952   0.341 
- 5 NasalCongestionYes      0.426     0.255    1.67    0.0944
- 6 CoughYNYes             -0.140     0.519   -0.271   0.787 
- 7 SneezeYes               0.177     0.210    0.840   0.401 
- 8 FatigueYes              0.229     0.372    0.616   0.538 
- 9 SubjectiveFeverYes      0.278     0.225    1.23    0.218 
-10 HeadacheYes             0.331     0.285    1.16    0.245 
-# … with 28 more rows</code></pre>
+ 1 (Intercept)             0.207     7.81     0.0265  0.979 
+ 2 SwollenLymphNodesYes   -0.247     0.196   -1.26    0.207 
+ 3 ChestCongestionYes      0.265     0.210    1.26    0.207 
+ 4 ChillsSweatsYes         0.291     0.287    1.01    0.311 
+ 5 NasalCongestionYes      0.440     0.253    1.74    0.0822
+ 6 SneezeYes               0.165     0.210    0.787   0.431 
+ 7 FatigueYes              0.231     0.371    0.622   0.534 
+ 8 SubjectiveFeverYes      0.255     0.223    1.14    0.253 
+ 9 HeadacheYes             0.337     0.285    1.18    0.236 
+10 WeaknessMild           -0.120     0.447   -0.269   0.788 
+# … with 22 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit_all1) <span class="sc">%&gt;%</span> <span class="do">##help visualize regression with dot-whisker plot w/ 95% CI</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dwplot</span>(<span class="at">dot_args =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>), <span class="co">#Coefficient Estimates</span></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">whisker_args =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>), <span class="co">#CI</span></span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">vline =</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>, <span class="at">linetype =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit_all1) <span class="sc">%&gt;%</span> <span class="do">##help visualize regression with dot-whisker plot w/ 95% CI</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dwplot</span>(<span class="at">dot_args =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>), <span class="co">#Coefficient Estimates</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">whisker_args =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"black"</span>), <span class="co">#CI</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">vline =</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>, <span class="at">linetype =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fitting_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -630,82 +614,63 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="model-output-comparison-1" class="level4">
 <h4 class="anchored" data-anchor-id="model-output-comparison-1">Model Output Comparison</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the goodness of "fit" with these 2 lm() models</span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(glm_fit1<span class="sc">$</span>fit) <span class="co">#QQ plot seems off, residuals may be an issue</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the goodness of "fit" with these 2 lm() models</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(glm_fit1<span class="sc">$</span>fit) <span class="co">#QQ plot seems off, residuals may be an issue</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fitting_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(glm_fit_all1<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(glm_fit_all1<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Variable `Component` is not in your data frame :/</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="fitting_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Compare output</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Visually</span></span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dwplot</span>(<span class="fu">list</span>(<span class="at">Myalgia =</span> glm_fit1, <span class="at">AllVariables =</span> glm_fit_all1)) <span class="co">#compare dwplots</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Model matrix is rank deficient. Parameters `WeaknessYNYes, CoughYN2Yes,
-  MyalgiaYNYes` were not estimable.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Compare output</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Visually</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dwplot</span>(<span class="fu">list</span>(<span class="at">Myalgia =</span> glm_fit1, <span class="at">AllVariables =</span> glm_fit_all1)) <span class="co">#compare dwplots</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fitting_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(glm_fit1) <span class="sc">%&gt;%</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( AIC, BIC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(glm_fit1) <span class="sc">%&gt;%</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( AIC, BIC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
     AIC   BIC
   &lt;dbl&gt; &lt;dbl&gt;
 1  920.  939.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(glm_fit_all1) <span class="sc">%&gt;%</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( AIC, BIC) <span class="co">#better fit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(glm_fit_all1) <span class="sc">%&gt;%</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( AIC, BIC) <span class="co">#better fit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
     AIC   BIC
   &lt;dbl&gt; &lt;dbl&gt;
-1  821.  982.</code></pre>
+1  816.  963.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_performance</span>(glm_fit1,glm_fit_all1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
-prediction from a rank-deficient fit may be misleading</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
-prediction from a rank-deficient fit may be misleading
-
-Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
-prediction from a rank-deficient fit may be misleading
-
-Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :
-prediction from a rank-deficient fit may be misleading</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_performance</span>(glm_fit1,glm_fit_all1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
 Name         | Model | AIC (weights) | AICc (weights) | BIC (weights) | Tjur's R2 |  RMSE | Sigma | Log_loss | Score_log | Score_spherical |   PCP
 --------------------------------------------------------------------------------------------------------------------------------------------------
 glm_fit1     |  _glm | 920.3 (&lt;.001) |  920.3 (&lt;.001) | 938.7 (&gt;.999) |     0.044 | 0.466 | 1.121 |    0.625 |  -110.929 |           0.006 | 0.565
-glm_fit_all1 |  _glm | 821.5 (&gt;.999) |  825.1 (&gt;.999) | 982.2 (&lt;.001) |     0.247 | 0.414 | 1.040 |    0.515 |      -Inf |           0.002 | 0.658</code></pre>
+glm_fit_all1 |  _glm | 816.1 (&gt;.999) |  819.2 (&gt;.999) | 963.1 (&lt;.001) |     0.246 | 0.415 | 1.038 |    0.515 |      -Inf |           0.002 | 0.657</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Via ANOVA</span></span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(glm_fit1<span class="sc">$</span>fit, glm_fit_all1<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Via ANOVA</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(glm_fit1<span class="sc">$</span>fit, glm_fit_all1<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Deviance Table
 
 Model 1: Nausea ~ Myalgia
 Model 2: Nausea ~ SwollenLymphNodes + ChestCongestion + ChillsSweats + 
-    NasalCongestion + CoughYN + Sneeze + Fatigue + SubjectiveFever + 
-    Headache + Weakness + WeaknessYN + CoughIntensity + CoughYN2 + 
-    Myalgia + MyalgiaYN + RunnyNose + AbPain + ChestPain + Diarrhea + 
-    EyePn + Insomnia + ItchyEye + EarPn + Hearing + Pharyngitis + 
-    Breathless + ToothPn + Vision + Vomit + Wheeze + BodyTemp
+    NasalCongestion + Sneeze + Fatigue + SubjectiveFever + Headache + 
+    Weakness + CoughIntensity + Myalgia + RunnyNose + AbPain + 
+    ChestPain + Diarrhea + EyePn + Insomnia + ItchyEye + EarPn + 
+    Pharyngitis + Breathless + ToothPn + Vomit + Wheeze + BodyTemp
   Resid. Df Resid. Dev Df Deviance
 1       726     912.28            
-2       695     751.47 31   160.81</code></pre>
+2       698     752.13 28   160.15</code></pre>
 </div>
 </div>
 

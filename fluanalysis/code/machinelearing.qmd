@@ -1,0 +1,247 @@
+# Machine Learning
+## With a focus on our single outcome, the continuous, numerical value of Body temperature. 
+
+### We will: 
+- Fit regression models
+- 
+
+```{r}
+library(here)
+library(tidyverse)
+library(ggplot2)
+library(tidymodels)
+library(dplyr)
+library(ranger)
+library(rpart)
+library(glmnet)
+library(rpart.plot)
+library(vip)
+
+data <- readRDS(here('fluanalysis/data/SypAct_clean.rds')) #upload cleaned data
+tibble(data) #overview of data
+```
+## Data Setup
+
+```{r}
+set.seed(123)
+# Fix the random numbers by setting the seed 
+# This enables the analysis to be reproducible when random numbers are used 
+
+data_split <- initial_split(data, prop = 2.8/4, strata = BodyTemp) #70% training, 30% testing
+
+# Create data frames for the two sets:
+train_data <- training(data_split)
+test_data  <- testing(data_split)
+
+#5-fold cross-validation, 5 times repeated
+fold_data <- vfold_cv(train_data, v = 5, repeats = 5, strata = BodyTemp)
+
+#Create a recipe for the data and fitting. 
+data_recipe <- recipe(BodyTemp ~ ., data = train_data) %>%
+  step_dummy(all_nominal(), -all_outcomes()) 
+
+```
+
+## Null model performance
+
+```{r}
+null_recipe <- recipe(BodyTemp ~ 1, data = train_data) %>%
+  step_dummy(all_nominal(), -all_outcomes())
+
+# Logistic model recipe
+recipe_mod <- linear_reg() %>% 
+  set_engine("lm") %>% 
+  set_mode("regression")
+
+# Model workflow to pair model and recipe 
+null_flow <- workflow() %>% 
+  add_model(recipe_mod) %>% 
+  add_recipe(null_recipe)
+
+#fit the null model to the folds made from the train data set.
+null_train <- fit_resamples(null_flow, resamples = fold_data)
+
+#Compute the RMSE for both training and test data
+Null_Met <- collect_metrics(null_train)
+#RMSE = 1.22
+```
+## Model tuning and fitting
+### Fit a Tree
+```{r}
+#TUNING HYPERPARAMETERS 
+tune_spec <- 
+  decision_tree(
+    cost_complexity = tune(),
+    tree_depth = tune()
+  ) %>% 
+  set_engine("rpart") %>% 
+  set_mode("regression")
+
+tree_grid <- grid_regular(cost_complexity(),
+                          tree_depth(),
+                          levels = 5)
+
+tree_grid %>% 
+  count(tree_depth)
+
+#Model tuning with a grid
+tree_wf <- workflow() %>%
+  add_model(tune_spec) %>%
+  add_recipe(data_recipe)
+
+tree_res <- #Code will take a hot minute to run
+  tree_wf %>% 
+  tune_grid(
+    resamples = fold_data,
+    grid = tree_grid
+    )
+
+tree_res %>% 
+  collect_metrics()
+
+#show and select best
+tree_res %>%
+  show_best()
+#rmse = 1.2
+
+best_tree <- tree_res %>%
+  select_best(n=1)
+
+#Final tuned model
+final_wf <- 
+  tree_wf %>% 
+  finalize_workflow(best_tree)
+
+#The Last Fit
+final_fit <- 
+  final_wf %>%
+  fit(train_data) 
+
+#Plot
+rpart.plot(extract_fit_parsnip(final_fit)$fit)
+
+```
+
+### Fit a LASSO
+```{r}
+#BUILD THE MODEL
+lasso_mod <- 
+  linear_reg(penalty = tune(), mixture = 1) %>% 
+  set_engine("glmnet")
+
+# Recipe and create Workflow
+data_recipe
+
+lasso_wf <- 
+  workflow() %>% 
+  add_model(lasso_mod) %>% 
+  add_recipe(data_recipe)
+
+#Create grid for tuning
+lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
+lr_reg_grid %>% top_n(-5) # lowest penalty values
+lr_reg_grid %>% top_n(5)  # highest penalty values
+
+#TRAIN AND TUNE THE MODEL
+lr_res <- 
+  lasso_wf %>% 
+  tune_grid(resamples = fold_data,
+            grid = lr_reg_grid,
+            control = control_grid(verbose = FALSE, save_pred = TRUE),
+            metrics = NULL)
+
+lr_res %>%
+  collect_metrics()
+
+lr_res %>%
+  show_best()
+
+#Selects best performing model
+best_lasso <- lr_res %>%
+  select_best()
+#rmse = 1.18
+
+#Final Model
+lasso_final_wf <- 
+  lasso_wf %>% 
+  finalize_workflow(best_lasso)
+
+lasso_final_fit <- 
+  lasso_final_wf %>%
+  fit(train_data) 
+
+#Plot
+x <- extract_fit_engine(lasso_final_fit)
+plot(x, "lambda")
+```
+
+### Fit a Random Forest
+```{r}
+#BUILD THE MODEL AND IMPROVE TRAINING TIME
+cores <- parallel::detectCores()
+cores
+
+f_mod <- 
+  rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>% 
+  set_engine("ranger",importance = "impurity", num.threads = cores) %>% 
+  set_mode("regression")
+
+f_wf <- workflow() %>%
+  add_model(f_mod) %>%
+  add_recipe(data_recipe)
+
+#TRAIN AND TUNE THE MODEL
+f_mod
+extract_parameter_set_dials(f_mod)
+
+f_res <- #This code takes a long time to run!
+  f_wf %>% 
+  tune_grid(fold_data,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = NULL)
+
+#Show and select the best
+
+f_res %>%
+  show_best()
+#rmse = 1.19
+
+f_best <- 
+  f_res %>% 
+  select_best(metric = "rmse")
+
+f_final_wf <- 
+  f_wf %>% 
+  finalize_workflow(f_best)
+
+#Final model fit
+f_final_fit <- 
+  f_final_wf %>%
+  fit(train_data) 
+
+f_final_fit %>% 
+  extract_fit_parsnip() %>% 
+  vip(num_features = 28)
+
+#Plot
+fx <- extract_fit_engine(f_final_fit)
+vip(fx)
+```
+
+## Final Evaluation
+
+```{r}
+#Based on rmse the Lasso model appears to be the best
+#We will fit final lasson model on split data!
+
+lasso_final_test <- 
+  lasso_final_wf %>%
+  last_fit(data_split) 
+
+lasso_final_test %>%
+   collect_metrics()
+
+#rmse = 1.156
+```
+
