@@ -26,9 +26,8 @@ website:
             href: ./fluanalysis/code/exploration.html
           - text: "Model Fitting"
             href: ./fluanalysis/code/fitting.html
-            menu:
-              - text: "Machine Learning"
-                href: ./fluanalysis/code/machinelearing.html
+          - text: "Machine Learning"
+            href: ./fluanalysis/code/machinelearing.html
           - text: "Model Improvement"
             href: ./fluanalysis/code/modeleval.html
     right:
