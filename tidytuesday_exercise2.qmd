@@ -1,0 +1,28 @@
+---
+title: "Tidy Tuesday Exercise 2"
+output: 
+  html_document:
+    toc: FALSE
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Tidy Tuesday Exercise 2
+
+## To be filled...
+
+### 4/ /2023
+
+Upload public access data for exercise via tidytuesdayR package.
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(here)
+library(janitor)
+
+#tuesdata2 <- tidytuesdayR::tt_load(2023, week = 7)
+# <- tuesdata$
+
+```

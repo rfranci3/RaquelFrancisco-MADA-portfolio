@@ -16,6 +16,8 @@ website:
             href: ./visualization_exercise.html
           - text: "Tidy Tuesday Exercise"
             href: ./tidytuesday_exercise.html
+          - text: "Tidy Tuesday Exercise 2"
+            href: ./tidytuesday_exercise2.html
           - text: "Wrangling Exercise"
             href: ./dataanalysis_exercise.html
       - text: "Flu Analysis"
@@ -30,6 +32,10 @@ website:
             href: ./fluanalysis/code/machinelearing.html
           - text: "Model Improvement"
             href: ./fluanalysis/code/modeleval.html
+      - text: "Term Project"
+        menu:
+          - text: "Summary"
+            href: ./AMRproject/AMRsummary.html
     right:
       - icon: github 
         href: https://github.com/rfranci3/RaquelFrancisco-MADA-portfolio
