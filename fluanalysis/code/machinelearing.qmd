@@ -16,6 +16,9 @@ library(rpart)
 library(glmnet)
 library(rpart.plot)
 library(vip)
+library(finetune)
+library(kernlab)
+library(doParallel)
 
 data <- readRDS(here('fluanalysis/data/SypAct_clean.rds')) #upload cleaned data
 tibble(data) #overview of data

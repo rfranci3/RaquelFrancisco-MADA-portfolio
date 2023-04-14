@@ -170,7 +170,7 @@ As the demand for cage free eggs increases so do the number of hens producing th
 set.seed(123)
 # Fix the random numbers by setting the seed 
 
-cdata_split <- initial_split(allclean, prop = 2.8/4, strata = prod_process) #70% training, 30% testing
+cdata_split <- initial_split(allclean, prop = 2.8/4, strata = n_eggs) #70% training, 30% testing
 
 # Create data frames for the two sets:
 train_cdata <- training(cdata_split)
@@ -180,7 +180,337 @@ test_cdata  <- testing(cdata_split)
 fold_cdata <- vfold_cv(train_cdata, v = 5, repeats = 5, strata = prod_process)
 
 #Create a recipe for the data and fitting. 
-data_recipe <- recipe(prod_process ~ ., data = train_cdata) %>%
+data_recipe <- recipe(n_eggs ~ prod_process, data = train_cdata) %>%
   step_dummy(all_nominal(), -all_outcomes()) 
 ```
 
+## Null model performance
+
+```{r}
+null_recipe <- recipe(n_eggs ~ 1, data = train_cdata) %>%
+  step_dummy(all_nominal(), -all_outcomes())
+
+# Logistic model recipe
+recipe_mod <- linear_reg() %>% 
+  set_engine("lm") %>% 
+  set_mode("regression")
+
+# Model workflow to pair model and recipe 
+null_flow <- workflow() %>% 
+  add_model(recipe_mod) %>% 
+  add_recipe(null_recipe)
+
+#fit the null model to the folds made from the train data set.
+null_train <- fit_resamples(null_flow, resamples = fold_cdata)
+
+#Compute the RMSE for both training and test data
+Null_Met <- collect_metrics(null_train)
+Null_Met
+#RMSE = 391114191
+```
+
+###Test Data with a linear model
+
+```{r}
+lm_flow <- workflow() %>% 
+  add_model(recipe_mod) %>% 
+  add_recipe(data_recipe)
+
+fit<- lm_flow %>%
+  fit(data = train_cdata)
+
+fit %>%
+  extract_fit_parsnip() %>%
+  tidy()
+```
+
+###Performance metrics
+
+```{r}
+aug_test <- augment(fit, train_cdata)
+rmse <- aug_test %>% rmse(truth = n_eggs, .pred)
+rsq <- aug_test %>% rsq(truth = n_eggs, .pred)
+metrics<- full_join(rmse, rsq)
+metrics
+
+#RMSE = 2.298755e+08
+#Something is going wrong here
+
+#Residuals?
+egg_mod<- lm(n_eggs ~ prod_process, data = train_cdata)
+res<- resid(egg_mod)
+plot(fitted(egg_mod), res)
+
+```
+
+#Tree model
+
+```{r}
+#Tune
+tune_spec_dtree <- 
+  decision_tree(
+    cost_complexity = tune(),
+    tree_depth = tune()) %>%
+  set_engine("rpart") %>% 
+  set_mode("regression")
+tune_spec_dtree
+
+dtree_wf <- workflow() %>%
+  add_model(tune_spec_dtree) %>%
+  add_recipe(data_recipe)
+
+#create a regular grid of values to try using some convenience functions 
+
+tree_grid_dtree <-
+  grid_regular(
+    cost_complexity(), 
+    tree_depth(), 
+    levels = 5)
+
+tree_grid_dtree
+
+#### Tuning using Cross-validation
+
+dtree_resample <- 
+  dtree_wf %>% 
+  tune_grid(
+    resamples = fold_cdata,
+    grid = tree_grid_dtree)
+
+dtree_resample %>%
+  collect_metrics()
+```
+## Plot
+
+```{r}
+dtree_resample %>%
+  collect_metrics() %>%
+  mutate(tree_depth = factor(tree_depth)) %>%
+  ggplot(aes(cost_complexity, mean, color = tree_depth)) +
+  geom_line(linewidth = 1.5, alpha = 0.6) +
+  geom_point(size = 2) +
+  facet_wrap(~ .metric, scales = "free", nrow = 2) +
+  scale_x_log10(labels = scales::label_number()) +
+  scale_color_viridis_d(option = "plasma", begin = .9, end = 0)
+
+dtree_resample %>%
+  show_best(n=1)
+
+#these numbers are strange...
+
+best_tree <- dtree_resample %>%
+  select_best()
+best_tree
+
+```
+#Make workflow
+
+```{r}
+dtree_final_wf <- 
+  dtree_wf %>% 
+  finalize_workflow(best_tree)
+
+dtree_final_fit <- 
+  dtree_final_wf %>%
+  fit(train_cdata) 
+
+dtree_residuals <- dtree_final_fit %>%
+  augment(train_cdata) %>%
+  select(c(.pred, n_eggs)) %>%
+  mutate(.resid = n_eggs - .pred) 
+  
+#calculate residuals and make new row.
+dtree_residuals
+```
+
+##Plot Pred vs Actual & Residuals
+
+```{r}
+#Actual
+dtree_pred_plot <- ggplot(dtree_residuals, 
+                          aes(x = n_eggs, 
+                              y = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Actual: Decision Tree", 
+       x = "Egg Outcome", 
+       y = "Egg Prediction")
+
+dtree_pred_plot
+
+#Residuals
+
+dtree_residual_plot <- ggplot(dtree_residuals, 
+                              aes(y = .resid, 
+                                  x = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Residuals: Decision Tree", 
+       x = "Egg Prediction", 
+       y = "Residuals")
+
+plot(dtree_residual_plot)
+
+```
+
+### Regression Tree
+
+```{r}
+
+tree <- rpart(n_eggs ~ prod_process, data = train_cdata)
+
+rpart.plot(tree)
+
+p <- predict(tree, train_cdata)
+
+rmse<- sqrt(mean(train_cdata$n_eggs - p))
+
+r2<- (cor(train_cdata$n_eggs,p))
+
+r2
+rmse
+```
+
+###Random Forest Model
+
+```{r}
+#detect cores for RFM computation
+cores <- parallel::detectCores()
+cores
+
+#Specify Model
+rf_mod <- 
+  rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("regression")
+
+#Crea Wortekflow
+rf_wf <- workflow() %>%
+  add_model(rf_mod) %>%
+  add_recipe(data_recipe)
+
+#Create Tuning Grid
+rf_grid  <- expand.grid(mtry = c(3, 4, 5, 6),
+                        min_n = c(40,50,60), 
+                        trees = c(500,1000)  )
+
+#Cross-validation
+rf_resample <- 
+  rf_wf %>% 
+  tune_grid(fold_cdata,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(yardstick::rmse))
+
+rf_resample %>%
+  collect_metrics()
+
+#select best models
+rf_resample %>%
+  show_best(n=1)
+
+#Selects best performing model
+best_rf <- rf_resample %>%
+  select_best(method = "rmse")
+
+#RMSE = 234720024 STD_ERR = 6282911
+```
+# Plot Performance
+
+```{r}
+#Plot of actual train data
+rf_resample %>%
+  autoplot()
+```
+
+#Final Fit
+
+```{r}
+rf_final_wf <- 
+  rf_wf %>% 
+  finalize_workflow(best_rf)
+
+rf_final_fit <- 
+  rf_final_wf %>%
+  fit(train_cdata) 
+
+#Calculate residuals
+rf_residuals <- rf_final_fit %>%
+  augment(train_cdata) %>% 
+  select(c(.pred, n_eggs)) %>%
+  mutate(.resid = n_eggs - .pred) 
+
+rf_residuals
+```
+
+#Model Predictions from Tuned vs Actual Outcomes
+
+```{r}
+rf_pred_plot <- ggplot(rf_residuals, 
+                          aes(x = n_eggs, 
+                              y = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Actual: Random Forest", 
+       x = "Eggs Actual", 
+       y = "Eggs Prediction")
+
+rf_pred_plot
+
+rf_residual_plot <- ggplot(rf_residuals, 
+                              aes(y = .resid, 
+                                  x = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Residuals: Random Forest", 
+       x = "Egg Prediction", 
+       y = "Residuals")
+
+plot(rf_residual_plot) #view plot
+```
+
+# Final Assignment
+
+These models acted strangely for me. I believe the best performing (i.e., the most normal) was the Tree model.
+
+```{r}
+#Model
+dtree_final_fit_TEST <- 
+  dtree_final_wf %>%
+  fit(test_cdata) 
+
+dtree_residualsT <- dtree_final_fit_TEST %>%
+  augment(test_cdata) %>%
+  select(c(.pred, n_eggs)) %>%
+  mutate(.resid = n_eggs - .pred) 
+  
+#calculate residuals and make new row.
+dtree_residualsT
+```
+
+##Plot Pred vs Actual & Residuals
+
+```{r}
+#Actual
+dtree_pred_plot2 <- ggplot(dtree_residualsT, 
+                          aes(x = n_eggs, 
+                              y = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Actual: Decision Tree", 
+       x = "Egg Outcome", 
+       y = "Egg Prediction")
+
+dtree_pred_plot2
+
+#Residuals
+
+dtree_residual_plot2 <- ggplot(dtree_residualsT, 
+                              aes(y = .resid, 
+                                  x = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Residuals: Decision Tree", 
+       x = "Egg Prediction", 
+       y = "Residuals")
+
+plot(dtree_residual_plot2)
+
+dtree_final_fit_TEST 
+```
+
+Actually I am unsure... 
